@@ -6,14 +6,12 @@ var maximization = require("./maximization");
 
 var Weights = {
     monotonicity: 1.0,
-    smoothness: 0.7,
-    availability: 2.4,
-    maximization: 7.0
+    smoothness: 1.0,
+    availability: 1.0,
+    maximization: 1.0
 };
 
 var OpponentValues = [1, 2];
-
-
 
 function playerMoves(grid) {
     var moves = [];
@@ -59,47 +57,45 @@ var Search = {
             Weights.maximization * maximization(grid);
     },
     search: function(grid) {
-        return Search.alphabeta(grid, 4, true, [], -Infinity, Infinity)
+        return Search.minimax(grid, 7, true);
     },
-    alphabeta: function(grid, depth, playerTurn, best, alpha, beta) {
-    if (grid.max() === 11 || depth === 0) {
-        return {
-            score: Search.evaluate(grid),
-            path: best
-        };
-    }
+    minimax: function(grid, depth, playerTurn) {
+        var bestMove = null;
+        var bestValue;
+        if (grid.max() === 11 || depth === 0) {
+            return {
+                score: Search.evaluate(grid),
+                move: bestMove
+            };
+        }
 
-    if (playerTurn) {
-        var steps = best.slice(0);
-        playerMoves(grid).forEach(function(move) {
-            var path = steps.slice(0);
-            path.push(move.direction);
-            var result = Search.alphabeta(move.grid, depth - 1, !playerTurn, path, alpha, beta);
-            if (result.score >= alpha) {
-                alpha = result.score;
-                steps = result.path;
-            }
-            if (alpha >= beta ) return false;
-        });
-        best = steps.concat(steps);
-        return {
-            score: alpha,
-            path: best
-        };
-    } else {
-        opponentMoves(grid).forEach(function(opponentGrid) {
-            var result = Search.alphabeta(opponentGrid, depth - 1, !playerTurn, best, alpha, beta);
-            if (result.score < beta) {
-                beta = result.score;
-            }
-            if (alpha >= beta ) return false;
-        });
-        return {
-            score: beta,
-            path: best
-        };
+        if (playerTurn) {
+            bestValue = -Infinity;
+            playerMoves(grid).forEach(function(move) {
+                var result = Search.minimax(move.grid, depth - 1, !playerTurn);
+                if (result.score > bestValue) {
+                    bestValue = result.score;
+                    bestMove = move.direction;
+                }
+            });
+            return {
+                score: bestValue,
+                move: bestMove
+            };
+        } else {
+            bestValue = Infinity;
+            opponentMoves(grid).forEach(function(opponentGrid) {
+                var result = Search.minimax(opponentGrid, depth - 1, !playerTurn);
+                if (result.score < bestValue) {
+                    bestValue = result.score;
+                }
+            });
+            return {
+                score: bestValue,
+                path: bestMove
+            };
+        }
     }
-}
 };
 
 module.exports = Search;

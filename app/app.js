@@ -1,25 +1,18 @@
-var Grid = require("../src/core/grid");
-var Direction = require("../src/core/direction");
-var Search = require("../src/heuristics/search");
-var grid = Grid.from([
-    0, 4, 4, 2,
-    0, 0, 5, 3,
-    0, 0, 0, 0,
-    0, 0, 0, 0
-]);
-var result = Search.search(grid);
-console.log(result);
-//var right = grid.clone();
-//right.slide(Direction.Right);
-//console.log(right.toString());
-//console.log(Search.evaluate(right));
-//
-//var left = grid.clone();
-//left.slide(Direction.Left);
-//console.log(left.toString());
-//console.log(Search.evaluate(left));
-//
-//var down = grid.clone();
-//down.slide(Direction.Down);
-//console.log(down.toString());
-//console.log(Search.evaluate(down));
+var Game = require("../src/core/game");
+
+var i;
+var iterations = 20;
+var passes = 0;
+var failures = 0;
+for (i = 1; i <= iterations; i++) {
+    var game = new Game();
+    var result = game.run();
+    if (result === false) {
+        failures++;
+        console.warn("\n" + i + "/" + iterations + ": Failed");
+    } else {
+        passes++;
+        console.log("\n" + i + "/" + iterations + ": Passed");
+    }
+}
+console.log("Winning rate: " + passes / (passes + failures));

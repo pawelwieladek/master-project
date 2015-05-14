@@ -141,6 +141,15 @@ Grid.prototype.max = function() {
     return Math.max.apply(null, this.tiles);
 };
 
+Grid.prototype.available = function() {
+    var i;
+    var indexes = [];
+    for (i = 0; i < this.tiles.length; i++)
+        if (this.value(i) === 0)
+            indexes.push(i);
+    return indexes;
+};
+
 Grid.prototype.toString = function() {
     var i;
     var string = new Array(this.size);
