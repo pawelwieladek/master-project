@@ -6,9 +6,9 @@ var maximization = require("./maximization");
 
 var Weights = {
     monotonicity: 1.0,
-    smoothness: 1.0,
-    availability: 1.0,
-    maximization: 1.0
+    smoothness: 0.5,
+    availability: 3.0,
+    maximization: 1.5
 };
 
 var OpponentValues = [1, 2];
