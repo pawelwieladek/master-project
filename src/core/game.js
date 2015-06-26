@@ -4,6 +4,7 @@ var Grid = require("./grid");
 var Search = require("../heuristics/search");
 
 function Game() {
+    this.points = 0;
     this.grid = new Grid();
 }
 

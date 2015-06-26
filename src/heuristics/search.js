@@ -57,7 +57,7 @@ var Search = {
             Weights.maximization * maximization(grid);
     },
     search: function(grid) {
-        return Search.minimax(grid, 7, true);
+        return Search.minimax(grid, 5, true);
     },
     minimax: function(grid, depth, playerTurn) {
         var bestMove = null;

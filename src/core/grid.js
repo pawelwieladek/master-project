@@ -33,7 +33,7 @@ Grid.prototype.remove = function(index) {
     return this.tiles[index] = 0;
 };
 
-// TODO: memoization
+// TODO: Possible performance gain with memoization
 Grid.prototype.shiftIndex = function(index, direction) {
     switch (direction) {
         case Direction.Up: return index >= this.size ? index - this.size : null;
@@ -48,7 +48,7 @@ Grid.prototype.moveValue = function(source, destination, value) {
     this.remove(source);
 };
 
-// TODO: memoization
+// TODO: Possible performance gain with memoization
 Grid.prototype.cells = function(direction) {
     var i, j, k;
     var cells = new Array(this.tiles.length);
