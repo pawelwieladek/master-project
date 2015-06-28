@@ -5,6 +5,7 @@ var numberOfIterations = 100;
 var numberOfGames = 20;
 var passes = 0;
 var failures = 0;
+var player = new SearchTreePlayer();
 
 var onMoved = function() {
     if (j++ % numberOfIterations === 0) process.stdout.write(".");
@@ -12,14 +13,13 @@ var onMoved = function() {
 
 for (i = 1; i <= numberOfGames; i++) {
     j = 0;
-    var player = new SearchTreePlayer();
-    var result = player.play(onMoved);
-    if (result === false) {
-        failures++;
-        console.warn("\n" + i + "/" + numberOfGames + ": Failed");
-    } else {
+    player.play(onMoved);
+    if (player.recorder.last().win === true) {
         passes++;
         console.log("\n" + i + "/" + numberOfGames + ": Passed");
+    } else {
+        failures++;
+        console.warn("\n" + i + "/" + numberOfGames + ": Failed");
     }
 }
 console.log("Winning rate: " + passes / (passes + failures));

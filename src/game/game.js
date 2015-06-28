@@ -2,35 +2,41 @@ var chance = require("chance").Chance(new Date());
 
 var Grid = require("../core/grid");
 
+var GameStatics = {
+    WinValue: 11,
+    addRandomTile: function(grid) {
+        var finalState = grid.clone();
+        var value = chance.integer({ min: 1, max: 10 }) <= 9 ? 1 : 2;
+        var index = chance.pick(finalState.available());
+        finalState.add(index, value);
+        return finalState;
+    },
+    computeAfterState: function(grid, direction) {
+        var afterState = grid.clone();
+        var points = afterState.slide(direction);
+        if (points === null) return null;
+        return { reward: points, afterState: afterState };
+    },
+    move: function(grid, direction) {
+        var result = GameStatics.computeAfterState(grid, direction);
+        if (result === null) return null;
+        var finalState = GameStatics.addRandomTile(result.afterState);
+        return { reward: result.reward, afterState: result.afterState, finalState: finalState };
+    }
+};
+
 function Game() {
-    this.winnerTileValue = 11;
-    this.iterations = 0;
+    this.movesNumber = 0;
     this.score = 0;
     this.grid = new Grid();
 }
 
-Game.prototype.getScore = function() {
-    return this.score;
-};
-
-Game.prototype.getIterations = function() {
-    return this.iterations;
-};
-
 Game.prototype.isWinnerState = function() {
-    return this.grid.max() === this.winnerTileValue;
-};
-
-Game.prototype.addRandomTile = function(grid) {
-    var finalState = grid.clone();
-    var value = chance.integer({ min: 1, max: 10 }) <= 9 ? 1 : 2;
-    var index = chance.pick(finalState.available());
-    finalState.add(index, value);
-    return finalState;
+    return this.grid.max() === GameStatics.WinValue;
 };
 
 Game.prototype.opponentTurn = function() {
-    this.grid = this.addRandomTile(this.grid);
+    this.grid = GameStatics.addRandomTile(this.grid);
 };
 
 Game.prototype.initialize = function() {
@@ -41,31 +47,22 @@ Game.prototype.initialize = function() {
 Game.prototype.play = function(directionEvaluator, onMoved) {
     this.initialize();
     while (!this.isWinnerState()) {
-        var direction = directionEvaluator(this.grid);
+        var state = this.grid;
+
+        var direction = directionEvaluator(state);
         if (direction === null) return false;
 
-        var result = this.move(this.grid, direction);
+        var result = GameStatics.move(state, direction);
         if (result === null) return false;
 
-        onMoved(this.grid, direction, result.reward, result.afterState, result.finalState);
+        onMoved(state, direction, result.reward, result.afterState, result.finalState);
 
+        this.movesNumber++;
         this.score += result.reward;
         this.grid = result.finalState;
     }
     return true;
 };
 
-Game.prototype.computeAfterState = function(grid, direction) {
-    var afterState = grid.clone();
-    var points = afterState.slide(direction);
-    return points !== null ? { reward: points, afterState: afterState } : null;
-};
-
-Game.prototype.move = function(grid, direction) {
-    var result = this.computeAfterState(grid, direction);
-    if (result === null) return null;
-    var finalState = this.addRandomTile(result.afterState);
-    return { reward: result.reward, afterState: result.afterState, finalState: finalState };
-};
-
-module.exports = Game;
+module.exports.Game = Game;
+module.exports.GameStatics = GameStatics;

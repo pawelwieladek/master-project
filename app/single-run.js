@@ -11,4 +11,4 @@ var onMoved = function(state, direction, reward, afterState, finalState) {
 var result = player.play(onMoved);
 
 console.log(result ? "Success" : "Failure");
-console.log("Score: " + this.game.getScore());
+console.log("Score: " + player.recorder.last().score);
