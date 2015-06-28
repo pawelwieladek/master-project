@@ -60,12 +60,12 @@ var Search = {
         return Search.minimax(grid, 5, true);
     },
     minimax: function(grid, depth, playerTurn) {
-        var bestMove = null;
+        var bestDirection = null;
         var bestValue;
         if (grid.max() === 11 || depth === 0) {
             return {
                 score: Search.evaluate(grid),
-                move: bestMove
+                direction: bestDirection
             };
         }
 
@@ -75,12 +75,12 @@ var Search = {
                 var result = Search.minimax(move.grid, depth - 1, !playerTurn);
                 if (result.score > bestValue) {
                     bestValue = result.score;
-                    bestMove = move.direction;
+                    bestDirection = move.direction;
                 }
             });
             return {
                 score: bestValue,
-                move: bestMove
+                direction: bestDirection
             };
         } else {
             bestValue = Infinity;
@@ -92,7 +92,7 @@ var Search = {
             });
             return {
                 score: bestValue,
-                path: bestMove
+                direction: bestDirection
             };
         }
     }

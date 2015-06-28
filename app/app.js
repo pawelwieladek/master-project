@@ -1,12 +1,12 @@
-var Game = require("../src/core/game");
+var SearchTreeGame = require("../src/game/search-tree-game");
 
 var i;
 var iterations = 20;
 var passes = 0;
 var failures = 0;
 for (i = 1; i <= iterations; i++) {
-    var game = new Game();
-    var result = game.run();
+    var game = new SearchTreeGame();
+    var result = game.play();
     if (result === false) {
         failures++;
         console.warn("\n" + i + "/" + iterations + ": Failed");
