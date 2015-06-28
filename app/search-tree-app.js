@@ -1,9 +1,14 @@
-var SearchTreeGame = require("../src/game/search-tree-game");
-var game = new SearchTreeGame();
-game.onMoved = function(direction, reward, afterState, finalState) {
+var SearchTreePlayer = require("../src/game/search-tree-player");
+
+var player = new SearchTreePlayer();
+
+var onMoved = function(state, direction, reward, afterState, finalState) {
+    console.log("Reward: " + reward);
     console.log(finalState.toString());
     console.log("---");
 };
-var result = game.play();
+
+var result = player.play(onMoved);
+
 console.log(result ? "Success" : "Failure");
-console.log("Score: " + game.getScore());
+console.log("Score: " + this.game.getScore());

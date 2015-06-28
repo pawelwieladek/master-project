@@ -38,26 +38,22 @@ Game.prototype.initialize = function() {
     this.opponentTurn();
 };
 
-Game.prototype.play = function() {
+Game.prototype.play = function(directionEvaluator, onMoved) {
     this.initialize();
     while (!this.isWinnerState()) {
-        var direction = this.evaluateDirection();
+        var direction = directionEvaluator(this.grid);
         if (direction === null) return false;
 
         var result = this.move(this.grid, direction);
         if (result === null) return false;
 
-        this.onMoved(direction, result.reward, result.afterState, result.finalState);
+        onMoved(this.grid, direction, result.reward, result.afterState, result.finalState);
 
         this.score += result.reward;
         this.grid = result.finalState;
     }
     return true;
 };
-
-Game.prototype.evaluateDirection = function() { };
-
-Game.prototype.onMoved = function(direction, reward, afterState, finalState) { };
 
 Game.prototype.computeAfterState = function(grid, direction) {
     var afterState = grid.clone();
@@ -69,7 +65,7 @@ Game.prototype.move = function(grid, direction) {
     var result = this.computeAfterState(grid, direction);
     if (result === null) return null;
     var finalState = this.addRandomTile(result.afterState);
-    return { reward: result.reward, afterState: result.afterState, finalState: finalState }
+    return { reward: result.reward, afterState: result.afterState, finalState: finalState };
 };
 
 module.exports = Game;
