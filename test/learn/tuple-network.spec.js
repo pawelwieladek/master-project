@@ -1,4 +1,4 @@
-var TupleNetwork = require("../../src/reinforcement/tuple-network");
+var TupleNetwork = require("../../src/learn/tuple-network");
 var Grid = require("../../src/core/grid");
 
 describe("tuple network", function() {

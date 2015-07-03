@@ -1,4 +1,4 @@
-var Tuple = require("../../src/reinforcement/tuple");
+var Tuple = require("../../src/learn/tuple");
 
 describe("tuple", function() {
     var locations, tuple;

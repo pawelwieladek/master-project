@@ -1,6 +1,6 @@
 describe("Smoothness", function() {
     var Grid = require("../../src/core/grid");
-    var smoothness = require("../../src/heuristics/smoothness");
+    var smoothness = require("../../src/search/smoothness");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [

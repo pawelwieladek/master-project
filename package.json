@@ -1,23 +1,28 @@
 {
-  "name": "2048-js",
+  "name": "learn-search-2048-ai",
+  "repository": 
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": [
+    "learn-app.js",
+    "search-app.js"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel": "^5.1.11",
     "chai": "^2.2.0",
     "gulp": "^3.8.11",
     "gulp-spawn-mocha": "^2.0.1",
-    "lodash": "^3.9.3",
-    "mocha": "^2.2.4"
+    "mocha": "^2.2.4",
+    "sinon": "^1.15.4",
+    "sinon-chai": "^2.8.0"
   },
   "dependencies": {
     "chance": "^0.7.5",
-    "immutable": "^3.7.2"
+    "bluebird": "^2.9.30",
+    "lodash": "^3.9.3",
+    "moment": "^2.10.3",
+    "mongodb": "^2.0.35",
+    "mongoose": "^4.0.6"
   }
 }

@@ -1,6 +1,6 @@
 describe("Monotonicity", function() {
     var Grid = require("../../src/core/grid");
-    var monotonicity = require("../../src/heuristics/monotonicity");
+    var monotonicity = require("../../src/search/monotonicity");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [

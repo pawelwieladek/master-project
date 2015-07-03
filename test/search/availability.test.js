@@ -1,6 +1,6 @@
 describe("Availability", function() {
     var Grid = require("../../src/core/grid");
-    var availability = require("../../src/heuristics/availability");
+    var availability = require("../../src/search/availability");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [

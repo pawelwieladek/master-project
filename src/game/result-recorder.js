@@ -1,27 +1,58 @@
 var _ = require("lodash");
+var mongoose = require("mongoose");
+var Promise = require("bluebird");
+var moment = require("moment");
 
-function Result(date, win, grid, score, moves) {
-    this.date = date;
-    this.win = win;
-    this.grid = grid;
-    this.score = score;
-    this.moves = moves;
+var Config = require("../../config");
+
+Promise.promisifyAll(mongoose);
+
+var ResultSchema = mongoose.Schema({
+    date: Date,
+    counter: Number,
+    win: Boolean,
+    tiles: Array,
+    score: Number,
+    moves: Number
+});
+
+function ResultRecorder(gameType) {
+    var collectionTemplate = _.template("<%= type %>_<%= datetime %>");
+    var collectionName = collectionTemplate({
+        type: gameType,
+        datetime: moment().format("YYYY_MM_DD_HH_mm")
+    });
+    this.model = mongoose.model(collectionName, ResultSchema);
 }
 
-function ResultRecorder() {
-    this.results = [];
-}
-
-ResultRecorder.prototype.record = function(date, win, game) {
-    this.results.push(new Result(date, win, game.grid, game.score, game.movesNumber));
+ResultRecorder.prototype.getDate = function() {
+    return new Date();
 };
 
-ResultRecorder.prototype.last = function() {
-    return this.results[this.results.length - 1];
-};
+ResultRecorder.prototype.record = function(counter, win, game) {
+    var Result = this.model;
+    var date = this.getDate();
+    return new Promise(function(resolve, reject) {
+        mongoose.connect(Config.Db.ConnectionString);
 
-ResultRecorder.prototype.getWinCoefficient = function() {
-    return _.sum(this.results, function(result) { return result.win === true ? 1 : 0 }) / this.results.length;
+        var result = new Result({
+            date: date,
+            win: win,
+            counter: counter,
+            tiles: game.grid.tiles,
+            score: game.score,
+            moves: game.movesNumber
+        });
+
+        result.saveAsync()
+            .then(function() {
+                mongoose.connection.close();
+                resolve();
+            })
+            .catch(function(err) {
+                reject(err);
+            });
+    });
 };
 
 module.exports = ResultRecorder;
