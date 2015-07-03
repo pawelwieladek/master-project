@@ -22,13 +22,11 @@ App.prototype.play = function(limit, onProgress, onMove) {
     var start = new Date();
     var promise = Config.PromiseLoop(function(count) { return count < limit; }, function(count) {
         return player.play(count, onMove)
-            .then(function() { onProgress(count); })
+            .then(function() { onProgress(count + 1, limit); })
             .then(function() { return ++count; });
     }, 0);
     return promise.then(function() {
-        var end = new Date();
-        console.log("Start: " + start);
-        console.log("End: " + end);
+        return { start: start, end: new Date() }
     });
 };
 

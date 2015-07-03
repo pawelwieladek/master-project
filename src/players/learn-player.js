@@ -1,6 +1,5 @@
 var Config = require("../../config");
-var Game = require("../game/game").Game;
-var GameRules = require("../game/game").GameRules;
+var Game = require("../game/game");
 var Direction = require("../core/direction");
 var ResultRecorder = require("../game/result-recorder");
 var TupleNetwork = require("../learn/tuple-network");
@@ -27,7 +26,7 @@ LearnPlayer.prototype.evaluateMaxAction = function(grid) {
 };
 
 LearnPlayer.prototype.evaluateDirection = function(grid, direction) {
-    var result = GameRules.computeAfterState(grid, direction);
+    var result = Game.computeAfterState(grid, direction);
     if (result === null) return null;
     return result.reward + this.tupleNetwork.getNetworkValue(result.afterState);
 };
@@ -35,7 +34,7 @@ LearnPlayer.prototype.evaluateDirection = function(grid, direction) {
 LearnPlayer.prototype.learnEvaluation = function(state, direction, reward, afterState, finalState) {
     var nextDirection = this.evaluateMaxAction(finalState);
     if (nextDirection === null) return null;
-    var nextResult = GameRules.computeAfterState(finalState, nextDirection);
+    var nextResult = Game.computeAfterState(finalState, nextDirection);
     this.updateLearningEvaluation(afterState, nextResult.afterState, nextResult.reward);
 };
 

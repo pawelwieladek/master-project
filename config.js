@@ -12,15 +12,8 @@ var Config = {
         if (!condition(value)) return value;
         return action(value).then(Config.PromiseLoop.bind(null, condition, action));
     }),
-    ConsoleProgress: function(count) {
-        if (count % 1000 === 0 ) process.stdout.write("\n");
-        else if (count % 100 === 0 ) process.stdout.write(":");
-        else if (count % 10 === 0 ) process.stdout.write(".");
-    },
-    ConsoleProgress2: function(count) {
-        if (count % 100 === 0 ) process.stdout.write("\n");
-        else if (count % 10 === 0 ) process.stdout.write(":");
-        else process.stdout.write(".");
+    ConsoleProgress: function(count, total) {
+        process.stdout.write("Progress: " + Math.round(100 * (100 * count) / total) / 100 + "%\r");
     }
 };
 
