@@ -4,16 +4,46 @@ var smoothness = require("./smoothness");
 var availability = require("./availability");
 var maximization = require("./maximization");
 
-var Weights = {
-    monotonicity: 1.0,
-    smoothness: 0.5,
-    availability: 3.0,
-    maximization: 1.5
+function SearchTree(weights, depth) {
+    this.depth = depth;
+    this.weights = weights;
+}
+
+SearchTree.OpponentValues = [1, 2];
+
+SearchTree.prototype.evaluate = function(grid) {
+    return this.weights.monotonicity * monotonicity(grid) +
+        this.weights.smoothness * smoothness(grid) +
+        this.weights.availability * availability(grid) +
+        this.weights.maximization * maximization(grid);
 };
 
-var OpponentValues = [1, 2];
+SearchTree.prototype.search = function(grid) {
+    return this.minimax(grid, this.depth, true);
+};
 
-function playerMoves(grid) {
+SearchTree.prototype.opponentMoves = function(grid) {
+    var moves = [];
+    var best = Infinity;
+    SearchTree.OpponentValues.forEach(function(value) {
+        for (var i = 0; i < grid.tiles.length; i++) {
+            if (grid.value(i) === 0) {
+                var clone = grid.clone();
+                clone.add(i, value);
+                var evaluation = this.evaluate(clone);
+                if (evaluation === best) {
+                    moves.push(clone);
+                } else if (evaluation < best) {
+                    best = evaluation;
+                    moves = [clone];
+                }
+            }
+        }
+    }.bind(this));
+    return moves;
+};
+
+SearchTree.prototype.playerMoves = function(grid) {
     var moves = [];
     Direction.all().forEach(function(direction) {
         var clone = grid.clone();
@@ -25,77 +55,44 @@ function playerMoves(grid) {
             });
     });
     return moves;
-}
+};
 
-function opponentMoves(grid) {
-    var i;
-    var moves = [];
-    var best = Infinity;
-    OpponentValues.forEach(function(value) {
-        for (i = 0; i < grid.tiles.length; i++) {
-            if (grid.value(i) === 0) {
-                var clone = grid.clone();
-                clone.add(i, value);
-                var evaluation = Search.evaluate(clone);
-                if (evaluation === best) {
-                    moves.push(clone);
-                } else if (evaluation < best) {
-                    best = evaluation;
-                    moves = [clone];
-                }
+SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
+    var bestDirection = null;
+    var bestValue;
+    if (grid.max() === 11 || depth === 0) {
+        return {
+            score: this.evaluate(grid),
+            direction: bestDirection
+        };
+    }
+
+    if (playerTurn) {
+        bestValue = -Infinity;
+        this.playerMoves(grid).forEach(function(move) {
+            var result = this.minimax(move.grid, depth - 1, !playerTurn);
+            if (result.score > bestValue) {
+                bestValue = result.score;
+                bestDirection = move.direction;
             }
-        }
-    });
-    return moves;
-}
-
-var Search = {
-    evaluate: function(grid) {
-        return Weights.monotonicity * monotonicity(grid) +
-            Weights.smoothness * smoothness(grid) +
-            Weights.availability * availability(grid) +
-            Weights.maximization * maximization(grid);
-    },
-    search: function(grid) {
-        return Search.minimax(grid, 5, true);
-    },
-    minimax: function(grid, depth, playerTurn) {
-        var bestDirection = null;
-        var bestValue;
-        if (grid.max() === 11 || depth === 0) {
-            return {
-                score: Search.evaluate(grid),
-                direction: bestDirection
-            };
-        }
-
-        if (playerTurn) {
-            bestValue = -Infinity;
-            playerMoves(grid).forEach(function(move) {
-                var result = Search.minimax(move.grid, depth - 1, !playerTurn);
-                if (result.score > bestValue) {
-                    bestValue = result.score;
-                    bestDirection = move.direction;
-                }
-            });
-            return {
-                score: bestValue,
-                direction: bestDirection
-            };
-        } else {
-            bestValue = Infinity;
-            opponentMoves(grid).forEach(function(opponentGrid) {
-                var result = Search.minimax(opponentGrid, depth - 1, !playerTurn);
-                if (result.score < bestValue) {
-                    bestValue = result.score;
-                }
-            });
-            return {
-                score: bestValue,
-                direction: bestDirection
-            };
-        }
+        }.bind(this));
+        return {
+            score: bestValue,
+            direction: bestDirection
+        };
+    } else {
+        bestValue = Infinity;
+        this.opponentMoves(grid).forEach(function(opponentGrid) {
+            var result = this.minimax(opponentGrid, depth - 1, !playerTurn);
+            if (result.score < bestValue) {
+                bestValue = result.score;
+            }
+        }.bind(this));
+        return {
+            score: bestValue,
+            direction: bestDirection
+        };
     }
 };
 
-module.exports = Search;
+module.exports = SearchTree;

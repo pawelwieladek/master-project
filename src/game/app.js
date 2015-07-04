@@ -3,10 +3,10 @@ var LearnPlayer = require("../players/learn-player");
 var SearchPlayer = require("../players/search-player");
 
 function App(gameType) {
-    this.player = App.GetPlayer(gameType);
+    this.player = App.PlayerFactory(gameType);
 }
 
-App.GetPlayer = function(gameType) {
+App.PlayerFactory = function(gameType) {
     switch(gameType) {
         case Config.GameTypes.Learn:
             return new LearnPlayer();
@@ -23,7 +23,8 @@ App.prototype.play = function(limit, onProgress, onMove) {
     var promise = Config.PromiseLoop(function(count) { return count < limit; }, function(count) {
         return player.play(count, onMove)
             .then(function() { onProgress(count + 1, limit); })
-            .then(function() { return ++count; });
+            .then(function() { return ++count; })
+            .catch(function(err) { throw err; });
     }, 0);
     return promise.then(function() {
         return { start: start, end: new Date() }
