@@ -4,18 +4,21 @@ var smoothness = require("./smoothness");
 var availability = require("./availability");
 var maximization = require("./maximization");
 
-function SearchTree(weights, depth) {
+function SearchTree(depth, monotonicityWeight, smoothnessWeight, availabilityWeight, maximizationWeight) {
     this.depth = depth;
-    this.weights = weights;
+    this.monotonicityWeight = monotonicityWeight;
+    this.smoothnessWeight = smoothnessWeight;
+    this.availabilityWeight = availabilityWeight;
+    this.maximizationWeight = maximizationWeight;
 }
 
 SearchTree.OpponentValues = [1, 2];
 
 SearchTree.prototype.evaluate = function(grid) {
-    return this.weights.monotonicity * monotonicity(grid) +
-        this.weights.smoothness * smoothness(grid) +
-        this.weights.availability * availability(grid) +
-        this.weights.maximization * maximization(grid);
+    return this.monotonicityWeight * monotonicity(grid) +
+        this.smoothnessWeight * smoothness(grid) +
+        this.availabilityWeight * availability(grid) +
+        this.maximizationWeight * maximization(grid);
 };
 
 SearchTree.prototype.search = function(grid) {

@@ -32,7 +32,7 @@ Game.move = function(grid, direction) {
     return { reward: result.reward, afterState: result.afterState, finalState: finalState };
 };
 
-Game.prototype.isWinnerState = function() {
+Game.prototype.isWin = function() {
     return this.grid.max() === Game.WinValue;
 };
 
@@ -47,14 +47,14 @@ Game.prototype.initialize = function() {
 
 Game.prototype.play = function(directionEvaluator, onMoved) {
     this.initialize();
-    while (!this.isWinnerState()) {
+    while (!this.isWin()) {
         var state = this.grid;
 
         var direction = directionEvaluator(state);
-        if (direction === null) return false;
+        if (direction === null) return;
 
         var result = Game.move(state, direction);
-        if (result === null) return false;
+        if (result === null) return;
 
         onMoved(state, direction, result.reward, result.afterState, result.finalState);
 
@@ -62,7 +62,6 @@ Game.prototype.play = function(directionEvaluator, onMoved) {
         this.score += result.reward;
         this.grid = result.finalState;
     }
-    return true;
 };
 
 module.exports = Game;

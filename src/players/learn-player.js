@@ -1,14 +1,23 @@
-var Config = require("../../config");
+var Parameters = require("../../config").Config.Parameters;
 var Game = require("../game/game");
 var Direction = require("../core/direction");
-var ResultRecorder = require("../game/result-recorder");
 var TupleNetwork = require("../learn/tuple-network");
 
-function LearnPlayer() {
-    this.resultsRecorder = new ResultRecorder(Config.GameTypes.Learn);
+function LearnPlayer(params) {
+    params = params || {};
+    this.learningRate = params.learningRate || Parameters.Learn.LearningRate.Default;
     this.tupleNetwork = new TupleNetwork(4);
-    this.learningRate = 0.01;
 }
+
+LearnPlayer.createParamsObject = function(learningRate) {
+    return {
+        learningRate: learningRate
+    }
+};
+
+LearnPlayer.prototype.getParams = function() {
+    return LearnPlayer.createParamsObject(this.learningRate);
+};
 
 LearnPlayer.prototype.evaluateMaxAction = function(grid) {
     var maxEvaluation = -Infinity;
@@ -45,10 +54,11 @@ LearnPlayer.prototype.updateLearningEvaluation = function(initialState, finalSta
     this.tupleNetwork.changeWeights(initialState, change);
 };
 
-LearnPlayer.prototype.play = function(counter) {
+LearnPlayer.prototype.play = function(onMoved) {
+    onMoved = onMoved || _.noop;
     var game = new Game();
-    var win = game.play(this.evaluateMaxAction.bind(this), this.learnEvaluation.bind(this));
-    return this.resultsRecorder.record(counter, win, game);
+    game.play(this.evaluateMaxAction.bind(this), this.learnEvaluation.bind(this));
+    return game;
 };
 
 module.exports = LearnPlayer;
