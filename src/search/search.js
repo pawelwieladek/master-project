@@ -28,11 +28,12 @@ SearchTree.prototype.search = function(grid) {
 SearchTree.prototype.opponentMoves = function(grid) {
     var moves = [];
     var best = Infinity;
-    SearchTree.OpponentValues.forEach(function(value) {
-        for (var i = 0; i < grid.tiles.length; i++) {
-            if (grid.value(i) === 0) {
+    for (var i = 0; i < SearchTree.OpponentValues.length; i++) {
+        var value = SearchTree.OpponentValues[i];
+        for (var j = 0; j < grid.tiles.length; j++) {
+            if (grid.value(j) === 0) {
                 var clone = grid.clone();
-                clone.add(i, value);
+                clone.add(j, value);
                 var evaluation = this.evaluate(clone);
                 if (evaluation === best) {
                     moves.push(clone);
@@ -42,25 +43,28 @@ SearchTree.prototype.opponentMoves = function(grid) {
                 }
             }
         }
-    }.bind(this));
+    }
     return moves;
 };
 
 SearchTree.prototype.playerMoves = function(grid) {
     var moves = [];
-    Direction.all().forEach(function(direction) {
+    var directions = Direction.all();
+    for (var i = 0; i < directions.length; i++) {
         var clone = grid.clone();
-        var points = clone.slide(direction);
-        if (points !== null)
+        var points = clone.slide(directions[i]);
+        if (points !== null) {
             moves.push({
-                direction: direction,
+                direction: directions[i],
                 grid: clone
             });
-    });
+        }
+    }
     return moves;
 };
 
 SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
+    var i, result;
     var bestDirection = null;
     var bestValue;
     if (grid.max() === 11 || depth === 0) {
@@ -72,25 +76,27 @@ SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
 
     if (playerTurn) {
         bestValue = -Infinity;
-        this.playerMoves(grid).forEach(function(move) {
-            var result = this.minimax(move.grid, depth - 1, !playerTurn);
+        var playerMoves = this.playerMoves(grid);
+        for (i = 0; i < playerMoves.length; i++) {
+            result = this.minimax(playerMoves[i].grid, depth - 1, !playerTurn);
             if (result.score > bestValue) {
                 bestValue = result.score;
-                bestDirection = move.direction;
+                bestDirection = playerMoves[i].direction;
             }
-        }.bind(this));
+        }
         return {
             score: bestValue,
             direction: bestDirection
         };
     } else {
         bestValue = Infinity;
-        this.opponentMoves(grid).forEach(function(opponentGrid) {
-            var result = this.minimax(opponentGrid, depth - 1, !playerTurn);
+        var opponentMoves = this.opponentMoves(grid);
+        for (i = 0; i < opponentMoves.length; i++) {
+            result = this.minimax(opponentMoves[i], depth - 1, !playerTurn);
             if (result.score < bestValue) {
                 bestValue = result.score;
             }
-        }.bind(this));
+        }
         return {
             score: bestValue,
             direction: bestDirection

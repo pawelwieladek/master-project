@@ -2,9 +2,9 @@ var Config = require("../config").Config;
 var Utils = require("../config").Utils;
 var App = require("../src/game/app");
 
-var gamesNumber = 10;
+var gamesNumber = 200000;
 var start = new Date();
-var app = new App(Config.GameTypes.Learn);
+var app = new App(Config.GameTypes.Search);
 
 app.research()
     .withPlayerDoneCallback(Utils.OnPlayerDoneCallback)

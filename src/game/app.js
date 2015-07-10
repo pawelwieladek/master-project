@@ -8,7 +8,6 @@ function App(gameType) {
     this.resultRecorder = new ResultRecorder(this.gameType, new Date());
 }
 
-// TODO: reorder arguments
 App.prototype.record = function(counter, game, params) {
     return this.resultRecorder.record(counter, game.isWin(), game, params);
 };

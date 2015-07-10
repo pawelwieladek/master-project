@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 
 var Config = {
     Db: {
-        ConnectionString: "mongodb://localhost/masters_tmp"
+        ConnectionString: "mongodb://localhost/masters"
     },
     GameTypes: {
         Learn: "learn",
@@ -11,7 +11,7 @@ var Config = {
     Parameters: {
         Search: {
             Depth: {
-                Range: [3, 4, 5, 6],
+                Range: [4, 5, 6],
                 Default: 5
             },
             Monotonicity: {
@@ -51,7 +51,7 @@ var Utils = {
         process.stdout.write("Game progress: " + Math.round(100 * (100 * gameCounter) / total) / 100 + "%\r");
     },
     OnPlayerDoneCallback: function(playerCounter, total) {
-        process.stdout.write("Player progress: " + Math.round(100 * (100 * playerCounter) / total) / 100 + "%\n");
+        process.stdout.write("Player progress: " + Math.round(100 * (100 * playerCounter) / total) / 100 + "%\r");
     }
 };
 
