@@ -1,4 +1,4 @@
-db.getCollection('search_2015_07_09_23_03_05').aggregate([
+db.getCollection('search_2015_07_09_depth_4').aggregate([
     { 
         $project: { 
             parameters: 1, 

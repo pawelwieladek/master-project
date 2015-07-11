@@ -1,8 +1,9 @@
+var _ = require("lodash");
 var Promise = require("bluebird");
 
 var Config = {
     Db: {
-        ConnectionString: "mongodb://localhost/masters"
+        ConnectionString: "mongodb://localhost/masters_tmp"
     },
     GameTypes: {
         Learn: "learn",
@@ -11,24 +12,24 @@ var Config = {
     Parameters: {
         Search: {
             Depth: {
-                Range: [4, 5, 6],
-                Default: 5
+                Range: [3, 4, 5, 6],
+                Default: 3
             },
             Monotonicity: {
                 Range: [1, 2, 3, 4],
-                Default: 2
+                Default: 4
             },
             Smoothness: {
                 Range: [1, 2, 3, 4],
-                Default: 1
+                Default: 4
             },
             Availability: {
                 Range: [1, 2, 3, 4],
-                Default: 4
+                Default: 3
             },
             Maximization: {
                 Range: [1, 2, 3, 4],
-                Default: 3
+                Default: 2
             }
         },
         Learn: {
@@ -40,6 +41,43 @@ var Config = {
     }
 };
 var Utils = {
+    cartesianProduct: function() {
+        function addTo(curr, args) {
+
+            var i, copy,
+                rest = args.slice(1),
+                last = !rest.length,
+                result = [];
+
+            for (i = 0; i < args[0].length; i++) {
+                copy = curr.slice();
+                copy.push(args[0][i]);
+
+                if (last) {
+                    result.push(copy);
+
+                } else {
+                    result = result.concat(addTo(copy, rest));
+                }
+            }
+            return result;
+        }
+        return addTo([], Array.prototype.slice.call(arguments));
+    },
+    getRunSummary: function(app, start) {
+        return function() {
+            var end = new Date();
+            console.log("Start: " + start);
+            console.log("End: " + end);
+            console.log("Done.");
+            app.end();
+        }
+    },
+    getErrorLog: function() {
+        return function(err) {
+            console.log(err);
+        }
+    },
     PromiseLoop: Promise.method(function(condition, action, value) {
         if (!condition(value)) return value;
         return action(value).then(Utils.PromiseLoop.bind(null, condition, action));

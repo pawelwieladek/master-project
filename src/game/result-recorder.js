@@ -23,17 +23,21 @@ function ResultRecorder(gameType, timestamp) {
         datetime: moment(timestamp).format("YYYY_MM_DD_HH_mm_SS")
     });
     this.model = mongoose.model(collectionName, ResultSchema);
+    mongoose.connect(Config.Db.ConnectionString);
 }
 
 ResultRecorder.prototype.getDate = function() {
     return new Date();
 };
 
+ResultRecorder.prototype.end = function() {
+    mongoose.connection.close();
+};
+
 ResultRecorder.prototype.record = function(counter, win, game, parameters) {
     var Result = this.model;
     var date = this.getDate();
     return new Promise(function(resolve, reject) {
-        mongoose.connect(Config.Db.ConnectionString);
 
         var result = new Result({
             date: date,
@@ -47,7 +51,6 @@ ResultRecorder.prototype.record = function(counter, win, game, parameters) {
 
         result.saveAsync()
             .then(function() {
-                mongoose.connection.close();
                 resolve();
             })
             .catch(function(err) {

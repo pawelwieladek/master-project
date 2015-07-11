@@ -11,7 +11,7 @@ function LearnPlayer(params) {
 
 LearnPlayer.createParamsObject = function(learningRate) {
     return {
-        learningRate: learningRate
+        learningRate: parseFloat(learningRate)
     }
 };
 

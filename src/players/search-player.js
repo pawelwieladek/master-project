@@ -16,11 +16,11 @@ function SearchTreePlayer(params) {
 
 SearchTreePlayer.createParamsObject = function(depth, monotonicity, smoothness, availability, maximization) {
     return {
-        depth: depth,
-        monotonicity: monotonicity,
-        smoothness: smoothness,
-        availability: availability,
-        maximization: maximization
+        depth: parseFloat(depth),
+        monotonicity: parseFloat(monotonicity),
+        smoothness: parseFloat(smoothness),
+        availability: parseFloat(availability),
+        maximization: parseFloat(maximization)
     }
 };
 
