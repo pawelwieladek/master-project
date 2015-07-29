@@ -1,42 +1,24 @@
 var _ = require("lodash");
 
-var Game = require("../../game/game");
+var Player = require("../../game/player");
+var Utils = require("../../../config").Utils;
 var Parameters = require("../../../config").Config.Parameters;
 var SearchTree = require("./search-tree");
 
 function SearchTreePlayer(params) {
     params = params || {};
-    this.depth = params.depth || Parameters.Search.Depth.Default;
-    this.monotonicity = params.monotonicity || Parameters.Search.Monotonicity.Default;
-    this.smoothness = params.smoothness || Parameters.Search.Smoothness.Default;
-    this.availability = params.availability || Parameters.Search.Availability.Default;
-    this.maximization = params.maximization || Parameters.Search.Maximization.Default;
-    this.searchTree = new SearchTree(this.depth, this.monotonicity, this.smoothness, this.availability, this.maximization);
+    var depth = params.depth || Parameters.Search.Depth.Default;
+    var monotonicity = params.monotonicity || Parameters.Search.Monotonicity.Default;
+    var smoothness = params.smoothness || Parameters.Search.Smoothness.Default;
+    var availability = params.availability || Parameters.Search.Availability.Default;
+    var maximization = params.maximization || Parameters.Search.Maximization.Default;
+    this.searchTree = new SearchTree(depth, monotonicity, smoothness, availability, maximization);
 }
 
-SearchTreePlayer.createParamsObject = function(depth, monotonicity, smoothness, availability, maximization) {
-    return {
-        depth: parseFloat(depth),
-        monotonicity: parseFloat(monotonicity),
-        smoothness: parseFloat(smoothness),
-        availability: parseFloat(availability),
-        maximization: parseFloat(maximization)
-    }
-};
-
-SearchTreePlayer.prototype.getParams = function() {
-    return SearchTreePlayer.createParamsObject(this.depth, this.monotonicity, this.smoothness, this.availability, this.maximization);
-};
+Utils.extend(Player, SearchTreePlayer);
 
 SearchTreePlayer.prototype.evaluateMaxAction = function(grid) {
     return this.searchTree.search(grid).direction;
-};
-
-SearchTreePlayer.prototype.play = function(onMoved) {
-    onMoved = onMoved || _.noop;
-    var game = new Game();
-    game.play(this.evaluateMaxAction.bind(this), onMoved);
-    return game;
 };
 
 module.exports = SearchTreePlayer;

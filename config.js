@@ -41,6 +41,12 @@ var Config = {
     }
 };
 var Utils = {
+    extend: function(parentClass, childClass) {
+        var C = function() { };
+        C.prototype = parentClass.prototype;
+        childClass.prototype = new C();
+        childClass.prototype.constructor = childClass;
+    },
     cartesianProduct: function() {
         function addTo(curr, args) {
 
