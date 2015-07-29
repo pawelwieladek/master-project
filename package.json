@@ -10,7 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^2.2.0",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-spawn-mocha": "^2.0.1",
     "mocha": "^2.2.4",
     "sinon": "^1.15.4",

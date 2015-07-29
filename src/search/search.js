@@ -27,20 +27,12 @@ SearchTree.prototype.search = function(grid) {
 
 SearchTree.prototype.opponentMoves = function(grid) {
     var moves = [];
-    var best = Infinity;
     for (var i = 0; i < SearchTree.OpponentValues.length; i++) {
-        var value = SearchTree.OpponentValues[i];
         for (var j = 0; j < grid.tiles.length; j++) {
             if (grid.value(j) === 0) {
                 var clone = grid.clone();
-                clone.add(j, value);
-                var evaluation = this.evaluate(clone);
-                if (evaluation === best) {
-                    moves.push(clone);
-                } else if (evaluation < best) {
-                    best = evaluation;
-                    moves = [clone];
-                }
+                clone.add(j, SearchTree.OpponentValues[i]);
+                moves.push(clone);
             }
         }
     }
@@ -63,7 +55,7 @@ SearchTree.prototype.playerMoves = function(grid) {
     return moves;
 };
 
-SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
+SearchTree.prototype.minimax = function(grid, depth, playerTurn, alpha, beta) {
     var i, result;
     var bestDirection = null;
     var bestValue;

@@ -1,5 +1,5 @@
 var mod = 1000;
-db.getCollection('learn_2015_07_10_18_56_65').aggregate([
+db.getCollection('learn_2015_07_10_learning_rate_0_01').aggregate([
     {
         $project: { 
             counter: 1,
@@ -37,17 +37,17 @@ db.getCollection('learn_2015_07_10_18_56_65').aggregate([
         } 
     },
     { 
-        $sort: { 
-            "win": -1 
-        } 
-    },
-    { 
         $project: { 
             _id: 0, 
             counter: "$_id", 
             winningRate: {
                 $multiply: [ { $divide: [ "$win", mod ] }, 100 ]
             }
+        } 
+    },
+    { 
+        $sort: { 
+            "counter": 1
         } 
     }
 ]);

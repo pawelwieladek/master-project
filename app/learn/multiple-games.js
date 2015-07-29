@@ -4,7 +4,7 @@ var options = stdio.getopt({
         key: "g",
         args: 1,
         description: "number of games",
-        "default": 1
+        "default": 1005
     },
     "learningRate": {
         key: "l",
