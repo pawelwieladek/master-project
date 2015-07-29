@@ -14,10 +14,10 @@ var options = stdio.getopt({
     }
 });
 
-var Config = require("../../config").Config;
-var Utils = require("../../config").Utils;
-var App = require("../../src/game/app");
-var LearnPlayer = require("../../src/players/learn-player");
+var Config = require("../../../../config").Config;
+var Utils = require("../../../../config").Utils;
+var App = require("../../../game/app");
+var LearnPlayer = require("../../../ai/learn/learn-player");
 
 var start = new Date();
 var app = new App(Config.GameTypes.Learn);

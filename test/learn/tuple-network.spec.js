@@ -1,5 +1,5 @@
-var TupleNetwork = require("../../src/learn/tuple-network");
-var Grid = require("../../src/core/grid");
+var TupleNetwork = require(".././tuple-network");
+var Grid = require("../../src/game/grid");
 
 describe("tuple network", function() {
     var grid, size, tupleNetwork;

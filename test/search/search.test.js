@@ -1,6 +1,6 @@
-var Grid = require("../../src/core/grid");
-var Direction = require("../../src/core/direction");
-var Search = require("../../src/search/search");
+var Grid = require("../../src/game/grid");
+var Direction = require("../../src/game/direction");
+var Search = require(".././search");
 
 describe("search", function() {
     describe("Value", function() {

@@ -1,7 +1,7 @@
-var Parameters = require("../../config").Config.Parameters;
-var Game = require("../game/game");
-var Direction = require("../core/direction");
-var TupleNetwork = require("../learn/tuple-network");
+var Parameters = require("../../../config").Config.Parameters;
+var Game = require("../../game/game");
+var Direction = require("../../game/direction");
+var TupleNetwork = require("./tuple-network/tuple-network");
 
 function LearnPlayer(params) {
     params = params || {};

@@ -1,8 +1,8 @@
 var _ = require("lodash");
 
-var Game = require("../game/game");
-var Parameters = require("../../config").Config.Parameters;
-var SearchTree = require("../search/search");
+var Game = require("../../game/game");
+var Parameters = require("../../../config").Config.Parameters;
+var SearchTree = require("./search-tree");
 
 function SearchTreePlayer(params) {
     params = params || {};

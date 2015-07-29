@@ -1,4 +1,4 @@
-var Direction = require("../core/direction");
+var Direction = require("../game/direction");
 var Monotonicity = {
     compare: function(grid, index, direction) {
         var next = grid.neighbour(index, direction);

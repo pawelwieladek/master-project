@@ -1,8 +1,8 @@
-var Direction = require("../core/direction");
-var monotonicity = require("./monotonicity");
-var smoothness = require("./smoothness");
-var availability = require("./availability");
-var maximization = require("./maximization");
+var Direction = require("../../game/direction");
+var monotonicity = require("./heuristics/monotonicity");
+var smoothness = require("./heuristics/smoothness");
+var availability = require("./heuristics/availability");
+var maximization = require("./heuristics/maximization");
 
 function SearchTree(depth, monotonicityWeight, smoothnessWeight, availabilityWeight, maximizationWeight) {
     this.depth = depth;

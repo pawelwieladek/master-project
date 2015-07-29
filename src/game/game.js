@@ -1,6 +1,6 @@
 var chance = require("chance").Chance(new Date());
 
-var Grid = require("../core/grid");
+var Grid = require("grid");
 
 function Game() {
     this.movesNumber = 0;

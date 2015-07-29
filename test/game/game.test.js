@@ -1,6 +1,6 @@
 var TestUtils = require("../test-utils");
 var Game = require("../../src/game/game");
-var Directions = require("../../src/core/direction");
+var Directions = require("../../src/game/direction");
 
 describe("game rules", function () {
     it("should add random tiles", function () {

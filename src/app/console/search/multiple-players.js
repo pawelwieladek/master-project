@@ -39,10 +39,10 @@ var options = stdio.getopt({
     }
 });
 
-var Config = require("../../config").Config;
-var Utils = require("../../config").Utils;
-var App = require("../../src/game/app");
-var SearchPlayer = require("../../src/players/search-player");
+var Config = require("../../../../config").Config;
+var Utils = require("../../../../config").Utils;
+var App = require("../../../game/app");
+var SearchPlayer = require("../../../ai/search/search-player");
 
 var start = new Date();
 var app = new App(Config.GameTypes.Search);

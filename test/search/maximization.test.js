@@ -1,6 +1,6 @@
 describe("Maximization", function() {
-    var Grid = require("../../src/core/grid");
-    var maximization = require("../../src/search/maximization");
+    var Grid = require("../../src/game/grid");
+    var maximization = require(".././maximization");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [

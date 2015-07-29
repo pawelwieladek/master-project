@@ -1,6 +1,6 @@
 describe("Grid", function() {
-    var Grid = require("../../src/core/grid");
-    var Direction = require("../../src/core/direction");
+    var Grid = require("../../src/game/grid");
+    var Direction = require("../../src/game/direction");
     it("Constructor", function() {
         var grid = new Grid(2);
         expect(grid.size).to.equal(2);
