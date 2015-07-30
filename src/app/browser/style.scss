@@ -5,6 +5,10 @@ $tile-size: ($grid-size - (4 * $tile-gap)) / 4;
 $primary-tile-color: #776e65;
 $secondary-tile-color: #f9f6f2;
 
+.controls {
+  text-align: center;
+}
+
 .grid {
   font-family: 'Oxygen', sans-serif;
   font-size: 0;

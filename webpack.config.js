@@ -1,3 +1,5 @@
+var excluded = /(node_modules|bower_components|build)/;
+
 module.exports = {
     entry: './src/app/browser/scripts/app.js',
     output: {
@@ -9,15 +11,17 @@ module.exports = {
         loaders: [
             {
                 test: /\.js?$/,
-                exclude: /(node_modules|bower_components)/,
+                exclude: excluded,
                 loader: 'babel'
             },
             {
                 test: /\.css$/,
+                exclude: excluded,
                 loader: 'style!css'
             },
             {
                 test: /\.scss$/,
+                exclude: excluded,
                 loader: "style!css!sass"
             }
         ]

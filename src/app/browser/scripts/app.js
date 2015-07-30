@@ -2,6 +2,7 @@ var React = require('react');
 var { Repeat } = require('immutable');
 
 require("!style!css!sass!../style.scss");
+
 var Grid = require('./grid');
 
 var generateTiles = () => {
@@ -25,7 +26,7 @@ var App = React.createClass({
                 <div>
                     <Grid tiles={this.state.tiles} />
                 </div>
-                <div>
+                <div className="controls">
                     <button onClick={this.handleClick}>Generate tiles</button>
                 </div>
             </div>

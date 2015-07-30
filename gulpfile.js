@@ -4,17 +4,28 @@ var mocha = require("gulp-spawn-mocha");
 var webpack = require("webpack");
 var electron = require("electron-prebuilt");
 var spawn = require("child_process").spawn;
+var stdio = require("stdio");
+var assign = Object.assign || require('object-assign');
+
+var options = stdio.getopt({
+    "watch": { key: "w", description: "Watch changes", "default": false },
+});
 
 gulp.task("html", function () {
     return gulp.src(["./src/app/browser/index.html"])
         .pipe(gulp.dest("./build"));
 });
 
-gulp.task("scripts", function(callback) {
-    webpack(require("./webpack.config"), function(err, stats) {
+gulp.task("scripts", function() {
+    var config = require("./webpack.config");
+
+    if (options.watch) {
+        config = assign(config, { watch: true });
+    }
+
+    webpack(config, function(err, stats) {
         if (err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString());
-        callback();
     });
 });
 
