@@ -5,18 +5,26 @@ var webpack = require("webpack");
 var electron = require("electron-prebuilt");
 var spawn = require("child_process").spawn;
 var stdio = require("stdio");
+var del = require('del');
+
 var assign = Object.assign || require('object-assign');
 
 var options = stdio.getopt({
     "watch": { key: "w", description: "Watch changes", "default": false },
 });
 
-gulp.task("html", function () {
+gulp.task("clear", function (callback) {
+    del(['./build'], callback);
+});
+
+gulp.task("html", ["clear"], function () {
     return gulp.src(["./src/app/browser/index.html"])
         .pipe(gulp.dest("./build"));
 });
 
-gulp.task("scripts", function() {
+var scriptsCallbackCalled = false;
+
+gulp.task("scripts", ["clear"], function(callback) {
     var config = require("./webpack.config");
 
     if (options.watch) {
@@ -26,10 +34,14 @@ gulp.task("scripts", function() {
     webpack(config, function(err, stats) {
         if (err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString());
+        if (!scriptsCallbackCalled) {
+            scriptsCallbackCalled = true;
+            callback();
+        }
     });
 });
 
-gulp.task("main", function () {
+gulp.task("main", ["clear"], function () {
     return gulp.src(["./src/app/browser/main.js"])
         .pipe(gulp.dest("./build"));
 });
