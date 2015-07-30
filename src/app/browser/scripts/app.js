@@ -1,32 +1,36 @@
 var React = require('react');
-var ipc = require('ipc');
+var { Repeat } = require('immutable');
 
-var TodoApp = React.createClass({
+require("!style!css!sass!../style.scss");
+var Grid = require('./grid');
+
+var generateTiles = () => {
+    return Repeat(0, 16).toList().map(() => Math.round(Math.random() * 10)).toArray();
+};
+
+var App = React.createClass({
     getInitialState() {
         return {
-            result: 0
+            tiles: generateTiles()
         };
     },
-    componentDidMount() {
-        ipc.on('result', result => {
-            this.setState({
-                result: result
-            })
-        });
-    },
-    handleClick(e) {
-        e.preventDefault();
-        ipc.send('calculate', this.state.result);
+    handleClick() {
+        this.setState({
+            tiles: generateTiles()
+        })
     },
     render() {
         return (
             <div>
-                <h3>App</h3>
-                <a href="#" onClick={this.handleClick}>Run</a>
-                <div>Result: {this.state.result}</div>
+                <div>
+                    <Grid tiles={this.state.tiles} />
+                </div>
+                <div>
+                    <button onClick={this.handleClick}>Generate tiles</button>
+                </div>
             </div>
         );
     }
 });
 
-React.render(<TodoApp />, document.body);
+React.render(<App />, document.body);

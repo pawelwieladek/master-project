@@ -1,11 +1,10 @@
 var _ = require("lodash");
 var Utils = require("../../config").Utils;
 var ResultRecorder = require("./result-recorder");
-var PlayerFactory = require("./player-factory");
 
-function App(gameType) {
-    this.gameType = gameType;
-    this.resultRecorder = new ResultRecorder(this.gameType, new Date());
+function App(playerFactory, resultRecorder) {
+    this.playerFactory = playerFactory;
+    this.resultRecorder = resultRecorder;
 }
 
 App.prototype.record = function(counter, game, params) {

@@ -5,7 +5,7 @@ var Utils = require("../../../config").Utils;
 var Parameters = require("../../../config").Config.Parameters;
 var SearchTree = require("./search-tree");
 
-function SearchTreePlayer(params) {
+function SearchPlayer(params) {
     params = params || {};
     var depth = params.depth || Parameters.Search.Depth.Default;
     var monotonicity = params.monotonicity || Parameters.Search.Monotonicity.Default;
@@ -15,10 +15,14 @@ function SearchTreePlayer(params) {
     this.searchTree = new SearchTree(depth, monotonicity, smoothness, availability, maximization);
 }
 
-Utils.extend(Player, SearchTreePlayer);
+Utils.extend(Player, SearchPlayer);
 
-SearchTreePlayer.prototype.evaluateMaxAction = function(grid) {
+SearchPlayer.create = function(params) {
+    return new SearchPlayer(params);
+};
+
+SearchPlayer.prototype.evaluateMaxAction = function(grid) {
     return this.searchTree.search(grid).direction;
 };
 
-module.exports = SearchTreePlayer;
+module.exports = SearchPlayer;

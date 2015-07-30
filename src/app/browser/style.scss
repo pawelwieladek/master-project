@@ -1,0 +1,93 @@
+$grid-size: 200px;
+$tile-gap: 5px;
+$tile-radius: 5px;
+$tile-size: ($grid-size - (4 * $tile-gap)) / 4;
+$primary-tile-color: #776e65;
+$secondary-tile-color: #f9f6f2;
+
+.grid {
+  font-family: 'Oxygen', sans-serif;
+  font-size: 0;
+  background: #bbada0;
+  padding: $tile-gap / 2;
+  border-radius: $tile-radius;
+  width: $grid-size;
+  height: $grid-size;
+  margin: 50px auto;
+}
+
+.tile {
+  display: block;
+  float: left;
+  font-size: $tile-size / 2.7;
+  width: $tile-size;
+  height: $tile-size;
+  margin: $tile-gap / 2;
+  border-radius: $tile-radius;
+  text-align: center;
+  line-height: $tile-size;
+}
+
+.tile-0 {
+  background: #cdc1b4;
+}
+
+.tile-1 {
+  color: $primary-tile-color;
+  background: #eee4da;
+}
+
+.tile-2 {
+  color: $primary-tile-color;
+  background: #ede0c8;
+}
+
+.tile-3 {
+  color: $secondary-tile-color;
+  background: #f2b179;
+}
+
+.tile-4 {
+  color: $secondary-tile-color;
+  background: #f59563;
+}
+
+.tile-5 {
+  color: $secondary-tile-color;
+  background: #f67c5f;
+}
+
+.tile-6 {
+  color: $secondary-tile-color;
+  background: #f65e3b;
+}
+
+.tile-7 {
+  color: $secondary-tile-color;
+  background: #edcf72;
+}
+
+.tile-8 {
+  color: $secondary-tile-color;
+  background: #edcc61;
+}
+
+.tile-9 {
+  color: $secondary-tile-color;
+  background: #edc850;
+}
+
+.tile-10 {
+  color: $secondary-tile-color;
+  background: #edc53f;
+}
+
+.tile-11 {
+  color: $secondary-tile-color;
+  background: #edc22e;
+}
+
+.tile-gt-11 {
+  color: $secondary-tile-color;
+  background: #3c3a32;
+}

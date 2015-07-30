@@ -1,6 +1,7 @@
 var _ = require("lodash");
 
 var Parameters = require("../../../config").Config.Parameters;
+var Utils = require("../../../config").Utils;
 var Rules = require("../../game/rules");
 var Player = require("../../game/player");
 var Direction = require("../../game/direction");
@@ -10,8 +11,13 @@ function LearnPlayer(params) {
     params = params || {};
     this.learningRate = params.learningRate || Parameters.Learn.LearningRate.Default;
     this.tupleNetwork = new TupleNetwork(4);
-    this.player = new Player(this.evaluateMaxAction.bind(this));
 }
+
+Utils.extend(Player, LearnPlayer);
+
+LearnPlayer.create = function(params) {
+    return new LearnPlayer(params);
+};
 
 LearnPlayer.prototype.evaluateMaxAction = function(grid) {
     var maxEvaluation = -Infinity;

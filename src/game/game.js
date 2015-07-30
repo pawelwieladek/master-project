@@ -11,10 +11,10 @@ Game.prototype.isWin = function() {
     return this.grid.max() === Rules.winValue;
 };
 
-Game.prototype.move = function(directionEvaluator, callback) {
+Game.prototype.move = function(maxActionEvaluator, callback) {
     var state = this.grid;
 
-    var direction = directionEvaluator(state);
+    var direction = maxActionEvaluator(state);
     if (direction === null) return false;
 
     var result = Rules.move(state, direction);
@@ -29,19 +29,19 @@ Game.prototype.move = function(directionEvaluator, callback) {
     return true;
 };
 
-Game.prototype.next = function(directionEvaluator, callback, limit) {
+Game.prototype.next = function(maxActionEvaluator, callback, limit) {
     var i = 0;
     var result = true;
     while (result || !this.isWin() || i < limit) {
-        result = this.move(directionEvaluator, callback);
+        result = this.move(maxActionEvaluator, callback);
         i++;
     }
 };
 
-Game.prototype.play = function(directionEvaluator, callback) {
+Game.prototype.play = function(maxActionEvaluator, callback) {
     var result = true;
     while (result || !this.isWin()) {
-        result = this.move(directionEvaluator, callback);
+        result = this.move(maxActionEvaluator, callback);
     }
 };
 

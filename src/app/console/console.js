@@ -1,11 +1,15 @@
 var stdio = require("stdio");
 
-stdio.question('AI type', ['search', 'learn'], function (err, type) {
+stdio.question("Game type", ["contest", "tournament", "league"], function (err, gameType) {
     if (err) throw err;
-    switch (type) {
-        case 'search':
-            stdio.question('AI type', ['search', 'learn'], function (err, type) {
+    switch (gameType) {
+        case "contest":
+            stdio.question("Player type", ["search", "learn"], function (err, playerType) {
+                if (err) throw err;
+                switch (playerType) {
+                    case "search":
 
+                }
             });
     }
 });
