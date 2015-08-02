@@ -1,3 +1,4 @@
+var ipc = require('ipc');
 var React = require('react');
 var { Repeat } = require('immutable');
 
@@ -15,10 +16,19 @@ var App = React.createClass({
             tiles: generateTiles()
         };
     },
-    handleClick() {
+    componentDidMount() {
+        ipc.on('response', response => {
+            console.log(response);
+        });
+    },
+    generateTiles() {
         this.setState({
             tiles: generateTiles()
         })
+    },
+    sendAsync(e) {
+        e.preventDefault();
+        ipc.send('message', 'hello world');
     },
     render() {
         return (
@@ -27,7 +37,10 @@ var App = React.createClass({
                     <Grid tiles={this.state.tiles} />
                 </div>
                 <div className="controls">
-                    <button onClick={this.handleClick}>Generate tiles</button>
+                    <button onClick={this.generateTiles}>Generate tiles</button>
+                </div>
+                <div>
+                    <a href="#" onClick={this.sendAsync}>Send async</a>
                 </div>
             </div>
         );

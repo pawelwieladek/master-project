@@ -34,12 +34,10 @@ app.on('ready', function() {
     });
 });
 
-ipc.on('calculate', function(event, arg) {
-    var n = cp.fork(__dirname + '/heavy.js');
-    console.log('MAIN received calculate');
-    n.on('message', function(result) {
-        console.log('MAIN received message');
-        event.sender.send('result', result);
+ipc.on('message', function(event, arg) {
+    var child = cp.fork(__dirname + '/child.js');
+    child.on('message', function(response) {
+        event.sender.send('response', response);
     });
-    n.send(arg);
+    child.send(arg);
 });
