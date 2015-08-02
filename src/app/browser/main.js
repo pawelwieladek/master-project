@@ -8,6 +8,8 @@ var BrowserWindow = require('browser-window');  // Module to create native brows
 // be closed automatically when the javascript object is GCed.
 var mainWindow = null;
 
+var player = null;
+
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
     app.quit();
@@ -34,10 +36,24 @@ app.on('ready', function() {
     });
 });
 
-ipc.on('message', function(event, arg) {
+ipc.on('message', function(event, message) {
     var child = cp.fork(__dirname + '/child.js');
-    child.on('message', function(response) {
-        event.sender.send('response', response);
+    child.on('message', function(message) {
+        switch(message.type) {
+            case 'create':
+                player = message.response;
+                event.sender.send('response', message);
+                break;
+            case 'play':
+                event.sender.send('response', message);
+                break;
+            case 'progress':
+                event.sender.send('response', message);
+                break;
+            default:
+                throw new Error('Message type not recognized');
+        }
     });
-    child.send(arg);
+    message.player = player;
+    child.send(message);
 });

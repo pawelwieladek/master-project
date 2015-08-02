@@ -1,6 +1,8 @@
 var _ = require("lodash");
 
 var Player = require("../../game/player");
+var Game = require("../../game/game");
+var Grid = require("../../game/grid");
 var Utils = require("../../../config").Utils;
 var Parameters = require("../../../config").Config.Parameters;
 var SearchTree = require("./search-tree");
@@ -13,12 +15,20 @@ function SearchPlayer(params) {
     var availability = params.availability || Parameters.Search.Availability.Default;
     var maximization = params.maximization || Parameters.Search.Maximization.Default;
     this.searchTree = new SearchTree(depth, monotonicity, smoothness, availability, maximization);
+    Player.call(this);
 }
 
 Utils.extend(Player, SearchPlayer);
 
-SearchPlayer.create = function(params) {
+SearchPlayer.createPlayer = function(params) {
     return new SearchPlayer(params);
+};
+
+SearchPlayer.deserialize = function(serialized) {
+    var player = new SearchPlayer();
+    player.searchTree = SearchTree.deserialize(serialized.searchTree);
+    player.game = Game.deserialize(serialized.game);
+    return player;
 };
 
 SearchPlayer.prototype.evaluateMaxAction = function(grid) {

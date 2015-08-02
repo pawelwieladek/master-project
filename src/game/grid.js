@@ -8,6 +8,12 @@ function Grid(size) {
         this.tiles[i] = 0;
 }
 
+Grid.deserialize = function(serialized) {
+    var grid = new Grid(serialized.size);
+    grid.tiles = serialized.tiles.slice(0);
+    return grid;
+};
+
 Grid.from = function(array) {
     var size = parseInt(Math.sqrt(array.length));
     var grid = new Grid(size);

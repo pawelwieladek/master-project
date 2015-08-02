@@ -31,3 +31,5 @@ Player.prototype.play = function(callback) {
     this.game.play(this.evaluateMaxAction.bind(this), this.getMoveCallback(callback));
     return this.game;
 };
+
+module.exports = Player;

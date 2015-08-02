@@ -7,6 +7,14 @@ function Game() {
     this.grid = Rules.getInitialState();
 }
 
+Game.deserialize = function(serialized) {
+    var game = new Game();
+    game.movesNumber = serialized.movesNumber;
+    game.score = serialized.score;
+    game.grid = Grid.deserialize(serialized.grid);
+    return game;
+};
+
 Game.prototype.isWin = function() {
     return this.grid.max() === Rules.winValue;
 };
@@ -32,7 +40,7 @@ Game.prototype.move = function(maxActionEvaluator, callback) {
 Game.prototype.next = function(maxActionEvaluator, callback, limit) {
     var i = 0;
     var result = true;
-    while (result || !this.isWin() || i < limit) {
+    while (result && !this.isWin() && i < limit) {
         result = this.move(maxActionEvaluator, callback);
         i++;
     }
@@ -40,7 +48,7 @@ Game.prototype.next = function(maxActionEvaluator, callback, limit) {
 
 Game.prototype.play = function(maxActionEvaluator, callback) {
     var result = true;
-    while (result || !this.isWin()) {
+    while (result && !this.isWin()) {
         result = this.move(maxActionEvaluator, callback);
     }
 };

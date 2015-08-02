@@ -12,6 +12,10 @@ function SearchTree(depth, monotonicityWeight, smoothnessWeight, availabilityWei
     this.maximizationWeight = maximizationWeight;
 }
 
+SearchTree.deserialize = function(serialized) {
+    return new SearchTree(serialized.depth, serialized.monotonicityWeight, serialized.smoothnessWeight, serialized.availabilityWeight, serialized.maximizationWeight);
+};
+
 SearchTree.OpponentValues = [1, 2];
 
 SearchTree.prototype.evaluate = function(grid) {
@@ -55,7 +59,7 @@ SearchTree.prototype.playerMoves = function(grid) {
     return moves;
 };
 
-SearchTree.prototype.minimax = function(grid, depth, playerTurn, alpha, beta) {
+SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
     var i, result;
     var bestDirection = null;
     var bestValue;

@@ -6,29 +6,40 @@ require("!style!css!sass!../style.scss");
 
 var Grid = require('./grid');
 
-var generateTiles = () => {
-    return Repeat(0, 16).toList().map(() => Math.round(Math.random() * 10)).toArray();
-};
-
 var App = React.createClass({
     getInitialState() {
         return {
-            tiles: generateTiles()
+            tiles: Repeat(0, 16).toArray()
         };
     },
     componentDidMount() {
-        ipc.on('response', response => {
-            console.log(response);
+        ipc.on('response', message => {
+            switch(message.type) {
+                case 'create':
+                    this.setState({
+                        tiles: message.response.game.grid.tiles
+                    });
+                    break;
+                case 'play':
+                    this.setState({
+                        tiles: message.response.grid.tiles
+                    });
+                    break;
+                case 'progress':
+                    this.setState({
+                        tiles: message.response.tiles
+                    });
+                    break;
+            }
         });
     },
-    generateTiles() {
-        this.setState({
-            tiles: generateTiles()
-        })
-    },
-    sendAsync(e) {
+    create(e) {
         e.preventDefault();
-        ipc.send('message', 'hello world');
+        ipc.send('message', { type: 'create' });
+    },
+    play(e) {
+        e.preventDefault();
+        ipc.send('message', { type: 'play' });
     },
     render() {
         return (
@@ -37,10 +48,8 @@ var App = React.createClass({
                     <Grid tiles={this.state.tiles} />
                 </div>
                 <div className="controls">
-                    <button onClick={this.generateTiles}>Generate tiles</button>
-                </div>
-                <div>
-                    <a href="#" onClick={this.sendAsync}>Send async</a>
+                    <button onClick={this.create}>Create</button>
+                    <button onClick={this.play}>Play</button>
                 </div>
             </div>
         );

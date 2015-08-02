@@ -1,10 +1,13 @@
 var excluded = /(node_modules|bower_components|build)/;
 
 module.exports = {
-    entry: './src/app/browser/scripts/app.js',
+    entry: {
+        app: './src/app/browser/scripts/app.js',
+        child: './src/app/browser/child.js'
+    },
     output: {
         path: './build/',
-        filename: 'app.js'
+        filename: '[name].js'
     },
     target: 'atom',
     module: {

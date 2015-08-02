@@ -11,11 +11,12 @@ function LearnPlayer(params) {
     params = params || {};
     this.learningRate = params.learningRate || Parameters.Learn.LearningRate.Default;
     this.tupleNetwork = new TupleNetwork(4);
+    Player.call(this);
 }
 
 Utils.extend(Player, LearnPlayer);
 
-LearnPlayer.create = function(params) {
+LearnPlayer.createPlayer = function(params) {
     return new LearnPlayer(params);
 };
 

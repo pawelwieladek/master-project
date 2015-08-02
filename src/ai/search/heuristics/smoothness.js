@@ -1,4 +1,4 @@
-var Direction = require("../game/direction");
+var Direction = require("../../../game/direction");
 var Smoothness = {
     compare: function(grid, index, direction) {
         var neighbour = grid.neighbour(index, direction);

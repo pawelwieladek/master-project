@@ -42,7 +42,7 @@ gulp.task("scripts", ["clear"], function(callback) {
 });
 
 gulp.task("main", ["clear"], function () {
-    return gulp.src(["./src/app/browser/main.js", "./src/app/browser/child.js"])
+    return gulp.src(["./src/app/browser/main.js"])
         .pipe(gulp.dest("./build"));
 });
 
