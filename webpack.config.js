@@ -2,8 +2,8 @@ var excluded = /(node_modules|bower_components|build)/;
 
 module.exports = {
     entry: {
-        app: './src/app/browser/scripts/app.js',
-        child: './src/app/browser/child.js'
+        app: './app/view/app.js',
+        child: './app/core/child.js'
     },
     output: {
         path: './build/',

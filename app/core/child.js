@@ -1,4 +1,4 @@
-var SearchPlayer = require("../../ai/search/search-player");
+var SearchPlayer = require("../../src/ai/search/search-player");
 
 process.on('message', function(message) {
     var player;

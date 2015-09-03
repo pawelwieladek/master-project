@@ -18,7 +18,7 @@ gulp.task("clear", function (callback) {
 });
 
 gulp.task("html", ["clear"], function () {
-    return gulp.src(["./src/app/browser/index.html"])
+    return gulp.src(["./app/view/index.html"])
         .pipe(gulp.dest("./build"));
 });
 
@@ -31,7 +31,7 @@ gulp.task("scripts", ["clear"], function(callback) {
         config = assign(config, { watch: true });
     }
 
-    webpack(config, function(err, stats) {
+    return webpack(config, function(err, stats) {
         if (err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString());
         if (!scriptsCallbackCalled) {
@@ -42,7 +42,7 @@ gulp.task("scripts", ["clear"], function(callback) {
 });
 
 gulp.task("main", ["clear"], function () {
-    return gulp.src(["./src/app/browser/main.js"])
+    return gulp.src(["./app/core/main.js"])
         .pipe(gulp.dest("./build"));
 });
 

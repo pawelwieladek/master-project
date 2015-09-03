@@ -2,7 +2,7 @@ var ipc = require('ipc');
 var React = require('react');
 var { Repeat } = require('immutable');
 
-require("!style!css!sass!../style.scss");
+require("!style!css!sass!./style.scss");
 
 var Grid = require('./grid');
 
