@@ -2,11 +2,11 @@ var excluded = /(node_modules|bower_components|build)/;
 
 module.exports = {
     entry: {
-        app: './app/view/app.js',
+        app: './app/view/scripts/app.js',
         child: './app/core/child.js'
     },
     output: {
-        path: './build/',
+        path: './dist/',
         filename: '[name].js'
     },
     target: 'atom',
@@ -25,7 +25,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 exclude: excluded,
-                loader: "style!css!sass"
+                loader: 'style!css!sass'
             }
         ]
     }
