@@ -1,9 +1,8 @@
-var excluded = /(node_modules|bower_components|build)/;
+var excluded = /(node_modules|bower_components|dist)/;
 
 module.exports = {
     entry: {
-        app: './app/view/scripts/app.js',
-        child: './app/core/child.js'
+        "app/scripts/app": './app/view/scripts/app.js'
     },
     output: {
         path: './dist/',

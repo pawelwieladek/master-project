@@ -14,22 +14,25 @@ var options = stdio.getopt({
 
 var paths = {
     dest: './dist',
-    html: './app/view/index.html',
-    main: './app/core/main.js'
+    html: {
+        src: './app/view/index.html',
+        dest: './dist/app/'
+    },
+    core: './app/core/*.js'
 };
 
 gulp.task('clear', function (callback) {
     del([paths.dest], callback);
 });
 
-gulp.task('html', ['clear'], function () {
-    return gulp.src([paths.html])
-        .pipe(gulp.dest(paths.dest));
+gulp.task('view:html', ['clear'], function () {
+    return gulp.src([paths.html.src])
+        .pipe(gulp.dest(paths.html.dest));
 });
 
 var scriptsCallbackCalled = false;
 
-gulp.task('scripts', ['clear'], function(callback) {
+gulp.task('view:scripts', ['clear'], function(callback) {
     var config = require('./webpack.config');
 
     if (options.watch) {
@@ -46,12 +49,15 @@ gulp.task('scripts', ['clear'], function(callback) {
     });
 });
 
-gulp.task('main', ['clear'], function () {
-    return gulp.src([paths.main])
-        .pipe(gulp.dest(paths.dest));
+gulp.task('view', ['view:scripts', 'view:html']);
+
+gulp.task('core', ['clear'], function () {
+    return gulp.src(paths.core).pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('run', ['html', 'scripts', 'main'], function() {
+gulp.task('build', ['view', 'core']);
+
+gulp.task('run', ['build'], function() {
     spawn(electron, ['.'], { stdio: 'inherit' });
 });
 

@@ -2,6 +2,8 @@ var ipc = require('ipc');
 var React = require('react');
 var { Repeat } = require('immutable');
 
+var SearchActions = require("../../core/search-actions");
+
 require("!style!css!sass!../styles/style.scss");
 
 var Grid = require('./grid');
@@ -13,33 +15,29 @@ var App = React.createClass({
         };
     },
     componentDidMount() {
-        ipc.on('response', message => {
-            switch(message.type) {
-                case 'create':
-                    this.setState({
-                        tiles: message.response.game.grid.tiles
-                    });
-                    break;
-                case 'play':
-                    this.setState({
-                        tiles: message.response.grid.tiles
-                    });
-                    break;
-                case 'progress':
-                    this.setState({
-                        tiles: message.response.tiles
-                    });
-                    break;
-            }
+        ipc.on(SearchActions.createPlayer, tiles => {
+            this.setState({
+                tiles: tiles
+            });
+        });
+        ipc.on(SearchActions.play, tiles => {
+            this.setState({
+                tiles: tiles
+            });
+        });
+        ipc.on(SearchActions.progress, tiles => {
+            this.setState({
+                tiles: tiles
+            });
         });
     },
     create(e) {
         e.preventDefault();
-        ipc.send('message', { type: 'create' });
+        ipc.send(SearchActions.createPlayer);
     },
     play(e) {
         e.preventDefault();
-        ipc.send('message', { type: 'play' });
+        ipc.send(SearchActions.play);
     },
     render() {
         return (
