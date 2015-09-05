@@ -2,7 +2,7 @@
   "name": "master-project",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/main.js",
+  "main": "./dist/init.js",
   "author": "",
   "license": "ISC",
   "devDependencies": {

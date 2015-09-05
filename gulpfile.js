@@ -18,7 +18,7 @@ var paths = {
         src: './app/view/index.html',
         dest: './dist/app/'
     },
-    core: './app/core/*.js'
+    init: './app/core/init.js'
 };
 
 gulp.task('clear', function (callback) {
@@ -30,30 +30,38 @@ gulp.task('view:html', ['clear'], function () {
         .pipe(gulp.dest(paths.html.dest));
 });
 
-var scriptsCallbackCalled = false;
+var webpackTask = function(params) {
+    return function(callback) {
+        var config = require(params.config);
 
-gulp.task('view:scripts', ['clear'], function(callback) {
-    var config = require('./webpack.config');
-
-    if (options.watch) {
-        config = assign(config, { watch: true });
-    }
-
-    return webpack(config, function(err, stats) {
-        if (err) throw new gutil.PluginError('webpack', err);
-        gutil.log('[webpack]', stats.toString());
-        if (!scriptsCallbackCalled) {
-            scriptsCallbackCalled = true;
-            callback();
+        if (options.watch) {
+            config = assign(config, { watch: true });
         }
-    });
+
+        var callbackCalled = false;
+
+        return webpack(config, function(err, stats) {
+            if (err) throw new gutil.PluginError('webpack', err);
+            gutil.log('[webpack]', stats.toString());
+            if (!callbackCalled) {
+                callbackCalled = true;
+                callback();
+            }
+        });
+    }
+};
+
+gulp.task('view:scripts', ['clear'], webpackTask({ config: './webpack-view.config' }));
+gulp.task('core:scripts', ['clear'], webpackTask({ config: './webpack-core.config' }));
+
+gulp.task('core:init', ['clear'], function () {
+    return gulp.src([paths.init])
+        .pipe(gulp.dest(paths.dest));
 });
+
+gulp.task('core', ['core:scripts', 'core:init']);
 
 gulp.task('view', ['view:scripts', 'view:html']);
-
-gulp.task('core', ['clear'], function () {
-    return gulp.src(paths.core).pipe(gulp.dest(paths.dest));
-});
 
 gulp.task('build', ['view', 'core']);
 

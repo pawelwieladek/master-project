@@ -2,11 +2,10 @@ var ipc = require('ipc');
 var React = require('react');
 var { Repeat } = require('immutable');
 
-var SearchActions = require("../../core/search-actions");
+var SearchActions = require("../../actions/search-actions");
+var Grid = require('./grid');
 
 require("!style!css!sass!../styles/style.scss");
-
-var Grid = require('./grid');
 
 var App = React.createClass({
     getInitialState() {

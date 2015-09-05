@@ -1,8 +1,8 @@
-var excluded = /(node_modules|bower_components|dist)/;
+var excluded = /(node_modules|bower_components|dist|src)/;
 
 module.exports = {
     entry: {
-        "app/scripts/app": './app/view/scripts/app.js'
+        "app/scripts/bundle": './app/view/scripts/app.js'
     },
     output: {
         path: './dist/',

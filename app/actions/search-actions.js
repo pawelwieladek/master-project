@@ -1,7 +1,7 @@
-var searchActions = {
+let searchActions = {
     createPlayer: 'searchActions:createPlayer',
     play: 'searchActions:play',
     progress: 'searchActions:progress'
 };
 
-module.exports = searchActions;
+export default searchActions;
