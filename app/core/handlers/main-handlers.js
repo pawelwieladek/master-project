@@ -3,16 +3,22 @@ var SearchActions = require("../../actions/search-actions");
 
 let handlers = app => {
 
-    app.register(SearchActions.createPlayer, Registry.withHandler(SearchActions.createPlayer, (send, player) => {
+    let createHandler = (send, player) => {
         app.setState({ player });
         send(player.game.grid.tiles);
-    }).build());
+    };
 
-    app.register(SearchActions.play, Registry.withHandler(SearchActions.play, (send, game) => {
+    app.register(SearchActions.createPlayer, Registry.withHandler(SearchActions.createPlayer, createHandler).build());
+
+    let playHandler = (send, game) => {
         send(game.grid.tiles);
-    }).withHandler(SearchActions.progress, (send, grid) => {
+    };
+
+    let progressHandler = (send, grid) => {
         send(grid.tiles);
-    }).build());
+    };
+
+    app.register(SearchActions.play, Registry.withHandler(SearchActions.play, playHandler).withHandler(SearchActions.progress, progressHandler).build());
 };
 
 export default handlers;
