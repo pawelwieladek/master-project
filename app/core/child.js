@@ -7,17 +7,13 @@ function createMessage(action, response) {
     };
 }
 
-process.on('message', function(message) {
-    console.log('child received message', message);
+process.on('message', function(context) {
     try {
-        var handler = childRegistry.getHandler(message.action);
+        var handler = childRegistry.getHandler(context.action);
         var send = function(action, response) {
-            console.log('child send action', response);
             process.send(createMessage(action, response));
         };
-        console.log('child will handle', message.action);
-        handler(send, message);
-        console.log('child did handle', message.action);
+        handler(send, context);
     } catch (e) {
         console.warn(e);
     }

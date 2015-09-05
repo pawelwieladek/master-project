@@ -16,7 +16,7 @@ Registry.prototype.register = function(action, handler) {
 
 Registry.prototype.getHandler = function(action) {
     if (!this.handlers[action]) {
-        throw new Error(`No action ${message.action} registered`);
+        throw new Error('No action ' + action + ' registered');
     } else {
         return this.handlers[action];
     }
