@@ -1,7 +1,7 @@
 let searchActions = {
     createPlayer: 'searchActions:createPlayer',
-    play: 'searchActions:play',
-    progress: 'searchActions:progress'
+    playGame: 'searchActions:playGame',
+    notifyProgress: 'searchActions:notifyProgress'
 };
 
 export default searchActions;

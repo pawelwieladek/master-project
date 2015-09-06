@@ -1,5 +1,5 @@
-import { createPlayer, play, progress } from "../actions/search-actions";
-import SearchPlayer from "../../../src/ai/search/search-player";
+import { createPlayer, playGame, notifyProgress } from '../../actions/search-actions';
+import SearchPlayer from '../../../../src/ai/search/search-player';
 
 let handlers = registry => {
 
@@ -7,12 +7,12 @@ let handlers = registry => {
         send(createPlayer, SearchPlayer.createPlayer());
     });
 
-    registry.register(play, (send, context) => {
+    registry.register(playGame, (send, context) => {
         let player = SearchPlayer.deserialize(context.state.player);
         let game = player.play((state, direction, reward, afterState, finalState) => {
-            send(progress, finalState);
+            send(notifyProgress, finalState);
         });
-        send(play, game);
+        send(playGame, game);
     });
 };
 

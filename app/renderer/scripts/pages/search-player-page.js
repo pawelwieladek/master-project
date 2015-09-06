@@ -1,7 +1,7 @@
 import ipc from 'ipc';
 import React from 'react';
-import { Row, Col, Button, Input, Panel, Tabs, Tab } from 'react-bootstrap';
-import { Repeat } from 'immutable';
+import { Row, Col, Button, Input, Panel, Tabs, Tab, Alert } from 'react-bootstrap';
+import { Repeat, List } from 'immutable';
 
 import SearchActions from '../../../browser/actions/search-actions';
 import GameGrid from '../components/grid';
@@ -11,30 +11,84 @@ let SearchPlayerPage = React.createClass({
     mixins: [CommunicationMixin],
     getInitialState() {
         return {
-            tiles: Repeat(0, 16).toArray()
+            tiles: Repeat(0, 16).toArray(),
+            playGameEnabled: false,
+            gameDone: false,
+            inProgress: false,
+            success: false,
+            movesNumber: 0
         };
     },
     componentDidMount() {
-        this.listenTo(SearchActions.createPlayer, this.updateTiles);
-        this.listenTo(SearchActions.play, this.updateTiles);
-        this.listenTo(SearchActions.progress, this.updateTiles);
+        this.listenTo(SearchActions.createPlayer, this.didCreatePlayer);
+        this.listenTo(SearchActions.playGame, this.didPlayGame);
+        this.listenTo(SearchActions.notifyProgress, this.didNotifyProgress);
     },
-    updateTiles(tiles) {
-        this.setState({ tiles });
+    didCreatePlayer(tiles) {
+        this.setState({
+            tiles,
+            playGameEnabled: true
+        });
+    },
+    didPlayGame(game) {
+        let success = List(game.grid.tiles).max() === 11;
+        this.setState({
+            gameDone: true,
+            inProgress: false,
+            success: success,
+            tiles: game.grid.tiles
+        });
+    },
+    didNotifyProgress() {
+        this.setState({
+            movesNumber: this.state.movesNumber + 1
+        });
     },
     createPlayer(e) {
         e.preventDefault();
+        this.setState({
+            playGameEnabled: false,
+            gameDone: false,
+            inProgress: false,
+            success: false,
+            movesNumber: 0
+        });
         this.trigger(SearchActions.createPlayer);
     },
-    play(e) {
+    playGame(e) {
         e.preventDefault();
-        this.trigger(SearchActions.play);
+        this.setState({
+            gameDone: false,
+            inProgress: true,
+            success: false,
+            movesNumber: 0
+        });
+        this.trigger(SearchActions.playGame);
     },
     render() {
+        let alert = null;
+        if (this.state.inProgress) {
+            alert = <Alert bsStyle='info'>Game in progress. Moves: {this.state.movesNumber}</Alert>;
+        } else if (this.state.gameDone) {
+            if (this.state.success) {
+                alert = <Alert bsStyle='success'>Win</Alert>;
+            } else {
+                alert = <Alert bsStyle='danger'>Failed</Alert>;
+            }
+        }
         return (
             <Row>
                 <Col sm={6}>
-                    <GameGrid tiles={this.state.tiles} />
+                    <Row>
+                        <Col xs={12}>
+                            <GameGrid tiles={this.state.tiles} />
+                        </Col>
+                    </Row>
+                    <Row style={{ marginTop: 20 }}>
+                        <Col xs={12}>
+                            {alert}
+                        </Col>
+                    </Row>
                 </Col>
                 <Col sm={6}>
                     <Tabs defaultActiveKey={1} animation={false}>
@@ -57,8 +111,8 @@ let SearchPlayerPage = React.createClass({
                             </Row>
                             <Button onClick={this.createPlayer}>Create player</Button>
                         </Tab>
-                        <Tab eventKey={2} title='Play'>
-                            <Button onClick={this.play}>Play</Button>
+                        <Tab eventKey={2} title='Play' disabled={!this.state.playGameEnabled}>
+                            <Button onClick={this.playGame}>Play</Button>
                         </Tab>
                     </Tabs>
                 </Col>

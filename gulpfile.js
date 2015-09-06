@@ -12,6 +12,8 @@ var options = stdio.getopt({
     'watch': { key: 'w', description: 'Watch changes', 'default': false }
 });
 
+process.env.NODE_ENV = 'production';
+
 var paths = {
     dest: './dist',
     html: {

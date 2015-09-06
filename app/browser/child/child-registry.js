@@ -1,5 +1,5 @@
 import Registry from "../common/registry";
-import childHandlers from "../handlers/child-handlers";
+import childHandlers from "./child-handlers";
 
 let childRegistry = new Registry();
 
