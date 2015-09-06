@@ -1,9 +1,9 @@
 import MainApp from "./main-app.js";
-import MainHandlers from "../handlers/main-handlers.js";
+import mainHandlers from "../handlers/main-handlers.js";
 
 let main = {
     App: MainApp,
-    Handlers: MainHandlers
+    handlers: mainHandlers
 };
 
 export default main;

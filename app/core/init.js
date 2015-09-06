@@ -1,9 +1,9 @@
 var App = require("./main").App;
-var Handlers = require("./main").Handlers;
+var handlers = require("./main").handlers;
 
 var main = new App({
     dirname: __dirname
 });
 
-main.use(Handlers);
+main.use(handlers);
 main.run();
