@@ -2,6 +2,7 @@ import ipc from 'ipc';
 import React from 'react';
 import { Row, Col, Button, Input, Panel, Tabs, Tab, Alert } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
+import ReactSlider from 'react-slider';
 
 import SearchActions from '../../../browser/actions/search-actions';
 import GameGrid from '../components/grid';
@@ -16,7 +17,7 @@ let SearchPlayerPage = React.createClass({
             gameDone: false,
             inProgress: false,
             success: false,
-            movesNumber: 0
+            moves: []
         };
     },
     componentDidMount() {
@@ -39,9 +40,9 @@ let SearchPlayerPage = React.createClass({
             tiles: game.grid.tiles
         });
     },
-    didNotifyProgress() {
+    didNotifyProgress(tiles) {
         this.setState({
-            movesNumber: this.state.movesNumber + 1
+            moves: this.state.moves.concat([tiles])
         });
     },
     createPlayer(e) {
@@ -51,7 +52,7 @@ let SearchPlayerPage = React.createClass({
             gameDone: false,
             inProgress: false,
             success: false,
-            movesNumber: 0
+            moves: []
         });
         this.trigger(SearchActions.createPlayer);
     },
@@ -61,20 +62,27 @@ let SearchPlayerPage = React.createClass({
             gameDone: false,
             inProgress: true,
             success: false,
-            movesNumber: 0
+            moves: []
         });
         this.trigger(SearchActions.playGame);
     },
+    sliderChanged(value) {
+        this.setState({
+            tiles: this.state.moves[value]
+        });
+    },
     render() {
         let alert = null;
+        let slider = null;
         if (this.state.inProgress) {
-            alert = <Alert bsStyle='info'>Game in progress. Moves: {this.state.movesNumber}</Alert>;
+            alert = <Alert bsStyle="info">Game in progress. Moves: {this.state.moves.length}</Alert>;
         } else if (this.state.gameDone) {
             if (this.state.success) {
-                alert = <Alert bsStyle='success'>Win</Alert>;
+                alert = <Alert bsStyle="success">Win</Alert>;
             } else {
-                alert = <Alert bsStyle='danger'>Failed</Alert>;
+                alert = <Alert bsStyle="danger">Failed</Alert>;
             }
+            slider = <ReactSlider min={0} max={this.state.moves.length - 1} defaultValue={0} onChange={this.sliderChanged} />;
         }
         return (
             <Row>
@@ -89,10 +97,15 @@ let SearchPlayerPage = React.createClass({
                             {alert}
                         </Col>
                     </Row>
+                    <Row>
+                        <Col xs={12}>
+                            {slider}
+                        </Col>
+                    </Row>
                 </Col>
                 <Col sm={6}>
                     <Tabs defaultActiveKey={1} animation={false}>
-                        <Tab eventKey={1} title='Create'>
+                        <Tab eventKey={1} title="Create">
                             <Row>
                                 <Col sm={6}>
                                     <Input type="text" label="Monotonicity weight" />
@@ -111,7 +124,7 @@ let SearchPlayerPage = React.createClass({
                             </Row>
                             <Button onClick={this.createPlayer}>Create player</Button>
                         </Tab>
-                        <Tab eventKey={2} title='Play' disabled={!this.state.playGameEnabled}>
+                        <Tab eventKey={2} title="Play" disabled={!this.state.playGameEnabled}>
                             <Button onClick={this.playGame}>Play</Button>
                         </Tab>
                     </Tabs>

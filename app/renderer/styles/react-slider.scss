@@ -1,0 +1,29 @@
+$slider-height: 4px;
+$handle-height: 16px;
+
+.handle {
+  font-size: 0.9em;
+  text-align: center;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+
+  .active {
+    background-color: grey;
+  }
+}
+
+.slider {
+  width: 100%;
+  height: $slider-height;
+  border-radius: $slider-height / 2;
+  background-color: grey;
+
+  .handle {
+    border-radius: $handle-height / 2;
+    top: -($handle-height - $slider-height) / 2;
+    width: $handle-height;
+    height: $handle-height;
+    line-height: $handle-height;
+  }
+}
