@@ -15,17 +15,17 @@ var options = stdio.getopt({
 var paths = {
     dest: './dist',
     html: {
-        src: './app/view/index.html',
+        src: './app/renderer/index.html',
         dest: './dist/app/'
     },
-    init: './app/core/init.js'
+    init: './app/browser/init.js'
 };
 
 gulp.task('clear', function (callback) {
     del([paths.dest], callback);
 });
 
-gulp.task('view:html', ['clear'], function () {
+gulp.task('renderer:html', ['clear'], function () {
     return gulp.src([paths.html.src])
         .pipe(gulp.dest(paths.html.dest));
 });
@@ -51,19 +51,19 @@ var webpackTask = function(params) {
     }
 };
 
-gulp.task('view:scripts', ['clear'], webpackTask({ config: './webpack-view.config' }));
-gulp.task('core:scripts', ['clear'], webpackTask({ config: './webpack-core.config' }));
+gulp.task('renderer:scripts', ['clear'], webpackTask({ config: './webpack-renderer.config' }));
+gulp.task('browser:scripts', ['clear'], webpackTask({ config: './webpack-browser.config' }));
 
-gulp.task('core:init', ['clear'], function () {
+gulp.task('browser:init', ['clear'], function () {
     return gulp.src([paths.init])
         .pipe(gulp.dest(paths.dest));
 });
 
-gulp.task('core', ['core:scripts', 'core:init']);
+gulp.task('browser', ['browser:scripts', 'browser:init']);
 
-gulp.task('view', ['view:scripts', 'view:html']);
+gulp.task('renderer', ['renderer:scripts', 'renderer:html']);
 
-gulp.task('build', ['view', 'core']);
+gulp.task('build', ['renderer', 'browser']);
 
 gulp.task('run', ['build'], function() {
     spawn(electron, ['.'], { stdio: 'inherit' });

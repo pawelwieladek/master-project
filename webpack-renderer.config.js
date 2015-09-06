@@ -2,7 +2,7 @@ var excluded = /(node_modules|bower_components|dist|src)/;
 
 module.exports = {
     entry: {
-        "app/scripts/bundle": './app/view/scripts/main.js'
+        "app/scripts/bundle": './app/renderer/scripts/main.js'
     },
     output: {
         path: './dist/',

@@ -1,5 +1,5 @@
 var Registry = require("../common/registry");
-var SearchActions = require("../../actions/search-actions");
+var SearchActions = require("../actions/search-actions");
 
 let handlers = app => {
 

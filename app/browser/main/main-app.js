@@ -8,6 +8,9 @@ export default class MainApp {
     constructor(params) {
         params = params || {};
         this.dirname = params.dirname;
+        this.width = params.width || 800;
+        this.height = params.height || 600;
+        this.title = params.title || 'Untitled';
         this.state = {};
         this.mainWindow = null;
     }
@@ -44,7 +47,12 @@ export default class MainApp {
             app.quit();
         });
         app.on('ready', () => {
-            this.mainWindow = new BrowserWindow({ width: 800, height: 600 });
+            this.mainWindow = new BrowserWindow({
+                width: this.width,
+                height: this.height,
+                center: true,
+                title: this.title
+            });
             this.mainWindow.loadUrl('file://' + this.dirname +'/app/index.html');
             this.mainWindow.openDevTools();
             this.mainWindow.on('closed', () => {

@@ -1,4 +1,4 @@
-import { createPlayer, play, progress } from "../../actions/search-actions";
+import { createPlayer, play, progress } from "../actions/search-actions";
 import SearchPlayer from "../../../src/ai/search/search-player";
 
 let handlers = registry => {
