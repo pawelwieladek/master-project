@@ -21,17 +21,16 @@ let SearchPlayerPage = React.createClass({
         this.listenTo(learnAction, this.didLearn);
         this.listenTo(notifyLearnProgressAction, this.didNotifyLearnProgress);
     },
-    didCreatePlayer(tiles) {
+    didCreatePlayer() {
         this.setState({
-            tiles,
             learnEnabled: true
         });
     },
     didLearn() {
         console.log('didLearn');
     },
-    didNotifyLearnProgress(progressInfo) {
-        console.log('didNotifyLearnProgress', progressInfo);
+    didNotifyLearnProgress(isWin) {
+        console.log('didNotifyLearnProgress', isWin);
     },
     createPlayer() {
         this.trigger(createPlayerAction);

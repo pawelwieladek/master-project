@@ -12,7 +12,7 @@ let SearchPlayerPage = React.createClass({
     mixins: [CommunicationMixin],
     getInitialState() {
         return {
-            tiles: Repeat(0, 16).toArray(),
+            tiles: this.getEmptyTiles(),
             playGameEnabled: false,
             gameDone: false,
             inProgress: false,
@@ -25,9 +25,8 @@ let SearchPlayerPage = React.createClass({
         this.listenTo(SearchActions.playGame, this.didPlayGame);
         this.listenTo(SearchActions.notifyProgress, this.didNotifyProgress);
     },
-    didCreatePlayer(tiles) {
+    didCreatePlayer() {
         this.setState({
-            tiles,
             playGameEnabled: true
         });
     },
@@ -62,9 +61,13 @@ let SearchPlayerPage = React.createClass({
             gameDone: false,
             inProgress: true,
             success: false,
-            moves: []
+            moves: [],
+            tiles: this.getEmptyTiles()
         });
         this.trigger(SearchActions.playGame);
+    },
+    getEmptyTiles() {
+        return Repeat(0, 16).toArray();
     },
     sliderChanged(value) {
         this.setState({
@@ -82,7 +85,7 @@ let SearchPlayerPage = React.createClass({
             } else {
                 alert = <Alert bsStyle="danger">Failed</Alert>;
             }
-            slider = <ReactSlider min={0} max={this.state.moves.length - 1} defaultValue={0} onChange={this.sliderChanged} />;
+            slider = <ReactSlider min={0} max={this.state.moves.length - 1} defaultValue={this.state.moves.length - 1} onChange={this.sliderChanged} />;
         }
         return (
             <Row>

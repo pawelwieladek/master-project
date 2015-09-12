@@ -23,18 +23,17 @@ LearnPlayer.createPlayer = function(params) {
 
 LearnPlayer.deserialize = function(serialized) {
     var player = new LearnPlayer();
-    player.game = Game.deserialize(serialized.game);
     player.learningRate = serialized.learningRate;
     player.tupleNetwork = TupleNetwork.deserialize(serialized.tupleNetwork);
     return player;
 };
 
-LearnPlayer.prototype.evaluateMaxAction = function(grid) {
+LearnPlayer.prototype.evaluateBestDirection = function(grid) {
     var maxEvaluation = -Infinity;
     var maxAction = null;
     for (var i = 0; i < Direction.all().length; i++) {
         var direction = Direction.all()[i];
-        var currentEvaluation = this.evaluateDirection(grid, direction);
+        var currentEvaluation = this.evaluateSingleDirection(grid, direction);
         if (currentEvaluation === null) continue;
         if (currentEvaluation > maxEvaluation) {
             maxEvaluation = currentEvaluation;
@@ -44,14 +43,14 @@ LearnPlayer.prototype.evaluateMaxAction = function(grid) {
     return maxAction;
 };
 
-LearnPlayer.prototype.defaultMoveCallback = function(state, direction, reward, afterState, finalState) {
-    var nextDirection = this.evaluateMaxAction(finalState);
+LearnPlayer.prototype.defaultDidMoveFunction = function(state, direction, reward, afterState, finalState) {
+    var nextDirection = this.evaluateBestDirection(finalState);
     if (nextDirection === null) return null;
     var nextResult = Rules.computeAfterState(finalState, nextDirection);
     this.updateLearningEvaluation(afterState, nextResult.afterState, nextResult.reward);
 };
 
-LearnPlayer.prototype.evaluateDirection = function(grid, direction) {
+LearnPlayer.prototype.evaluateSingleDirection = function(grid, direction) {
     var result = Rules.computeAfterState(grid, direction);
     if (result === null) return null;
     return result.reward + this.tupleNetwork.getNetworkValue(result.afterState);

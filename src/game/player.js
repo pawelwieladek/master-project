@@ -1,35 +1,30 @@
 var Game = require("./game");
 
-function Player() {
-    this.game = new Game();
-}
+function Player() { }
 
-Player.prototype.reset = function() {
-    this.game = new Game();
-};
+Player.prototype.defaultDidMoveFunction = function() { };
 
-Player.prototype.defaultMoveCallback = function() { };
-
-Player.prototype.evaluateMaxAction = function() {
+Player.prototype.evaluateBestDirection = function() {
     throw new Error("evaluateMaxAction not implemented");
 };
 
-Player.prototype.getMoveCallback = function(callback) {
+Player.prototype.getDidMoveFunction = function(callback) {
     return function(state, direction, reward, afterState, finalState) {
-        this.defaultMoveCallback.call(this, state, direction, reward, afterState, finalState);
+        this.defaultDidMoveFunction.call(this, state, direction, reward, afterState, finalState);
         callback = callback || function() { };
         callback.call(this, state, direction, reward, afterState, finalState);
     }.bind(this);
 };
 
-Player.prototype.next = function(limit, callback) {
-    this.game.next(this.evaluateMaxAction.bind(this), this.getMoveCallback(callback), limit);
-    return this.game;
+Player.prototype.next = function(game, limit, playerDidMove) {
+    game.next(this.evaluateBestDirection.bind(this), this.getDidMoveFunction(playerDidMove), limit);
+    return game;
 };
 
-Player.prototype.play = function(callback) {
-    this.game.play(this.evaluateMaxAction.bind(this), this.getMoveCallback(callback));
-    return this.game;
+Player.prototype.play = function(playerDidMove) {
+    var game = new Game();
+    game.play(this.evaluateBestDirection.bind(this), this.getDidMoveFunction(playerDidMove));
+    return game;
 };
 
 module.exports = Player;

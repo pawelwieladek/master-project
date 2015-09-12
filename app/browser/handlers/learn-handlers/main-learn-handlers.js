@@ -5,7 +5,7 @@ let handlers = app => {
 
     let createPlayerHandler = (send, player) => {
         app.setState({ player });
-        send(player.game.grid.tiles);
+        send();
     };
 
     app.register(createPlayerAction, Registry.withHandler(createPlayerAction, createPlayerHandler).build());
@@ -14,8 +14,8 @@ let handlers = app => {
         send();
     };
 
-    let notifyLearnProgressHandler = (send, iteration) => {
-        send(iteration);
+    let notifyLearnProgressHandler = (send, isWin) => {
+        send(isWin);
     };
 
     app.register(learnAction, Registry.withHandler(learnAction, learnHandler).withHandler(notifyLearnProgressAction, notifyLearnProgressHandler).build());

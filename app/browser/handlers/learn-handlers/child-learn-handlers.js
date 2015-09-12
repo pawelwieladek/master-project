@@ -12,10 +12,9 @@ let handlers = registry => {
         let player = LearnPlayer.deserialize(context.state.player);
         let iterationsNumber = context.args[0];
         for (let iteration = 0; iteration < iterationsNumber; iteration++) {
-            player.reset();
             let game = player.play();
             let isWin = List(game.grid.tiles).max() === 11;
-            send(notifyLearnProgressAction, { iteration, isWin });
+            send(notifyLearnProgressAction, isWin);
         }
         send(learnAction);
     });

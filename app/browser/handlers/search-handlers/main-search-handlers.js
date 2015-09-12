@@ -5,7 +5,7 @@ let handlers = app => {
 
     let createPlayerHandler = (send, player) => {
         app.setState({ player });
-        send(player.game.grid.tiles);
+        send();
     };
 
     app.register(createPlayer, Registry.withHandler(createPlayer, createPlayerHandler).build());

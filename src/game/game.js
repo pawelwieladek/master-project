@@ -19,16 +19,16 @@ Game.prototype.isWin = function() {
     return this.grid.max() === Rules.winValue;
 };
 
-Game.prototype.move = function(maxActionEvaluator, callback) {
+Game.prototype.move = function(evaluateDirectionFunction, didMoveFunction) {
     var state = this.grid;
 
-    var direction = maxActionEvaluator(state);
+    var direction = evaluateDirectionFunction(state);
     if (direction === null) return false;
 
     var result = Rules.move(state, direction);
     if (result === null) return false;
 
-    callback(state, direction, result.reward, result.afterState, result.finalState);
+    didMoveFunction(state, direction, result.reward, result.afterState, result.finalState);
 
     this.movesNumber++;
     this.score += result.reward;
@@ -37,19 +37,19 @@ Game.prototype.move = function(maxActionEvaluator, callback) {
     return true;
 };
 
-Game.prototype.next = function(maxActionEvaluator, callback, limit) {
+Game.prototype.next = function(evaluateDirectionFunction, didMoveFunction, limit) {
     var i = 0;
     var result = true;
     while (result && !this.isWin() && i < limit) {
-        result = this.move(maxActionEvaluator, callback);
+        result = this.move(evaluateDirectionFunction, didMoveFunction);
         i++;
     }
 };
 
-Game.prototype.play = function(maxActionEvaluator, callback) {
+Game.prototype.play = function(evaluateDirectionFunction, didMoveFunction) {
     var result = true;
     while (result && !this.isWin()) {
-        result = this.move(maxActionEvaluator, callback);
+        result = this.move(evaluateDirectionFunction, didMoveFunction);
     }
 };
 

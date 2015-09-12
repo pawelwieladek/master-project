@@ -27,11 +27,10 @@ SearchPlayer.createPlayer = function(params) {
 SearchPlayer.deserialize = function(serialized) {
     var player = new SearchPlayer();
     player.searchTree = SearchTree.deserialize(serialized.searchTree);
-    player.game = Game.deserialize(serialized.game);
     return player;
 };
 
-SearchPlayer.prototype.evaluateMaxAction = function(grid) {
+SearchPlayer.prototype.evaluateBestDirection = function(grid) {
     return this.searchTree.search(grid).direction;
 };
 
