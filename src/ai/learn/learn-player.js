@@ -2,6 +2,7 @@ var _ = require("lodash");
 
 var Parameters = require("../../../config").Config.Parameters;
 var Utils = require("../../../config").Utils;
+var Game = require("../../game/game");
 var Rules = require("../../game/rules");
 var Player = require("../../game/player");
 var Direction = require("../../game/direction");
@@ -18,6 +19,14 @@ Utils.extend(Player, LearnPlayer);
 
 LearnPlayer.createPlayer = function(params) {
     return new LearnPlayer(params);
+};
+
+LearnPlayer.deserialize = function(serialized) {
+    var player = new LearnPlayer();
+    player.game = Game.deserialize(serialized.game);
+    player.learningRate = serialized.learningRate;
+    player.tupleNetwork = TupleNetwork.deserialize(serialized.tupleNetwork);
+    return player;
 };
 
 LearnPlayer.prototype.evaluateMaxAction = function(grid) {

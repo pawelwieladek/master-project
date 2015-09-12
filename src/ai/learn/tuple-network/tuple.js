@@ -3,6 +3,12 @@ function Tuple(locations) {
     this.lookupTable = {};
 }
 
+Tuple.deserialize = function(serialized) {
+    var tuple = new Tuple(serialized.locations);
+    tuple.lookupTable = serialized.lookupTable;
+    return tuple;
+};
+
 Tuple.prototype.buildKey = function(values) {
     return values.join(':');
 };

@@ -24,7 +24,7 @@ export default class MainApp {
     }
 
     register(action, registry) {
-        ipc.on(action, (event, args) => {
+        ipc.on(action, (event, ...args) => {
             let child = cp.fork(this.dirname + '/child.js');
             child.on('message', message => {
                 try {
@@ -37,7 +37,7 @@ export default class MainApp {
                     console.log(e);
                 }
             });
-            let childContext = { state: this.state, action, args };
+            let childContext = { state: this.state, action, args: [...args] };
             child.send(childContext);
         });
     }

@@ -1,8 +1,20 @@
+var _ = require("lodash");
 var Tuple = require("./tuple");
 
-function TupleNetwork(size) {
-    var i, j, locations;
+function TupleNetwork(arg) {
     this.tuples = [];
+
+    if (_.isNumber(arg)) {
+        this.initializeTuples(arg);
+    } else if (_.isArray(arg)) {
+        this.tuples = arg;
+    } else {
+        throw new Error("TupleNetwork cannot be initialized");
+    }
+}
+
+TupleNetwork.prototype.initializeTuples = function(size) {
+    var i, j, locations;
 
     for (i = 0; i < size; i++) {
         locations = [];
@@ -30,7 +42,14 @@ function TupleNetwork(size) {
             this.tuples.push(new Tuple(locations));
         }
     }
-}
+};
+
+TupleNetwork.deserialize = function(serialized) {
+    var tuples = serialized.tuples.map(function(tuple) {
+        return Tuple.deserialize(tuple);
+    });
+    return new TupleNetwork(tuples);
+};
 
 TupleNetwork.prototype.getLocationValues = function(grid, locations) {
     var i;

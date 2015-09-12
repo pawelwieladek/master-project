@@ -1,7 +1,7 @@
-import searchHandlers from '../handlers/search-handlers/main-search-handlers';
+import mainHandlers from '../handlers/main-handlers.js';
 
-let handlers = app => {
-    searchHandlers(app);
+let handlers = registry => {
+    mainHandlers.forEach(handler => handler(registry));
 };
 
 export default handlers;

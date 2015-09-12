@@ -1,7 +1,7 @@
-import searchHandlers from '../handlers/search-handlers/child-search-handlers';
+import childHandlers from '../handlers/child-handlers.js';
 
 let handlers = registry => {
-    searchHandlers(registry);
+    childHandlers.forEach(handler => handler(registry));
 };
 
 export default handlers;
