@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-let Grid = React.createClass({
+let GameGrid = React.createClass({
+    propTypes: {
+        disabled: PropTypes.bool
+    },
     render() {
         let tiles = this.props.tiles.map((value, index) => {
             let classes = classnames('tile', 'tile-' + value);
@@ -9,9 +12,9 @@ let Grid = React.createClass({
             return <div className={classes} key={'cell-' + index}>{tile}</div>;
         });
         return (
-            <div className='grid'>{tiles}</div>
+            <div className={classnames('grid', { 'disabled': this.props.disabled })}>{tiles}</div>
         );
     }
 });
 
-export default Grid;
+export default GameGrid;

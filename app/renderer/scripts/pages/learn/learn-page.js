@@ -4,9 +4,9 @@ import { Row, Col, Button, Input } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
 import ReactSlider from 'react-slider';
 
-import { createPlayerAction, learnAction, notifyLearnProgressAction } from '../../../browser/actions/learn-actions.js';
-import GameGrid from '../components/grid';
-import CommunicationMixin from '../mixins/communication-mixin';
+import { createPlayerAction, learnAction, notifyLearnProgressAction } from '../../../../browser/actions/learn-actions.js';
+import GameGrid from '../../components/game-grid';
+import CommunicationMixin from '../../mixins/communication-mixin';
 
 let SearchPlayerPage = React.createClass({
     mixins: [ CommunicationMixin ],
@@ -45,7 +45,7 @@ let SearchPlayerPage = React.createClass({
                 <Col sm={6}>
                     <Row>
                         <Col xs={12}>
-                            <GameGrid tiles={this.state.tiles} />
+                            <GameGrid tiles={Repeat(0, 16).toArray()} disabled />
                         </Col>
                     </Row>
                 </Col>

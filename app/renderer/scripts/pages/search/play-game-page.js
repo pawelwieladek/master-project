@@ -4,9 +4,9 @@ import { Row, Col, Button, Input, Panel, Tabs, Tab, Alert } from 'react-bootstra
 import { Repeat, List } from 'immutable';
 import ReactSlider from 'react-slider';
 
-import SearchActions from '../../../browser/actions/search-actions';
-import GameGrid from '../components/grid';
-import CommunicationMixin from '../mixins/communication-mixin';
+import SearchActions from '../../../../browser/actions/search-actions';
+import GameGrid from '../../components/game-grid';
+import CommunicationMixin from '../../mixins/communication-mixin';
 
 let SearchPlayerPage = React.createClass({
     mixins: [CommunicationMixin],

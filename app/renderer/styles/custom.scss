@@ -14,6 +14,10 @@ $secondary-tile-color: #f9f6f2;
   width: $grid-size + 5;
   height: $grid-size + 5;
   margin: 0 auto;
+
+  &.disabled {
+    opacity: 0.4;
+  }
 }
 
 .tile {

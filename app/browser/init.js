@@ -3,8 +3,8 @@ var handlers = require("./main").handlers;
 
 var main = new App({
     dirname: __dirname,
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     title: '2048 AI App'
 });
 
