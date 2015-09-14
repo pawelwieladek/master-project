@@ -8,8 +8,8 @@ import { createPlayerAction } from '../../../../browser/actions/learn-actions.js
 import GameGrid from '../../components/game-grid';
 import CommunicationMixin from '../../mixins/communication-mixin';
 
-let CreateLearnPlayerPage = React.createClass({
-    displayName: 'CreateLearnPlayerPage',
+let CreatePlayerPage = React.createClass({
+    displayName: 'CreatePlayerPage',
     mixins: [ CommunicationMixin, Navigation ],
     getInitialState() {
         return {
@@ -23,7 +23,7 @@ let CreateLearnPlayerPage = React.createClass({
         this.setState({
             isLoading: false
         });
-        this.transitionTo('/learn/learn');
+        this.transitionTo('/learning/learn');
     },
     createPlayer() {
         this.setState({
@@ -58,4 +58,4 @@ let CreateLearnPlayerPage = React.createClass({
     }
 });
 
-export default CreateLearnPlayerPage;
+export default CreatePlayerPage;

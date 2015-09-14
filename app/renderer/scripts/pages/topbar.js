@@ -8,8 +8,8 @@ let Topbar = React.createClass({
         return (
             <Well>
                 <ButtonGroup>
-                    <Button onClick={() => this.transitionTo('search')}>Search</Button>
-                    <Button onClick={() => this.transitionTo('learn')}>Learn</Button>
+                    <Button onClick={() => this.transitionTo('/searching')}>Search</Button>
+                    <Button onClick={() => this.transitionTo('/learning')}>Learn</Button>
                 </ButtonGroup>
             </Well>
         )

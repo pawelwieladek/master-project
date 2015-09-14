@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
 
-let SearchIndexPage = React.createClass({
+let IndexPage = React.createClass({
     render () {
         return (
             <div>
@@ -12,4 +12,4 @@ let SearchIndexPage = React.createClass({
     }
 });
 
-export default SearchIndexPage;
+export default IndexPage;

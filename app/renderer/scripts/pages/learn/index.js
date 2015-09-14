@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
 
-let LearnIndexPage = React.createClass({
+let IndexPage = React.createClass({
     render () {
         return (
             <div>
@@ -12,4 +12,4 @@ let LearnIndexPage = React.createClass({
     }
 });
 
-export default LearnIndexPage;
+export default IndexPage;

@@ -8,7 +8,7 @@ import SearchActions from '../../../../browser/actions/search-actions';
 import GameGrid from '../../components/game-grid';
 import CommunicationMixin from '../../mixins/communication-mixin';
 
-let SearchPlayerPage = React.createClass({
+let PlayGamePage = React.createClass({
     mixins: [CommunicationMixin],
     getInitialState() {
         return {
@@ -137,4 +137,4 @@ let SearchPlayerPage = React.createClass({
     }
 });
 
-export default SearchPlayerPage;
+export default PlayGamePage;
