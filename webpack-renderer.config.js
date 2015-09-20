@@ -1,12 +1,10 @@
 var excluded = /(node_modules|bower_components|dist|src)/;
 
 module.exports = {
-    entry: {
-        "app/scripts/bundle": './app/renderer/scripts/main.js'
-    },
+    entry: './app/renderer/scripts/main.js',
     output: {
-        path: './dist/',
-        filename: '[name].js'
+        path: './dist/app/scripts/',
+        publicPath: './scripts/'
     },
     target: 'atom',
     module: {
@@ -26,10 +24,8 @@ module.exports = {
                 exclude: excluded,
                 loader: 'style!css!sass'
             },
-            {
-                test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-                loader: 'file-loader'
-            }
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
         ]
     }
 };

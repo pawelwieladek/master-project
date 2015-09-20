@@ -1,10 +1,8 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
 import { Grid } from 'react-bootstrap';
+import Topbar from '../components/topbar.js';
 
-import Topbar from './topbar.js';
-
-require('!style!css!sass!../../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss');
 require('!style!css!sass!../../styles/style.scss');
 
 let AppPage = React.createClass({
@@ -12,7 +10,7 @@ let AppPage = React.createClass({
         return (
             <Grid>
                 <Topbar />
-                <RouteHandler/>
+                <RouteHandler />
             </Grid>
         )
     }

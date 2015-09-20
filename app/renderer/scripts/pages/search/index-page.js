@@ -1,15 +1,13 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
 
-let IndexPage = React.createClass({
+export default React.createClass({
+    displayName: 'SearchIndexPage',
     render () {
         return (
             <div>
-                <h1>Search</h1>
                 <RouteHandler/>
             </div>
         )
     }
 });
-
-export default IndexPage;

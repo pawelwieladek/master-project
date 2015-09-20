@@ -44,7 +44,9 @@ var webpackTask = function(params) {
 
         return webpack(config, function(err, stats) {
             if (err) throw new gutil.PluginError('webpack', err);
-            gutil.log('[webpack done]');
+            gutil.log("[webpack]", stats.toString({
+                // output options
+            }));
             if (!callbackCalled) {
                 callbackCalled = true;
                 callback();

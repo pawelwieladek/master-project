@@ -1,5 +1,5 @@
 import Registry from '../../common/registry';
-import { createPlayerAction, learnAction, notifyLearnProgressAction } from '../../actions/learn-actions';
+import { createPlayerIntent, learnIntent, notifyLearnProgressIntent } from '../../intents/learn-intents';
 
 let handlers = app => {
 
@@ -8,7 +8,7 @@ let handlers = app => {
         send();
     };
 
-    app.register(createPlayerAction, Registry.withHandler(createPlayerAction, createPlayerHandler).build());
+    app.register(createPlayerIntent, Registry.withHandler(createPlayerIntent, createPlayerHandler).build());
 
     let learnHandler = (send) => {
         send();
@@ -18,7 +18,7 @@ let handlers = app => {
         send(isWin);
     };
 
-    app.register(learnAction, Registry.withHandler(learnAction, learnHandler).withHandler(notifyLearnProgressAction, notifyLearnProgressHandler).build());
+    app.register(learnIntent, Registry.withHandler(learnIntent, learnHandler).withHandler(notifyLearnProgressIntent, notifyLearnProgressHandler).build());
 };
 
 export default handlers;

@@ -1,18 +1,20 @@
-import { createPlayer, playGame, notifyProgress } from '../../actions/search-actions';
+import { createPlayerIntent, playGameIntent, notifyProgressIntent } from '../../intents/search-intents';
 import SearchPlayer from '../../../../src/ai/search/search-player';
 
 let handlers = registry => {
 
-    registry.register(createPlayer, send => {
-        send(createPlayer, SearchPlayer.createPlayer());
+    registry.register(createPlayerIntent, (send, context) => {
+        let params = context.args[0];
+        let player = SearchPlayer.createPlayer(params);
+        send(createPlayerIntent, player);
     });
 
-    registry.register(playGame, (send, context) => {
+    registry.register(playGameIntent, (send, context) => {
         let player = SearchPlayer.deserialize(context.state.player);
         let game = player.play((state, direction, reward, afterState, finalState) => {
-            send(notifyProgress, finalState);
+            send(notifyProgressIntent, finalState);
         });
-        send(playGame, game);
+        send(playGameIntent, game);
     });
 };
 

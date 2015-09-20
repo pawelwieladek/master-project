@@ -1,61 +1,46 @@
-import ipc from 'ipc';
 import React from 'react';
+import { ListenerMixin } from 'reflux';
 import { Navigation } from 'react-router';
-import { Row, Col, Button, Input } from 'react-bootstrap';
+import { Row, Col, Button, Input, Well, Glyphicon } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
 
-import { createPlayerAction } from '../../../../browser/actions/learn-actions.js';
-import GameGrid from '../../components/game-grid';
-import CommunicationMixin from '../../mixins/communication-mixin';
+import { createPlayerAction } from '../../actions/learn-player-actions.js';
+import LearnPlayerStore from '../../stores/learn-player-store.js';
 
-let CreatePlayerPage = React.createClass({
-    displayName: 'CreatePlayerPage',
-    mixins: [ CommunicationMixin, Navigation ],
+export default React.createClass({
+    displayName: 'CreateLearnPlayerPage',
+    mixins: [ ListenerMixin, Navigation ],
     getInitialState() {
         return {
             isLoading: false
         };
     },
     componentDidMount() {
-        this.listenTo(createPlayerAction, this.didCreatePlayer);
+        this.listenTo(LearnPlayerStore, this.didCreatePlayer);
     },
     didCreatePlayer() {
-        this.setState({
-            isLoading: false
-        });
-        this.transitionTo('/learning/learn');
+        this.setState({ isLoading: false });
+        this.transitionTo('/learn/settings');
     },
     createPlayer() {
-        this.setState({
-            isLoading: true
-        });
-        this.trigger(createPlayerAction);
+        this.setState({ isLoading: true });
+        let learningRate = this.refs['learningRate'].getValue();
+        createPlayerAction(learningRate);
     },
     render() {
         return (
-            <Row>
-                <Col sm={6}>
+            <div>
+                <div>
+                    <Input type='text' ref='learningRate' label='Learning rate' placeholder='Learning rate' defaultValue={0.01} />
+                </div>
+                <Well>
                     <Row>
-                        <Col xs={12}>
-                            <GameGrid tiles={Repeat(0, 16).toArray()} disabled />
+                        <Col md={6} mdOffset={6} className="text-right">
+                            <Button bsStyle="primary" onClick={this.createPlayer}>Create player <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
-                </Col>
-                <Col sm={6}>
-                    <Row>
-                        <Col xs={12}>
-                            <Input type='text' label='Learning rate' placeholder='Learning rate' defaultValue={0.01} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={12}>
-                            <Button onClick={this.createPlayer}>Create player</Button>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+                </Well>
+            </div>
         );
     }
 });
-
-export default CreatePlayerPage;
