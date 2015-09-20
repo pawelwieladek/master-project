@@ -11,7 +11,7 @@ Game.deserialize = function(serialized) {
     var game = new Game();
     game.movesNumber = serialized.movesNumber;
     game.score = serialized.score;
-    game.grid = Grid.deserialize(serialized.grid);
+    game.grid = new Grid(serialized.grid.tiles);
     return game;
 };
 

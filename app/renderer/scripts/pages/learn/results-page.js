@@ -88,7 +88,7 @@ export default React.createClass({
         return {
             isLearning: !_.isUndefined(this.props.query.iterations),
             showResults: true,
-            results: [],
+            results: LearnPlayerStore.results,
             iterations: LearnPlayerStore.results.length + parseInt(this.props.query.iterations)
         };
     },
@@ -120,6 +120,9 @@ export default React.createClass({
                     <Row>
                         <Col md={6}>
                             <Button onClick={() => this.transitionTo('/learn/settings', this.getParams(), this.getQuery())}><Glyphicon glyph="chevron-left" /> Back</Button>
+                        </Col>
+                        <Col md={6} className="text-right">
+                            <Button bsStyle="primary" onClick={() => this.transitionTo('/learn/play')}><Glyphicon glyph="chevron-right" /> Play</Button>
                         </Col>
                     </Row>
                 </Well>

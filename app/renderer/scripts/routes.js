@@ -11,6 +11,7 @@ import LearnIndexPage from './pages/learn/index-page.js';
 import CreateLearnPlayer from './pages/learn/create-player-page.js';
 import LearnSettingsPage from './pages/learn/settings-page.js';
 import LearnResultsPage from './pages/learn/results-page.js';
+import PlayLearnGamePage from './pages/learn/play-game-page.js';
 
 let routes = (
     <Route handler={AppPage}>
@@ -24,6 +25,7 @@ let routes = (
             <Route path='create' handler={CreateLearnPlayer}/>
             <Route path='settings' handler={LearnSettingsPage}/>
             <Route path='results' handler={LearnResultsPage}/>
+            <Route path='play' handler={PlayLearnGamePage}/>
         </Route>
     </Route>
 );

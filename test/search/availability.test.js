@@ -1,6 +1,6 @@
 describe("Availability", function() {
     var Grid = require("../../src/game/grid");
-    var availability = require(".././availability");
+    var availability = require("../../src/ai/search/heuristics/availability");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [
@@ -9,7 +9,7 @@ describe("Availability", function() {
                 2, 0, 0, 0,
                 0, 2, 1, 5
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(availability(grid)).to.equal(-8);
         });
         it("Case 2", function() {
@@ -19,7 +19,7 @@ describe("Availability", function() {
                 2, 6, 4, 2,
                 1, 2, 1, 5
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(availability(grid)).to.equal(-16);
         });
         it("Case 3", function() {
@@ -29,7 +29,7 @@ describe("Availability", function() {
                 2, 0, 4, 2,
                 1, 2, 1, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(availability(grid)).to.equal(-13);
         });
         it("Case 4", function() {
@@ -39,7 +39,7 @@ describe("Availability", function() {
                 0, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(availability(grid)).to.equal(0);
         });
     });

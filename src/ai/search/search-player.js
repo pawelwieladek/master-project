@@ -1,10 +1,8 @@
 var _ = require("lodash");
 
 var Player = require("../../game/player");
-var Game = require("../../game/game");
-var Grid = require("../../game/grid");
-var Utils = require("../../../config").Utils;
-var Parameters = require("../../../config").Config.Parameters;
+var Utils = require("../../../config/utils");
+var Parameters = require("../../../config/config").Parameters;
 var SearchTree = require("./search-tree");
 
 function SearchPlayer(params) {

@@ -1,30 +1,18 @@
 var Direction = require("./direction");
+var Helpers = require("./helpers");
+var Config = require("../../config/config");
 
-function Grid(size) {
+function Grid(tiles) {
     var i;
-    this.size = size || 4;
-    this.tiles = new Array(Math.pow(this.size, 2));
-    for (i = 0; i < this.tiles.length; i++)
-        this.tiles[i] = 0;
+    this.tiles = tiles || new Array(Math.pow(Config.GridSize, 2));
+    if (!tiles) {
+        for (i = 0; i < this.tiles.length; i++)
+            this.tiles[i] = 0;
+    }
 }
 
-Grid.deserialize = function(serialized) {
-    var grid = new Grid(serialized.size);
-    grid.tiles = serialized.tiles.slice(0);
-    return grid;
-};
-
-Grid.from = function(array) {
-    var size = parseInt(Math.sqrt(array.length));
-    var grid = new Grid(size);
-    grid.tiles = array.slice(0, Math.pow(size, 2));
-    return grid;
-};
-
 Grid.prototype.clone = function() {
-    var clone = new Grid(this.size);
-    clone.tiles = this.tiles.slice(0);
-    return clone;
+    return new Grid(this.tiles.slice(0));
 };
 
 Grid.prototype.value = function(index) {
@@ -39,48 +27,16 @@ Grid.prototype.remove = function(index) {
     return this.tiles[index] = 0;
 };
 
-// TODO: Possible performance gain with memoization
-Grid.prototype.shiftIndex = function(index, direction) {
-    switch (direction) {
-        case Direction.Up: return index >= this.size ? index - this.size : null;
-        case Direction.Down: return index < this.tiles.length - this.size ? index + this.size : null;
-        case Direction.Left: return index % this.size !== 0 ? index - 1 : null;
-        case Direction.Right: return (index + 1) % this.size !== 0 ? index + 1 : null;
-    }
-};
-
 Grid.prototype.moveValue = function(source, destination, value) {
     this.add(destination, value);
     this.remove(source);
-};
-
-// TODO: Possible performance gain with memoization
-Grid.prototype.cells = function(direction) {
-    var i, j, k;
-    var cells = new Array(this.tiles.length);
-    switch (direction) {
-        case Direction.Left:
-        case Direction.Right:
-            for (i = 0; i < cells.length; i++)
-                cells[i] = i;
-            if (direction === Direction.Left) cells.reverse();
-            return cells;
-        case Direction.Up:
-        case Direction.Down:
-            k = 0;
-            for (i = 0; i < this.size; i++)
-                for (j = 0; j < this.size; j++)
-                    cells[k++] = i + j * this.size;
-            if (direction === Direction.Up) cells.reverse();
-            return cells;
-    }
 };
 
 Grid.prototype.destination = function(index, direction) {
     var indexValue = this.value(index);
     if (indexValue === 0) return index;
     while (true) {
-        var next = this.shiftIndex(index, direction);
+        var next = Helpers.shiftIndex(index, direction);
         if (next === null) break;
         var nextValue = this.value(next);
         if (nextValue === 0) {
@@ -98,7 +54,7 @@ Grid.prototype.destination = function(index, direction) {
 Grid.prototype.neighbour = function(index, direction) {
     if (this.value(index) === 0) return index;
     while (true) {
-        var next = this.shiftIndex(index, direction);
+        var next = Helpers.shiftIndex(index, direction);
         if (next === null) {
             index = null;
             break;
@@ -117,7 +73,7 @@ Grid.prototype.slide = function(direction) {
     var points = 0;
     var moved = false;
     var merged = [];
-    this.cells(Direction.opposite(direction)).forEach(function(index) {
+    Helpers.cells(Direction.opposite(direction)).forEach(function(index) {
         var value = this.value(index);
         if (value !== 0) {
             var destination = this.destination(index, direction);
@@ -126,7 +82,7 @@ Grid.prototype.slide = function(direction) {
                     this.moveValue(index, destination, this.value(index));
                     moved = true;
                 } else if (merged.indexOf(destination) > -1) {
-                    destination = this.shiftIndex(destination, Direction.opposite(direction));
+                    destination = Helpers.shiftIndex(destination, Direction.opposite(direction));
                     if (destination === index) return;
                     this.moveValue(index, destination, this.value(index));
                     moved = true;
@@ -158,9 +114,9 @@ Grid.prototype.available = function() {
 
 Grid.prototype.toString = function() {
     var i;
-    var string = new Array(this.size);
-    for (i = 0; i < this.size; i++)
-        string[i] = this.tiles.slice(i * this.size, (i + 1) * this.size).join("\t");
+    var string = new Array(Config.GridSize);
+    for (i = 0; i < Config.GridSize; i++)
+        string[i] = this.tiles.slice(i * Config.GridSize, (i + 1) * Config.GridSize).join("\t");
     return string.join("\n");
 };
 

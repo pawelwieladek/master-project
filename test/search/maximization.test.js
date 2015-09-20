@@ -1,6 +1,6 @@
 describe("Maximization", function() {
     var Grid = require("../../src/game/grid");
-    var maximization = require(".././maximization");
+    var maximization = require("../../src/ai/search/heuristics/maximization");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [
@@ -9,7 +9,7 @@ describe("Maximization", function() {
                 2, 0, 0, 0,
                 0, 2, 1, 5
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(maximization(grid)).to.equal(5);
         });
         it("Case 2", function() {
@@ -19,7 +19,7 @@ describe("Maximization", function() {
                 2, 6, 4, 2,
                 1, 2, 1, 5
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(maximization(grid)).to.equal(6);
         });
         it("Case 3", function() {
@@ -29,7 +29,7 @@ describe("Maximization", function() {
                 2, 0, 4, 2,
                 1, 2, 1, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(maximization(grid)).to.equal(6);
         });
         it("Case 4", function() {
@@ -39,7 +39,7 @@ describe("Maximization", function() {
                 0, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(maximization(grid)).to.equal(0);
         });
         it("Case 5", function() {
@@ -49,7 +49,7 @@ describe("Maximization", function() {
                 2, 11, 4, 2,
                 1, 2, 1, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(maximization(grid)).to.equal(11);
         });
     });

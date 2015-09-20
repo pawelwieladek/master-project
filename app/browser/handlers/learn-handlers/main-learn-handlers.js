@@ -1,5 +1,5 @@
 import Registry from '../../common/registry';
-import { createPlayerIntent, learnIntent, notifyLearnProgressIntent } from '../../intents/learn-intents';
+import LearnIntents from '../../intents/learn-intents';
 
 let handlers = app => {
 
@@ -8,7 +8,11 @@ let handlers = app => {
         send();
     };
 
-    app.register(createPlayerIntent, Registry.withHandler(createPlayerIntent, createPlayerHandler).build());
+    app.register(
+        LearnIntents.createPlayerIntent,
+        Registry.withHandler(LearnIntents.createPlayerIntent, createPlayerHandler)
+            .build()
+    );
 
     let learnHandler = (send) => {
         send();
@@ -18,7 +22,28 @@ let handlers = app => {
         send(isWin);
     };
 
-    app.register(learnIntent, Registry.withHandler(learnIntent, learnHandler).withHandler(notifyLearnProgressIntent, notifyLearnProgressHandler).build());
+    app.register(
+        LearnIntents.learnIntent,
+        Registry.withHandler(LearnIntents.learnIntent, learnHandler)
+            .withHandler(LearnIntents.notifyLearnProgressIntent, notifyLearnProgressHandler)
+            .build()
+    );
+
+    let playGameHandler = (send, game) => {
+        send(game);
+    };
+
+    let notifyGameProgressHandler = (send, grid) => {
+        send(grid.tiles);
+    };
+
+    app.register(
+        LearnIntents.playGameIntent,
+        Registry
+            .withHandler(LearnIntents.playGameIntent, playGameHandler)
+            .withHandler(LearnIntents.notifyGameProgressIntent, notifyGameProgressHandler)
+            .build()
+    );
 };
 
 export default handlers;

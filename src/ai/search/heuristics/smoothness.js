@@ -1,4 +1,6 @@
 var Direction = require("../../../game/direction");
+var Helpers = require("../../../game/helpers");
+
 var Smoothness = {
     compare: function(grid, index, direction) {
         var neighbour = grid.neighbour(index, direction);
@@ -7,7 +9,7 @@ var Smoothness = {
     },
     evaluate: function(grid, direction) {
         var sum = 0;
-        grid.cells(direction).forEach(function(index) {
+        Helpers.cells(direction).forEach(function(index) {
             if (grid.value(index) === 0) return;
             sum += Smoothness.compare(grid, index, direction);
         });

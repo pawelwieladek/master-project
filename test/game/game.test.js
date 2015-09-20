@@ -1,5 +1,5 @@
 var TestUtils = require("../test-utils");
-var Game = require("../../src/game/game");
+var Rules = require("../../src/game/rules");
 var Directions = require("../../src/game/direction");
 
 describe("game rules", function () {
@@ -18,7 +18,7 @@ describe("game rules", function () {
         };
 
         // when
-        var state = Game.addRandomTile(grid);
+        var state = Rules.addRandomTile(grid);
         var indexMatcher = TestUtils.matchNumberWithin(1, 3);
         var valueMatcher = TestUtils.matchNumberWithin(1, 2);
 
@@ -44,7 +44,7 @@ describe("game rules", function () {
             var direction = Directions.Down;
 
             // when
-            var result = Game.computeAfterState(grid, direction);
+            var result = Rules.computeAfterState(grid, direction);
 
             // then
             expect(grid.clone).to.have.been.called;
@@ -67,7 +67,7 @@ describe("game rules", function () {
             var direction = Directions.Down;
 
             // when
-            var result = Game.computeAfterState(grid, direction);
+            var result = Rules.computeAfterState(grid, direction);
 
             // then
             expect(grid.clone).to.have.been.called;
