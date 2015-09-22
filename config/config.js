@@ -4,34 +4,17 @@ var Config = {
         Learn: "learn",
         Search: "search"
     },
-    Parameters: {
+    OpponentValues: [1, 2],
+    Defaults: {
         Search: {
-            Depth: {
-                Range: [3, 4, 5, 6],
-                Default: 3
-            },
-            Monotonicity: {
-                Range: [1, 2, 3, 4],
-                Default: 4
-            },
-            Smoothness: {
-                Range: [1, 2, 3, 4],
-                Default: 4
-            },
-            Availability: {
-                Range: [1, 2, 3, 4],
-                Default: 3
-            },
-            Maximization: {
-                Range: [1, 2, 3, 4],
-                Default: 2
-            }
+            Depth: 3,
+            Monotonicity: 4,
+            Smoothness: 4,
+            Availability: 3,
+            Maximization: 2
         },
         Learn: {
-            LearningRate: {
-                Range: [1, 0.1, 0.01, 0.001],
-                Default: 0.01
-            }
+            LearningRate: 0.01
         }
     }
 };

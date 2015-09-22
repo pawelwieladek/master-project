@@ -12,8 +12,7 @@ export default React.createClass({
     learn() {
         let iterations = this.refs['iterations'].getValue();
         learnAction(iterations);
-        let query = assign(this.getQuery(), { iterations });
-        this.transitionTo('/learn/results', this.getParams(), query);
+        this.transitionTo('/learn/results', this.getParams(), { iterations });
     },
     render() {
         return (

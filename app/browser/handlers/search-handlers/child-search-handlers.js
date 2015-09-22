@@ -5,12 +5,12 @@ let handlers = registry => {
 
     registry.register(createPlayerIntent, (send, context) => {
         let params = context.args[0];
-        let player = SearchPlayer.createPlayer(params);
+        let player = new SearchPlayer(params);
         send(createPlayerIntent, player);
     });
 
     registry.register(playGameIntent, (send, context) => {
-        let player = SearchPlayer.deserialize(context.state.player);
+        let player = new SearchPlayer(context.state.player);
         let game = player.play((state, direction, reward, afterState, finalState) => {
             send(notifyProgressIntent, finalState);
         });

@@ -14,7 +14,8 @@ let handlers = app => {
             .build()
     );
 
-    let learnHandler = (send) => {
+    let learnHandler = (send, player) => {
+        app.setState({ player });
         send();
     };
 

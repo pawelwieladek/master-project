@@ -8,10 +8,12 @@ require('!style!css!sass!../../styles/style.scss');
 let AppPage = React.createClass({
     render () {
         return (
-            <Grid>
+            <div>
                 <Topbar />
-                <RouteHandler />
-            </Grid>
+                <Grid>
+                    <RouteHandler />
+                </Grid>
+            </div>
         )
     }
 });

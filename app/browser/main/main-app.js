@@ -66,8 +66,7 @@ export default class MainApp {
             this.mainWindow = new BrowserWindow({
                 width: this.width,
                 height: this.height,
-                center: true,
-                title: this.title
+                center: true
             });
             this.mainWindow.loadUrl('file://' + this.dirname +'/app/index.html');
             this.mainWindow.openDevTools();

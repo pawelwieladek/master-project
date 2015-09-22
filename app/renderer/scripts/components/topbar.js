@@ -7,12 +7,12 @@ let Topbar = React.createClass({
     mixins: [ Navigation ],
     render () {
         return (
-            <Well>
+            <div className="topbar">
                 <ButtonGroup>
                     <Button onClick={() => this.transitionTo('/search')}>Search</Button>
                     <Button onClick={() => this.transitionTo('/learn')}>Learn</Button>
                 </ButtonGroup>
-            </Well>
+            </div>
         )
     }
 });

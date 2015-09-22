@@ -70,10 +70,14 @@ Grid.prototype.compare = function(source, destination) {
 };
 
 Grid.prototype.slide = function(direction) {
+    var i;
+    var index;
     var points = 0;
     var moved = false;
     var merged = [];
-    Helpers.cells(Direction.opposite(direction)).forEach(function(index) {
+    var cells = Helpers.cells(Direction.opposite(direction));
+    for (i = 0; i < cells.length; i++) {
+        index = cells[i];
         var value = this.value(index);
         if (value !== 0) {
             var destination = this.destination(index, direction);
@@ -83,7 +87,7 @@ Grid.prototype.slide = function(direction) {
                     moved = true;
                 } else if (merged.indexOf(destination) > -1) {
                     destination = Helpers.shiftIndex(destination, Direction.opposite(direction));
-                    if (destination === index) return;
+                    if (destination === index) continue;
                     this.moveValue(index, destination, this.value(index));
                     moved = true;
                 } else {
@@ -95,7 +99,7 @@ Grid.prototype.slide = function(direction) {
                 }
             }
         }
-    }.bind(this));
+    }
     if (moved === true) return points; else return null;
 };
 

@@ -1,13 +1,7 @@
-function Tuple(locations) {
+function Tuple(locations, lookupTable) {
     this.locations = locations;
-    this.lookupTable = {};
+    this.lookupTable = lookupTable || {};
 }
-
-Tuple.deserialize = function(serialized) {
-    var tuple = new Tuple(serialized.locations);
-    tuple.lookupTable = serialized.lookupTable;
-    return tuple;
-};
 
 Tuple.prototype.buildKey = function(values) {
     return values.join(':');

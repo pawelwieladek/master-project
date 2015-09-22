@@ -8,11 +8,13 @@ var Smoothness = {
         return Math.abs(grid.compare(index, neighbour));
     },
     evaluate: function(grid, direction) {
+        var i, index;
         var sum = 0;
-        Helpers.cells(direction).forEach(function(index) {
-            if (grid.value(index) === 0) return;
-            sum += Smoothness.compare(grid, index, direction);
-        });
+        var cells = Helpers.cells(direction);
+        for (i = 0; i < cells.length; i++) {
+            if (grid.value(cells[i]) === 0) continue;
+            sum += Smoothness.compare(grid, cells[i], direction);
+        }
         return sum;
     },
     value: function(grid) {

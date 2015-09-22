@@ -2,7 +2,7 @@ import ipc from 'ipc';
 import React from 'react';
 import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
-import { Row, Col, Button, Input, Alert, Glyphicon, Well, Panel } from 'react-bootstrap';
+import { Row, Col, Button, Input, Alert, Glyphicon, Well } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
 import ReactSlider from 'react-slider';
 
@@ -79,11 +79,9 @@ export default React.createClass({
         }
         return (
             <div>
-                <Row>
+                <Row style={{ marginBottom: 20 }}>
                     <Col sm={6}>
-                        <Panel>
-                            <GameGrid tiles={this.state.tiles} />
-                        </Panel>
+                        <GameGrid tiles={this.state.tiles} />
                     </Col>
                     <Col sm={6}>
                         <div>

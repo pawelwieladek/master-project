@@ -1,54 +1,48 @@
-var _ = require("lodash");
 var Tuple = require("./tuple");
+var Config = require("../../../../config/config");
 
-function TupleNetwork(arg) {
-    this.tuples = [];
-
-    if (_.isNumber(arg)) {
-        this.initializeTuples(arg);
-    } else if (_.isArray(arg)) {
-        this.tuples = arg;
+function TupleNetwork(params) {
+    params = params || {};
+    if (params.tuples) {
+        this.tuples = new Array(params.tuples.length);
+        for (var i = 0; i < params.tuples.length; i++) {
+            this.tuples[i] = new Tuple(params.tuples[i].locations, params.tuples[i].lookupTable);
+        }
     } else {
-        throw new Error("TupleNetwork cannot be initialized");
+        this.initializeTuples();
     }
 }
 
-TupleNetwork.prototype.initializeTuples = function(size) {
+TupleNetwork.prototype.initializeTuples = function() {
     var i, j, locations;
 
-    for (i = 0; i < size; i++) {
+    this.tuples = [];
+    for (i = 0; i < Config.GridSize; i++) {
         locations = [];
-        for (j = i * size; j < (i + 1) * size; j++) {
+        for (j = i * Config.GridSize; j < (i + 1) * Config.GridSize; j++) {
             locations.push(j);
         }
         this.tuples.push(new Tuple(locations));
     }
 
-    for (i = 0; i < size; i++) {
+    for (i = 0; i < Config.GridSize; i++) {
         locations = [];
-        for (j = i; j < Math.pow(size, 2); j += size) {
+        for (j = i; j < Math.pow(Config.GridSize, 2); j += Config.GridSize) {
             locations.push(j);
         }
         this.tuples.push(new Tuple(locations));
     }
 
-    for (i = 0; i < size - 1; i++) {
-        for (j = 0; j < size - 1; j++) {
+    for (i = 0; i < Config.GridSize - 1; i++) {
+        for (j = 0; j < Config.GridSize - 1; j++) {
             locations = [];
-            locations.push(i * size + j);
-            locations.push(i * size + j + 1);
-            locations.push((i + 1) * size + j);
-            locations.push((i + 1) * size + j + 1);
+            locations.push(i * Config.GridSize + j);
+            locations.push(i * Config.GridSize + j + 1);
+            locations.push((i + 1) * Config.GridSize + j);
+            locations.push((i + 1) * Config.GridSize + j + 1);
             this.tuples.push(new Tuple(locations));
         }
     }
-};
-
-TupleNetwork.deserialize = function(serialized) {
-    var tuples = serialized.tuples.map(function(tuple) {
-        return Tuple.deserialize(tuple);
-    });
-    return new TupleNetwork(tuples);
 };
 
 TupleNetwork.prototype.getLocationValues = function(grid, locations) {

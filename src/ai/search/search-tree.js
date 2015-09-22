@@ -1,28 +1,24 @@
+var Config = require("../../../config/config");
 var Direction = require("../../game/direction");
 var monotonicity = require("./heuristics/monotonicity");
 var smoothness = require("./heuristics/smoothness");
 var availability = require("./heuristics/availability");
 var maximization = require("./heuristics/maximization");
 
-function SearchTree(depth, monotonicityWeight, smoothnessWeight, availabilityWeight, maximizationWeight) {
-    this.depth = depth;
-    this.monotonicityWeight = monotonicityWeight;
-    this.smoothnessWeight = smoothnessWeight;
-    this.availabilityWeight = availabilityWeight;
-    this.maximizationWeight = maximizationWeight;
+function SearchTree(params) {
+    params = params || {};
+    this.depth = params.depth || Config.Defaults.Search.Depth;
+    this.monotonicity = params.monotonicity || Config.Defaults.Search.Monotonicity;
+    this.smoothness = params.smoothness || Config.Defaults.Search.Smoothness;
+    this.availability = params.availability || Config.Defaults.Search.Availability;
+    this.maximization = params.maximization || Config.Defaults.Search.Maximization;
 }
 
-SearchTree.deserialize = function(serialized) {
-    return new SearchTree(serialized.depth, serialized.monotonicityWeight, serialized.smoothnessWeight, serialized.availabilityWeight, serialized.maximizationWeight);
-};
-
-SearchTree.OpponentValues = [1, 2];
-
 SearchTree.prototype.evaluate = function(grid) {
-    return this.monotonicityWeight * monotonicity(grid) +
-        this.smoothnessWeight * smoothness(grid) +
-        this.availabilityWeight * availability(grid) +
-        this.maximizationWeight * maximization(grid);
+    return this.monotonicity * monotonicity(grid) +
+        this.smoothness * smoothness(grid) +
+        this.availability * availability(grid) +
+        this.maximization * maximization(grid);
 };
 
 SearchTree.prototype.search = function(grid) {
@@ -31,11 +27,11 @@ SearchTree.prototype.search = function(grid) {
 
 SearchTree.prototype.opponentMoves = function(grid) {
     var moves = [];
-    for (var i = 0; i < SearchTree.OpponentValues.length; i++) {
+    for (var i = 0; i < Config.OpponentValues.length; i++) {
         for (var j = 0; j < grid.tiles.length; j++) {
             if (grid.value(j) === 0) {
                 var clone = grid.clone();
-                clone.add(j, SearchTree.OpponentValues[i]);
+                clone.add(j, Config.OpponentValues[i]);
                 moves.push(clone);
             }
         }

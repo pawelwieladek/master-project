@@ -5,6 +5,13 @@ $tile-size: ($grid-size - (4 * $tile-gap)) / 4;
 $primary-tile-color: #776e65;
 $secondary-tile-color: #f9f6f2;
 
+.topbar {
+  @extend .well;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
 .grid {
   font-family: 'Oxygen', sans-serif;
   font-size: 0;

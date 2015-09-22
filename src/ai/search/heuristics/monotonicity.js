@@ -1,5 +1,5 @@
 var Direction = require("../../../game/direction");
-var Helpers = require("../../../game/helpers")
+var Helpers = require("../../../game/helpers");
 
 var Monotonicity = {
     compare: function(grid, index, direction) {
@@ -10,11 +10,13 @@ var Monotonicity = {
         return value < 0 ? value : 0;
     },
     evaluate: function(grid, direction) {
+        var i;
         var sum = 0;
-        Helpers.cells(direction).forEach(function(index) {
-            if (grid.value(index) === 0) return;
-            sum += Monotonicity.compare(grid, index, direction);
-        });
+        var cells = Helpers.cells(direction);
+        for (i = 0; i < cells.length; i++) {
+            if (grid.value(cells[i]) === 0) continue;
+            sum += Monotonicity.compare(grid, cells[i], direction);
+        }
         return sum;
     },
     value: function(grid) {
