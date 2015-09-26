@@ -45,6 +45,7 @@
     "numeral": "^1.5.3",
     "object-assign": "^3.0.0",
     "react": "^0.13.3",
+    "react-bootstrap": "^0.25.2",
     "react-router": "^0.13.3",
     "react-select": "^0.6.9",
     "react-slider": "^0.5.1",
