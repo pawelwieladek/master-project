@@ -1,11 +1,10 @@
-var TupleNetwork = require("../../src/learn/tuple-network");
-var Grid = require("../../src/core/grid");
+var TupleNetwork = require(".././tuple-network");
+var Grid = require("../../src/game/grid");
 
 describe("tuple network", function() {
-    var grid, size, tupleNetwork;
+    var grid, tupleNetwork;
     beforeEach(function() {
-        size = 4;
-        tupleNetwork = new TupleNetwork(size);
+        tupleNetwork = new TupleNetwork();
         grid = Grid.from([
             3, 2, 1, 0,
             2, 1, 0, 0,

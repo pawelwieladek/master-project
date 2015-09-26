@@ -1,6 +1,6 @@
 describe("Monotonicity", function() {
-    var Grid = require("../../src/core/grid");
-    var monotonicity = require("../../src/search/monotonicity");
+    var Grid = require("../../src/game/grid");
+    var monotonicity = require("../../src/ai/search/heuristics/monotonicity");
     describe("Value", function() {
         it("Case 1", function() {
             var values = [
@@ -9,7 +9,7 @@ describe("Monotonicity", function() {
                 1, 0, 0, 0,
                 1, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(0);
         });
         it("Case 2", function() {
@@ -19,7 +19,7 @@ describe("Monotonicity", function() {
                 0, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(-1);
         });
         it("Case 3", function() {
@@ -29,7 +29,7 @@ describe("Monotonicity", function() {
                 0, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(-3);
         });
         it("Case 4", function() {
@@ -39,7 +39,7 @@ describe("Monotonicity", function() {
                 0, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(-7);
         });
         it("Case 5", function() {
@@ -49,7 +49,7 @@ describe("Monotonicity", function() {
                 3, 2, 1, 0,
                 2, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(0);
         });
         it("Case 6", function() {
@@ -59,7 +59,7 @@ describe("Monotonicity", function() {
                 0, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(0);
         });
         it("Case 7", function() {
@@ -69,7 +69,7 @@ describe("Monotonicity", function() {
                 1, 0, 0, 0,
                 0, 0, 0, 0
             ];
-            var grid = Grid.from(values);
+            var grid = new Grid(values);
             expect(monotonicity(grid)).to.equal(-1);
         });
     });
