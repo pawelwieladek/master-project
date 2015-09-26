@@ -22,7 +22,7 @@ SearchTree.prototype.evaluate = function(grid) {
 };
 
 SearchTree.prototype.search = function(grid) {
-    return this.minimax(grid, this.depth, true);
+    return this.minimax(grid, this.depth, true, -Infinity, Infinity);
 };
 
 SearchTree.prototype.opponentMoves = function(grid) {
@@ -55,10 +55,9 @@ SearchTree.prototype.playerMoves = function(grid) {
     return moves;
 };
 
-SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
+SearchTree.prototype.minimax = function(grid, depth, playerTurn, alpha, beta) {
     var i, result;
     var bestDirection = null;
-    var bestValue;
     if (grid.max() === 11 || depth === 0) {
         return {
             score: this.evaluate(grid),
@@ -67,30 +66,34 @@ SearchTree.prototype.minimax = function(grid, depth, playerTurn) {
     }
 
     if (playerTurn) {
-        bestValue = -Infinity;
         var playerMoves = this.playerMoves(grid);
         for (i = 0; i < playerMoves.length; i++) {
-            result = this.minimax(playerMoves[i].grid, depth - 1, !playerTurn);
-            if (result.score > bestValue) {
-                bestValue = result.score;
+            result = this.minimax(playerMoves[i].grid, depth - 1, !playerTurn, alpha, beta);
+            if (result.score > alpha) {
+                alpha = result.score;
                 bestDirection = playerMoves[i].direction;
+            }
+            if (alpha >= beta) {
+                break;
             }
         }
         return {
-            score: bestValue,
+            score: alpha,
             direction: bestDirection
         };
     } else {
-        bestValue = Infinity;
         var opponentMoves = this.opponentMoves(grid);
         for (i = 0; i < opponentMoves.length; i++) {
-            result = this.minimax(opponentMoves[i], depth - 1, !playerTurn);
-            if (result.score < bestValue) {
-                bestValue = result.score;
+            result = this.minimax(opponentMoves[i], depth - 1, !playerTurn, alpha, beta);
+            if (result.score < beta) {
+                beta = result.score;
+            }
+            if (alpha >= beta) {
+                break;
             }
         }
         return {
-            score: bestValue,
+            score: beta,
             direction: bestDirection
         };
     }
