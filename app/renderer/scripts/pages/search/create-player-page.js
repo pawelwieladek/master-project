@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
-import { Row, Col, Button, Input, Well } from 'react-bootstrap';
+import { Row, Col, Button, Input, Well, Glyphicon } from 'react-bootstrap';
 
 import { createPlayerAction } from '../../actions/search-player-actions';
 import SearchModeStore from '../../stores/search-player-store';
@@ -29,6 +29,7 @@ export default React.createClass({
         this.setState({ isLoading: true });
         createPlayerAction({ depth, monotonicity, smoothness, availability, maximization });
     },
+
     render() {
         return (
             <div>
@@ -52,7 +53,7 @@ export default React.createClass({
                 <Well>
                     <Row>
                         <Col sm={12} className="text-right">
-                            <Button bsStyle="primary" onClick={this.createPlayer}>Create player</Button>
+                            <Button onClick={this.createPlayer}>Play <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
                 </Well>

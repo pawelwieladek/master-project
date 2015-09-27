@@ -19,13 +19,13 @@ let handlers = registry => {
         send(LearnIntents.learnIntent, player);
     });
 
-    registry.register(LearnIntents.playGameIntent, (send, context) => {
+    registry.register(LearnIntents.playSingleGameIntent, (send, context) => {
         let player = new LearnPlayer(context.state.player);
         player.learningEnabled = false;
         let game = player.play((state, direction, reward, afterState, finalState) => {
-            send(LearnIntents.notifyGameProgressIntent, finalState);
+            send(LearnIntents.notifySingleGameProgressIntent, finalState);
         });
-        send(LearnIntents.playGameIntent, game);
+        send(LearnIntents.playSingleGameIntent, game);
     });
 };
 

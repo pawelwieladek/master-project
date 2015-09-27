@@ -36,7 +36,7 @@ export default React.createClass({
                 <Well>
                     <Row>
                         <Col md={6} mdOffset={6} className="text-right">
-                            <Button bsStyle="primary" onClick={this.createPlayer}>Create player <Glyphicon glyph="chevron-right" /></Button>
+                            <Button onClick={this.createPlayer}>Create player <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
                 </Well>

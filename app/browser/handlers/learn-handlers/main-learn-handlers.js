@@ -39,10 +39,10 @@ let handlers = app => {
     };
 
     app.register(
-        LearnIntents.playGameIntent,
+        LearnIntents.playSingleGameIntent,
         Registry
-            .withHandler(LearnIntents.playGameIntent, playGameHandler)
-            .withHandler(LearnIntents.notifyGameProgressIntent, notifyGameProgressHandler)
+            .withHandler(LearnIntents.playSingleGameIntent, playGameHandler)
+            .withHandler(LearnIntents.notifySingleGameProgressIntent, notifyGameProgressHandler)
             .build()
     );
 };

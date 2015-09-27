@@ -138,7 +138,7 @@ export default React.createClass({
                 <Well>
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/learn/settings')}><Glyphicon glyph="chevron-left" /> Back</Button>
+                            <Button onClick={() => this.transitionTo('/learn/settings')}><Glyphicon glyph="chevron-left" /> Settings</Button>
                         </Col>
                         <Col md={6} className="text-right">
                             <Button bsStyle="primary" onClick={() => this.transitionTo('/learn/play')}><Glyphicon glyph="chevron-right" /> Play</Button>

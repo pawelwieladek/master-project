@@ -13,8 +13,11 @@ import LearnSettingsPage from './pages/learn/settings-page.js';
 import LearnResultsPage from './pages/learn/results-page.js';
 import PlayLearnGamePage from './pages/learn/play-game-page.js';
 
+import SamplePage from './pages/sample-page.js';
+
 let routes = (
     <Route handler={AppPage}>
+        <Route path='sample' handler={SamplePage} />
         <Route path='search' handler={SearchIndexPage}>
             <DefaultRoute handler={CreateSearchPlayerPage}/>
             <Route path='create' handler={CreateSearchPlayerPage}/>
