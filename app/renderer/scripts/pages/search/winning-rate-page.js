@@ -7,35 +7,29 @@ import { Repeat, List } from 'immutable';
 import ReactSlider from 'react-slider';
 
 import GameGrid from '../../components/game-grid';
-import LearnIntents from '../../../../browser/intents/learn-intents';
+import SearchIntents from '../../../../browser/intents/search-intents';
 
 export default React.createClass({
+    displayName: 'SearchWinningRatePage',
     mixins: [ ListenerMixin, Navigation ],
     getInitialState() {
         return {
             tiles: this.getEmptyTiles(),
-            moves: [],
-            isGameDone: false,
-            isInProgress: false,
-            isWin: false
+            games: [],
+            isDone: false,
+            isInProgress: false
         };
     },
     componentDidMount() {
-        ipc.on(LearnIntents.playSingleGameIntent, this.didPlayGame);
-        ipc.on(LearnIntents.notifySingleGameProgressIntent, this.didNotifyProgress);
+        ipc.on(SearchIntents.multipleGames.playIntent, this.didPlayGames);
+        ipc.on(SearchIntents.multipleGames.notifyIntent, this.didNotifyProgress);
     },
-    didPlayGame(game) {
-        let isWin = List(game.grid.tiles).max() === 11;
-        this.setState({
-            isGameDone: true,
-            isInProgress: false,
-            isWin: isWin,
-            tiles: game.grid.tiles
-        });
+    didPlayGames() {
+
     },
     didNotifyProgress(tiles) {
         this.setState({
-            moves: this.state.moves.concat([tiles])
+            games: this.state.games.concat([tiles])
         });
     },
     playGame() {
@@ -46,7 +40,7 @@ export default React.createClass({
             moves: [],
             tiles: this.getEmptyTiles()
         });
-        ipc.send(LearnIntents.playSingleGameIntent);
+        ipc.send(SearchIntents.playSingleGameIntent);
     },
     getEmptyTiles() {
         return Repeat(0, 16).toArray();
@@ -102,7 +96,10 @@ export default React.createClass({
                 <Well>
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/learn/results')}><Glyphicon glyph="chevron-left" /> Results</Button>
+                            <Button onClick={() => this.transitionTo('/search/create')}><Glyphicon glyph="chevron-left" /> Create player</Button>
+                        </Col>
+                        <Col md={6} className="text-right">
+                            <Button onClick={() => this.transitionTo('/search/rate')}>Winning rate <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
                 </Well>

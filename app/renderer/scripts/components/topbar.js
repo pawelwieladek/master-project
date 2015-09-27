@@ -11,6 +11,7 @@ let Topbar = React.createClass({
                 <ButtonGroup>
                     <Button onClick={() => this.transitionTo('/search')}>Search</Button>
                     <Button onClick={() => this.transitionTo('/learn')}>Learn</Button>
+                    <Button onClick={() => this.transitionTo('/sample')}>Sample</Button>
                 </ButtonGroup>
             </div>
         )

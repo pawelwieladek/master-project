@@ -1,5 +1,5 @@
 import Registry from '../../common/registry';
-import { createPlayerIntent, playGameIntent, notifyProgressIntent } from '../../intents/search-intents';
+import SearchIntents from '../../intents/search-intents';
 
 let handlers = app => {
 
@@ -9,9 +9,9 @@ let handlers = app => {
     };
 
     app.register(
-        createPlayerIntent,
+        SearchIntents.createPlayerIntent,
         Registry
-            .withHandler(createPlayerIntent, createPlayerHandler)
+            .withHandler(SearchIntents.createPlayerIntent, createPlayerHandler)
             .build()
     );
 
@@ -24,10 +24,10 @@ let handlers = app => {
     };
 
     app.register(
-        playGameIntent,
+        SearchIntents.singleGame.playIntent,
         Registry
-            .withHandler(playGameIntent, playGameHandler)
-            .withHandler(notifyProgressIntent, notifyProgressHandler)
+            .withHandler(SearchIntents.singleGame.playIntent, playGameHandler)
+            .withHandler(SearchIntents.singleGame.notifyIntent, notifyProgressHandler)
             .build()
     );
 };

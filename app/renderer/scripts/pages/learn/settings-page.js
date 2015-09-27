@@ -23,10 +23,10 @@ export default React.createClass({
                 <Well>
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/learn/create')}><Glyphicon glyph="chevron-left" /> Back</Button>
+                            <Button onClick={() => this.transitionTo('/learn/create')}><Glyphicon glyph="chevron-left" /> Create player</Button>
                         </Col>
                         <Col md={6} className="text-right">
-                            <Button bsStyle="primary" onClick={this.learn}>Learn <Glyphicon glyph="chevron-right" /></Button>
+                            <Button onClick={this.learn}>Learn <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
                 </Well>

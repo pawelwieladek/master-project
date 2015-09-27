@@ -22,8 +22,8 @@ export default React.createClass({
         };
     },
     componentDidMount() {
-        ipc.on(SearchIntents.playGameIntent, this.didPlayGame);
-        ipc.on(SearchIntents.notifyProgressIntent, this.didNotifyProgress);
+        ipc.on(SearchIntents.singleGame.playIntent, this.didPlayGame);
+        ipc.on(SearchIntents.singleGame.notifyIntent, this.didNotifyProgress);
     },
     componentWillUnmount() {
         ipc.send(killChildProcessIntent);
@@ -50,7 +50,7 @@ export default React.createClass({
             moves: [],
             tiles: this.getEmptyTiles()
         });
-        ipc.send(SearchIntents.playGameIntent);
+        ipc.send(SearchIntents.singleGame.playIntent);
     },
     getEmptyTiles() {
         return Repeat(0, 16).toArray();
@@ -98,11 +98,18 @@ export default React.createClass({
                 </Row>
                 <Well>
                     <Row>
+                        <Col md={12} className="text-right">
+                            <Button bsStyle="primary" onClick={this.playGame}>Play</Button>
+                        </Col>
+                    </Row>
+                </Well>
+                <Well>
+                    <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/search/create')}><Glyphicon glyph="chevron-left" /> Back</Button>
+                            <Button onClick={() => this.transitionTo('/search/create')}><Glyphicon glyph="chevron-left" /> Create player</Button>
                         </Col>
                         <Col md={6} className="text-right">
-                            <Button bsStyle="primary" onClick={this.playGame}>Play</Button>
+                            <Button onClick={() => this.transitionTo('/search/rate')}>Winning rate <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
                 </Well>

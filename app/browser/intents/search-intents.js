@@ -1,5 +1,11 @@
 export default {
     createPlayerIntent: 'searchIntents:createPlayer',
-    playGameIntent: 'searchIntents:playGame',
-    notifyProgressIntent: 'searchIntents:notifyProgress'
+    singleGame: {
+        playIntent: 'searchIntents:singleGame.playIntent',
+        notifyIntent: 'searchIntents:singleGame.notifyIntent'
+    },
+    multipleGames: {
+        playIntent: 'searchIntents:multipleGame.playIntent',
+        notifyIntent: 'searchIntents:multipleGame.notifyIntent'
+    }
 };
