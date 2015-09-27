@@ -5,7 +5,8 @@ let handlers = registry => {
 
     registry.register(createPlayerIntent, (send, context) => {
         let params = context.args[0];
-        let player = new SearchPlayer(params);
+        console.log(params);
+        let player = new SearchPlayer({ searchTree: params} );
         send(createPlayerIntent, player);
     });
 

@@ -8,6 +8,7 @@ import ReactSlider from 'react-slider';
 
 import GameGrid from '../../components/game-grid';
 import SearchIntents from '../../../../browser/intents/search-intents';
+import { killChildProcessIntent } from '../../../../browser/intents/common-intents.js';
 
 export default React.createClass({
     mixins: [ ListenerMixin, Navigation ],
@@ -23,6 +24,9 @@ export default React.createClass({
     componentDidMount() {
         ipc.on(SearchIntents.playGameIntent, this.didPlayGame);
         ipc.on(SearchIntents.notifyProgressIntent, this.didNotifyProgress);
+    },
+    componentWillUnmount() {
+        ipc.send(killChildProcessIntent);
     },
     didPlayGame(game) {
         let isWin = List(game.grid.tiles).max() === 11;

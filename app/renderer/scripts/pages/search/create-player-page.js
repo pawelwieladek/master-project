@@ -3,6 +3,8 @@ import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
 import { Row, Col, Button, Input, Well } from 'react-bootstrap';
 
+import Config from '../../../../../config/config';
+import NumberInput from '../../components/number-input';
 import { createPlayerAction } from '../../actions/search-player-actions';
 import SearchModeStore from '../../stores/search-player-store';
 
@@ -34,19 +36,19 @@ export default React.createClass({
             <div>
                 <Row>
                     <Col sm={4}>
-                        <Input type="text" ref="depth" label="Game tree depth" />
+                        <NumberInput type="text" ref="depth" label="Game tree depth" defaultValue={Config.Defaults.Search.Depth} />
                     </Col>
                     <Col sm={4}>
-                        <Input type="text" ref="monotonicity" label="Monotonicity weight" />
+                        <NumberInput type="text" ref="monotonicity" label="Monotonicity weight" defaultValue={Config.Defaults.Search.Monotonicity} />
                     </Col>
                     <Col sm={4}>
-                        <Input type="text" ref="smoothness" label="Smoothness weight" />
+                        <NumberInput type="text" ref="smoothness" label="Smoothness weight" defaultValue={Config.Defaults.Search.Smoothness} />
                     </Col>
                     <Col sm={4}>
-                        <Input type="text" ref="availability" label="Availability weight" />
+                        <NumberInput type="text" ref="availability" label="Availability weight" defaultValue={Config.Defaults.Search.Availability} />
                     </Col>
                     <Col sm={4}>
-                        <Input type="text" ref="maximization" label="Maximization weight" />
+                        <NumberInput type="text" ref="maximization" label="Maximization weight" defaultValue={Config.Defaults.Search.Maximization} />
                     </Col>
                 </Row>
                 <Well>
