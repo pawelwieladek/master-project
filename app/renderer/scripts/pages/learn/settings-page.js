@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { State, Navigation } from 'react-router'
-import { Row, Col, Button, Input, Well, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Input, Well } from 'react-bootstrap';
 import assign from 'object-assign';
 
 import { learnAction } from '../../actions/learn-player-actions.js';
@@ -17,19 +17,25 @@ export default React.createClass({
     render() {
         return (
             <div>
-                <div>
-                    <Input type='text' ref='iterations' label='Iterations' defaultValue={100} />
+                <div className="page-wrapper">
+                    <Grid>
+                        <Row>
+                            <Col md={12}>
+                                <Input type='text' ref='iterations' label='Iterations' defaultValue={100} addonBefore={<span className="fa fa-fw fa-retweet" />} />
+                            </Col>
+                        </Row>
+                    </Grid>
                 </div>
-                <Well>
+                <div className="footer">
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/learn/create')}><Glyphicon glyph="chevron-left" /> Create player</Button>
+                            <Button onClick={() => this.transitionTo('/learn/create')}><span className="fa fa-fw fa-chevron-left" /> Create player</Button>
                         </Col>
                         <Col md={6} className="text-right">
-                            <Button onClick={this.learn}>Learn <Glyphicon glyph="chevron-right" /></Button>
+                            <Button bsStyle="primary" onClick={this.learn}>Learn <span className="fa fa-fw fa-chevron-right" /></Button>
                         </Col>
                     </Row>
-                </Well>
+                </div>
             </div>
         );
     }

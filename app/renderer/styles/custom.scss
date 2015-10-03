@@ -5,11 +5,58 @@ $tile-size: ($grid-size - (4 * $tile-gap)) / 4;
 $primary-tile-color: #776e65;
 $secondary-tile-color: #f9f6f2;
 
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+
+.app-page {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+}
+
+.page-wrapper {
+  margin-top: 20px;
+  position: absolute;
+  top: 80px;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+}
+
 .topbar {
   @extend .well;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $brand-primary;
   border-radius: 0;
   border-left: 0;
   border-right: 0;
+  margin: 0;
+  z-index: 1000;
+}
+
+.footer {
+  @extend .well;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  margin: 0;
+  z-index: 1000;
+}
+
+.logo {
+  color: #fff;
+  line-height: 37px;
 }
 
 .grid {
@@ -104,5 +151,7 @@ $secondary-tile-color: #f9f6f2;
 }
 
 .number-input {
-  margin-bottom: $form-group-margin-bottom;
+  .form-control-feedback {
+    right: 83px;
+  }
 }

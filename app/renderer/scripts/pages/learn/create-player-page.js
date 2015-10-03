@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListenerMixin } from 'reflux';
 import { Navigation } from 'react-router';
-import { Row, Col, Button, Input, Well, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Input, Well } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
 
 import { createPlayerAction } from '../../actions/learn-player-actions.js';
@@ -30,16 +30,22 @@ export default React.createClass({
     render() {
         return (
             <div>
-                <div>
-                    <Input type='text' ref='learningRate' label='Learning rate' placeholder='Learning rate' defaultValue={0.01} />
+                <div className="page-wrapper">
+                    <Grid>
+                        <Row>
+                            <Col md={12}>
+                                <Input type='text' ref='learningRate' label='Learning rate' placeholder='Learning rate' defaultValue={0.01} addonBefore={<span className="fa fa-graduation-cap" />} />
+                            </Col>
+                        </Row>
+                    </Grid>
                 </div>
-                <Well>
+                <div className="footer">
                     <Row>
-                        <Col md={6} mdOffset={6} className="text-right">
-                            <Button onClick={this.createPlayer}>Create player <Glyphicon glyph="chevron-right" /></Button>
+                        <Col md={12} className="text-right">
+                            <Button bsStyle="primary" onClick={this.createPlayer}>Create player <span className="fa fa-fw fa-chevron-right"></span></Button>
                         </Col>
                     </Row>
-                </Well>
+                </div>
             </div>
         );
     }

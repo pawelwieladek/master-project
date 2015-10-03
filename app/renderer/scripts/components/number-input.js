@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
-import { Button, Input, Glyphicon } from 'react-bootstrap';
+import { Button, Input } from 'react-bootstrap';
 import classnames from 'classnames';
 
 let NumberInput = React.createClass({
@@ -87,25 +87,25 @@ let NumberInput = React.createClass({
         this.setState({ value: event.target.value });
     },
     render() {
-        let props = this.props;
         let value = this.state.value;
         let label = this.state.isValid ? this.state.label : this.state.errorMessage;
         let style = this.state.isValid ? "default" : "error";
         let buttonStyle = this.state.isValid ? "default" : "danger";
-        delete props.label;
-        delete props.value;
-        delete props.onChange;
+        let addonBefore = this.props.addonBefore ? (<div className="input-group-addon">{this.props.addonBefore}</div>) : null;
         return (
+            <div className="number-input">
                 <Input bsStyle={style} hasFeedback>
                     <label className="control-label">{label}</label>
                     <div className="input-group">
-                        <div className="input-group-btn">
-                            <Button bsStyle={buttonStyle} onClick={this.add}><Glyphicon glyph="plus" /></Button>
-                            <Button bsStyle={buttonStyle} onClick={this.subtract}><Glyphicon glyph="minus" /></Button>
-                        </div>
+                        {addonBefore}
                         <input type="text" ref="input" className="form-control" onChange={this.handleChange} value={value} />
+                        <div className="input-group-btn">
+                            <Button bsStyle={buttonStyle} onClick={this.add}><span className="fa fa-fw fa-plus" /></Button>
+                            <Button bsStyle={buttonStyle} onClick={this.subtract}><span className="fa fa-fw fa-minus" /></Button>
+                        </div>
                     </div>
                 </Input>
+            </div>
         );
     }
 });

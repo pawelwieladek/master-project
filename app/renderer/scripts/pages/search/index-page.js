@@ -5,9 +5,7 @@ export default React.createClass({
     displayName: 'SearchIndexPage',
     render () {
         return (
-            <div>
-                <RouteHandler/>
-            </div>
+            <RouteHandler/>
         )
     }
 });

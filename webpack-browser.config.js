@@ -2,8 +2,8 @@ var excluded = /(node_modules|bower_components|dist)/;
 
 module.exports = {
     entry: {
-        "child": './app/browser/child/child',
-        "main": './app/browser/main/main'
+        'child': './app/browser/child/child',
+        'main': './app/browser/main/main'
     },
     output: {
         path: './dist/',

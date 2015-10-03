@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
-import { Row, Col, Button, Input, Well, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Input, Well, Glyphicon } from 'react-bootstrap';
 
 import Config from '../../../../../config/config';
 import NumberInput from '../../components/number-input';
@@ -35,30 +35,34 @@ export default React.createClass({
     render() {
         return (
             <div>
-                <Row>
-                    <Col sm={4}>
-                        <NumberInput type="text" ref="depth" label="Game tree depth" defaultValue={Config.Defaults.Search.Depth} />
-                    </Col>
-                    <Col sm={4}>
-                        <NumberInput type="text" ref="monotonicity" label="Monotonicity weight" defaultValue={Config.Defaults.Search.Monotonicity} />
-                    </Col>
-                    <Col sm={4}>
-                        <NumberInput type="text" ref="smoothness" label="Smoothness weight" defaultValue={Config.Defaults.Search.Smoothness} />
-                    </Col>
-                    <Col sm={4}>
-                        <NumberInput type="text" ref="availability" label="Availability weight" defaultValue={Config.Defaults.Search.Availability} />
-                    </Col>
-                    <Col sm={4}>
-                        <NumberInput type="text" ref="maximization" label="Maximization weight" defaultValue={Config.Defaults.Search.Maximization} />
-                    </Col>
-                </Row>
-                <Well>
+                <div className="page-wrapper">
+                    <Grid>
+                        <Row>
+                            <Col sm={4}>
+                                <NumberInput type="text" ref="depth" label="Game tree depth" defaultValue={Config.Defaults.Search.Depth} addonBefore={<span className="fa fa-fw fa-sitemap"></span>} />
+                            </Col>
+                            <Col sm={4}>
+                                <NumberInput type="text" ref="monotonicity" label="Monotonicity weight" defaultValue={Config.Defaults.Search.Monotonicity} addonBefore={<i className="fa fa-fw fa-sort-numeric-asc"></i>} />
+                            </Col>
+                            <Col sm={4}>
+                                <NumberInput type="text" ref="smoothness" label="Smoothness weight" defaultValue={Config.Defaults.Search.Smoothness} addonBefore={<i className="fa fa-fw fa-star-half-o"></i>} />
+                            </Col>
+                            <Col sm={4}>
+                                <NumberInput type="text" ref="availability" label="Availability weight" defaultValue={Config.Defaults.Search.Availability} addonBefore={<i className="fa fa-fw fa-th"></i>} />
+                            </Col>
+                            <Col sm={4}>
+                                <NumberInput type="text" ref="maximization" label="Maximization weight" defaultValue={Config.Defaults.Search.Maximization} addonBefore={<i className="fa fa-fw fa-trophy"></i>} />
+                            </Col>
+                        </Row>
+                    </Grid>
+                </div>
+                <div className="footer">
                     <Row>
                         <Col sm={12} className="text-right">
-                            <Button onClick={this.createPlayer}>Play <Glyphicon glyph="chevron-right" /></Button>
+                            <Button bsStyle="primary" onClick={this.createPlayer}>Play <Glyphicon glyph="chevron-right" /></Button>
                         </Col>
                     </Row>
-                </Well>
+                </div>
             </div>
         );
     }

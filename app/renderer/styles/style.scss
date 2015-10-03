@@ -1,6 +1,13 @@
-$icon-font-path: '../../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
-@import '../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
-@import './theme';
+@import './variables';
+
+@import '../../../node_modules/font-awesome/scss/font-awesome';
+@import '../../../node_modules/octicons/octicons/octicons';
+@import '../../../node_modules/bootswatch/flatly/_variables';
+@import '../../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import '../../../node_modules/bootswatch/flatly/_bootswatch';
+
 @import './react-slider';
 @import './react-select';
+@import './highcharts';
 @import './custom';
+@import './theme';
