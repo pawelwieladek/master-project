@@ -64,13 +64,16 @@ let ChartResults = React.createClass({
                 }
             },
             xAxis: {
+                title: 'Games played',
                 categories: []
             },
             yAxis: {
+                title: 'Winning rate',
                 min: 0.0,
                 max: 1.0
             },
             series: [{
+                name: 'Winning rate',
                 data: []
             }]
         }
@@ -221,6 +224,7 @@ export default React.createClass({
     render() {
         let progressValue = this.state.isLearning ? Math.round((100 * this.state.results.length) / this.state.iterations) : 100;
         let granularitySelect = this.renderGranularitySelect();
+        let { learningRate } = this.getParams();
         return (
             <div>
                 <div className="page-wrapper">
@@ -229,7 +233,17 @@ export default React.createClass({
                             <ProgressBar bsStyle={this.state.isLearning ? "default" : "success"} now={progressValue} />
                         </div>
                         <Row style={{ marginBottom: 10 }}>
-                            <Col xs={6} style={{ lineHeight: '39px' }}>
+                            <Col xs={3} style={{ lineHeight: '39px' }}>
+                                <ul className="list-inline">
+                                    <li>
+                                        <strong>Learning rate</strong>
+                                    </li>
+                                    <li>
+                                        <h4><Label bsStyle="primary">{learningRate}</Label></h4>
+                                    </li>
+                                </ul>
+                            </Col>
+                            <Col xs={3} style={{ lineHeight: '39px' }}>
                                 <ul className="list-inline">
                                     <li>
                                         <strong>Games learned</strong>
@@ -254,10 +268,10 @@ export default React.createClass({
                 <div className="footer">
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/learn/settings')}><span className="fa fa-fw fa-chevron-left"></span> Settings</Button>
+                            <Button onClick={() => this.transitionTo('learn-settings', this.getParams())}><span className="fa fa-fw fa-chevron-left"></span> Learn more games</Button>
                         </Col>
                         <Col md={6} className="text-right">
-                            <Button bsStyle="primary" onClick={() => this.transitionTo('/learn/play')}>Play <span className="fa fa-fw fa-chevron-right"></span></Button>
+                            <Button bsStyle="primary" onClick={() => this.transitionTo('learn-play', this.getParams())}>Play <span className="fa fa-fw fa-chevron-right"></span></Button>
                         </Col>
                     </Row>
                 </div>

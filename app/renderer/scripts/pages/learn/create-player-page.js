@@ -12,6 +12,7 @@ export default React.createClass({
     mixins: [ ListenerMixin, Navigation ],
     getInitialState() {
         return {
+            learningRate: null,
             isLoading: false
         };
     },
@@ -20,11 +21,11 @@ export default React.createClass({
     },
     didCreatePlayer() {
         this.setState({ isLoading: false });
-        this.transitionTo('/learn/settings');
+        this.transitionTo('learn-settings', { learningRate: this.state.learningRate });
     },
     createPlayer() {
-        this.setState({ isLoading: true });
         let learningRate = this.refs['learningRate'].getValue();
+        this.setState({ isLoading: true, learningRate });
         createPlayerAction(learningRate);
     },
     render() {

@@ -25,10 +25,10 @@ let routes = (
         </Route>
         <Route path='learn' handler={LearnIndexPage}>
             <DefaultRoute handler={CreateLearnPlayer}/>
-            <Route path='create' handler={CreateLearnPlayer}/>
-            <Route path='settings' handler={LearnSettingsPage}/>
-            <Route path='results' handler={LearnResultsPage}/>
-            <Route path='play' handler={PlayLearnGamePage}/>
+            <Route name="learn-create" path='create' handler={CreateLearnPlayer}/>
+            <Route name="learn-settings" path=':learningRate/settings' handler={LearnSettingsPage}/>
+            <Route name="learn-results" path=':learningRate/results' handler={LearnResultsPage}/>
+            <Route name="learn-play" path=':learningRate/play' handler={PlayLearnGamePage}/>
         </Route>
     </Route>
 );

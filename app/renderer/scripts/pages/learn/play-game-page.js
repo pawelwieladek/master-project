@@ -1,6 +1,6 @@
 import ipc from 'ipc';
 import React from 'react';
-import { Navigation } from 'react-router';
+import { Navigation, State } from 'react-router';
 import { ListenerMixin } from 'reflux';
 import { Grid, Row, Col, Button, Input, Alert, Well } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
@@ -10,7 +10,7 @@ import GameGrid from '../../components/game-grid';
 import LearnIntents from '../../../../browser/intents/learn-intents';
 
 export default React.createClass({
-    mixins: [ ListenerMixin, Navigation ],
+    mixins: [ ListenerMixin, Navigation, State ],
     getInitialState() {
         return {
             tiles: this.getEmptyTiles(),
@@ -107,7 +107,7 @@ export default React.createClass({
                 <div className="footer">
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/learn/results')}><span className="fa fa-fw fa-chevron-left" /> Results</Button>
+                            <Button onClick={() => this.transitionTo('learn-results', this.getParams())}><span className="fa fa-fw fa-chevron-left" /> Results</Button>
                         </Col>
                     </Row>
                 </div>
