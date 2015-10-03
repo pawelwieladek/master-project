@@ -19,7 +19,7 @@ export default Reflux.createStore({
     createPlayerAction(learningRate) {
         this.results = [];
         this.learningRate = learningRate;
-        ipc.send(LearnIntents.createPlayerIntent);
+        ipc.send(LearnIntents.createPlayerIntent, learningRate);
     },
     learnAction(iterations) {
         ipc.send(LearnIntents.learnIntent, iterations);

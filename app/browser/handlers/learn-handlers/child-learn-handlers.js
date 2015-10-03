@@ -4,8 +4,9 @@ import { List } from 'immutable';
 
 let handlers = registry => {
 
-    registry.register(LearnIntents.createPlayerIntent, send => {
-        send(LearnIntents.createPlayerIntent, new LearnPlayer());
+    registry.register(LearnIntents.createPlayerIntent, (send, context) => {
+        var learningRate = context.args[0];
+        send(LearnIntents.createPlayerIntent, new LearnPlayer({ learningRate }));
     });
 
     registry.register(LearnIntents.learnIntent, (send, context) => {
