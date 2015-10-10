@@ -1,4 +1,4 @@
-var Config = {
+var Const = {
     GridSize: 4,
     GameTypes: {
         Learn: "learn",
@@ -19,4 +19,4 @@ var Config = {
     }
 };
 
-module.exports = Config;
+module.exports = Const;

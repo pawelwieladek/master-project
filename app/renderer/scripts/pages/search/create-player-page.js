@@ -3,7 +3,7 @@ import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
 import { Grid, Row, Col, Button, Input, Well } from 'react-bootstrap';
 
-import Config from '../../../../../config/config';
+import Const from '../../../../../config/const';
 import NumberInput from '../../components/number-input';
 import { createPlayerAction } from '../../actions/search-player-actions';
 import SearchModeStore from '../../stores/search-player-store';
@@ -44,7 +44,7 @@ export default React.createClass({
                                     type="text"
                                     ref="depth"
                                     label="Game tree depth"
-                                    defaultValue={Config.Defaults.Search.Depth}
+                                    defaultValue={Const.Defaults.Search.Depth}
                                     addonBefore={<span className="fa fa-fw fa-sitemap"></span>}
                                     help="Number of moves ahead the algorithm will estimate. The higher depth, the longer it takes to calculate result."
                                     />
@@ -56,7 +56,7 @@ export default React.createClass({
                                     type="text"
                                     ref="monotonicity"
                                     label="Monotonicity weight"
-                                    defaultValue={Config.Defaults.Search.Monotonicity}
+                                    defaultValue={Const.Defaults.Search.Monotonicity}
                                     addonBefore={<i className="fa fa-fw fa-sort-numeric-asc"></i>}
                                     help="Algorithm's best practice: Higher tile values should be placed in the corners of game grid."
                                     />
@@ -66,7 +66,7 @@ export default React.createClass({
                                     type="text"
                                     ref="smoothness"
                                     label="Smoothness weight"
-                                    defaultValue={Config.Defaults.Search.Smoothness}
+                                    defaultValue={Const.Defaults.Search.Smoothness}
                                     addonBefore={<i className="fa-fw octicon octicon-color-mode"></i>}
                                     help="Algorithm's best practice: Neighbouring tiles should have the same value to be able to merge."
                                     />
@@ -76,7 +76,7 @@ export default React.createClass({
                                     type="text"
                                     ref="availability"
                                     label="Availability weight"
-                                    defaultValue={Config.Defaults.Search.Availability}
+                                    defaultValue={Const.Defaults.Search.Availability}
                                     addonBefore={<i className="fa fa-fw fa-arrows"></i>}
                                     help="Algorithm's best practice: The more places on the grid are free the more moves are available for the player."
                                     />
@@ -86,7 +86,7 @@ export default React.createClass({
                                     type="text"
                                     ref="maximization"
                                     label="Maximization weight"
-                                    defaultValue={Config.Defaults.Search.Maximization}
+                                    defaultValue={Const.Defaults.Search.Maximization}
                                     addonBefore={<i className="fa fa-fw fa-trophy"></i>}
                                     help="Algorithm's best practice: Finally, the higher value on the grid, the better. Value 2048 is the goal." />
                             </Col>

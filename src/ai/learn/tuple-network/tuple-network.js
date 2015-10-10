@@ -1,5 +1,5 @@
 var Tuple = require("./tuple");
-var Config = require("../../../../config/config");
+var Config = require("../../../../config/const");
 
 function TupleNetwork(params) {
     params = params || {};

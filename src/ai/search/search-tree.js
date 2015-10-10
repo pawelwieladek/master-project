@@ -1,4 +1,4 @@
-var Config = require("../../../config/config");
+var Const = require("../../../config/const");
 var Direction = require("../../game/direction");
 var monotonicity = require("./heuristics/monotonicity");
 var smoothness = require("./heuristics/smoothness");
@@ -7,11 +7,11 @@ var maximization = require("./heuristics/maximization");
 
 function SearchTree(params) {
     params = params || {};
-    this.depth = params.depth || Config.Defaults.Search.Depth;
-    this.monotonicity = params.monotonicity || Config.Defaults.Search.Monotonicity;
-    this.smoothness = params.smoothness || Config.Defaults.Search.Smoothness;
-    this.availability = params.availability || Config.Defaults.Search.Availability;
-    this.maximization = params.maximization || Config.Defaults.Search.Maximization;
+    this.depth = params.depth || Const.Defaults.Search.Depth;
+    this.monotonicity = params.monotonicity || Const.Defaults.Search.Monotonicity;
+    this.smoothness = params.smoothness || Const.Defaults.Search.Smoothness;
+    this.availability = params.availability || Const.Defaults.Search.Availability;
+    this.maximization = params.maximization || Const.Defaults.Search.Maximization;
 }
 
 SearchTree.prototype.evaluate = function(grid) {
@@ -27,11 +27,11 @@ SearchTree.prototype.search = function(grid) {
 
 SearchTree.prototype.opponentMoves = function(grid) {
     var moves = [];
-    for (var i = 0; i < Config.OpponentValues.length; i++) {
+    for (var i = 0; i < Const.OpponentValues.length; i++) {
         for (var j = 0; j < grid.tiles.length; j++) {
             if (grid.value(j) === 0) {
                 var clone = grid.clone();
-                clone.add(j, Config.OpponentValues[i]);
+                clone.add(j, Const.OpponentValues[i]);
                 moves.push(clone);
             }
         }

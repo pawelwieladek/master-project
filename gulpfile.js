@@ -2,14 +2,14 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var mocha = require('gulp-spawn-mocha');
 var webpack = require('webpack');
-var electron = require('electron-prebuilt');
+var electronPath = require('electron-prebuilt');
 var spawn = require('child_process').spawn;
 var stdio = require('stdio');
 var del = require('del');
 var assign = Object.assign || require('object-assign');
-var electronPackage = require('gulp-electron');
+var electron = require('gulp-electron');
 var template = require('gulp-template');
-var rename = require("gulp-rename");
+var rename = require('gulp-rename');
 
 var packageJson = require('./package.json');
 
@@ -18,24 +18,6 @@ var options = stdio.getopt({
 });
 
 process.env.NODE_ENV = 'production';
-
-var paths = {
-    dest: './dist',
-    html: {
-        src: './app/renderer/index.html',
-        dest: './dist/app/'
-    },
-    init: './app/browser/init.js'
-};
-
-gulp.task('clear', function (callback) {
-    del(['./dist', './release'], callback);
-});
-
-gulp.task('renderer:html', ['clear'], function () {
-    return gulp.src([paths.html.src])
-        .pipe(gulp.dest(paths.html.dest));
-});
 
 var webpackTask = function(params) {
     return function(callback) {
@@ -49,7 +31,7 @@ var webpackTask = function(params) {
 
         return webpack(config, function(err, stats) {
             if (err) throw new gutil.PluginError('webpack', err);
-            gutil.log("[webpack]", stats.toString({
+            gutil.log('[webpack]', stats.toString({
                 colors: true,
                 children: false,
                 chunks: false,
@@ -63,22 +45,37 @@ var webpackTask = function(params) {
     }
 };
 
-gulp.task('renderer:scripts', ['clear'], webpackTask({ config: './webpack-renderer.config' }));
-gulp.task('browser:scripts', ['clear'], webpackTask({ config: './webpack-browser.config' }));
+gulp.task('clear', function (callback) {
+    del([ './dist', './release' ], callback);
+});
+
+gulp.task('package-json', ['clear'], function() {
+    return gulp.src('./app/package.json.template')
+        .pipe(rename('package.json'))
+        .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('renderer:html', ['clear'], function () {
+    return gulp.src([ './app/renderer/index.html' ])
+        .pipe(gulp.dest('./dist/app/'));
+});
+
+gulp.task('renderer:scripts', ['clear'], webpackTask({ config: './config/webpack-renderer.config' }));
+gulp.task('browser:scripts', ['clear'], webpackTask({ config: './config/webpack-browser.config' }));
 
 gulp.task('browser:init', ['clear'], function () {
-    return gulp.src([paths.init])
-        .pipe(gulp.dest(paths.dest));
+    return gulp.src([ './app/browser/init.js' ])
+        .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('browser', ['browser:scripts', 'browser:init']);
 
 gulp.task('renderer', ['renderer:scripts', 'renderer:html']);
 
-gulp.task('build', ['renderer', 'browser', 'json']);
+gulp.task('build', ['renderer', 'browser', 'package-json']);
 
 gulp.task('run', ['build'], function() {
-    spawn(electron, ['.'], { stdio: 'inherit' });
+    spawn(electronPath, ['.'], { stdio: 'inherit' });
 });
 
 gulp.task('test', function () {
@@ -90,16 +87,10 @@ gulp.task('test', function () {
         }));
 });
 
-gulp.task('json', ['clear'], function() {
-    return gulp.src('./app/package.json.template')
-        .pipe(rename('package.json'))
-        .pipe(gulp.dest('dist'));
-});
-
 gulp.task('electron', ['build'], function() {
 
-    gulp.src("")
-        .pipe(electronPackage({
+    gulp.src('')
+        .pipe(electron({
             src: './dist',
             packageJson: packageJson,
             release: './release',
@@ -117,5 +108,5 @@ gulp.task('electron', ['build'], function() {
                 }
             }
         }))
-        .pipe(gulp.dest(""));
+        .pipe(gulp.dest(''));
 });

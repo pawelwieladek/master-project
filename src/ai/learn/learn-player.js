@@ -1,6 +1,6 @@
 var _ = require("lodash");
 
-var Defaults = require("../../../config/config").Defaults;
+var Defaults = require("../../../config/const").Defaults;
 var Utils = require("../../../config/utils");
 var Rules = require("../../game/rules");
 var Player = require("../../game/player");

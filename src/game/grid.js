@@ -1,10 +1,10 @@
 var Direction = require("./direction");
 var Helpers = require("./helpers");
-var Config = require("../../config/config");
+var Const = require("../../config/const");
 
 function Grid(tiles) {
     var i;
-    this.tiles = tiles || new Array(Math.pow(Config.GridSize, 2));
+    this.tiles = tiles || new Array(Math.pow(Const.GridSize, 2));
     if (!tiles) {
         for (i = 0; i < this.tiles.length; i++)
             this.tiles[i] = 0;
@@ -118,9 +118,9 @@ Grid.prototype.available = function() {
 
 Grid.prototype.toString = function() {
     var i;
-    var string = new Array(Config.GridSize);
-    for (i = 0; i < Config.GridSize; i++)
-        string[i] = this.tiles.slice(i * Config.GridSize, (i + 1) * Config.GridSize).join("\t");
+    var string = new Array(Const.GridSize);
+    for (i = 0; i < Const.GridSize; i++)
+        string[i] = this.tiles.slice(i * Const.GridSize, (i + 1) * Const.GridSize).join("\t");
     return string.join("\n");
 };
 
