@@ -3,6 +3,8 @@ import { Route, DefaultRoute } from 'react-router';
 
 import AppPage from './pages/app-page';
 
+import IndexPage from './pages/index-page.js';
+
 import SearchIndexPage from './pages/search/index-page.js';
 import CreateSearchPlayerPage from './pages/search/create-player-page.js';
 import PlaySearchGamePage from './pages/search/play-game-page.js';
@@ -14,11 +16,12 @@ import LearnSettingsPage from './pages/learn/settings-page.js';
 import LearnResultsPage from './pages/learn/results-page.js';
 import PlayLearnGamePage from './pages/learn/play-game-page.js';
 
-import SamplePage from './pages/sample-page.js';
+import SamplesPage from './pages/samples-page.js';
 
 let routes = (
     <Route handler={AppPage}>
-        <Route path='sample' handler={SamplePage} />
+        <DefaultRoute handler={IndexPage}/>
+        <Route path='samples' handler={SamplesPage} />
         <Route path='search' handler={SearchIndexPage}>
             <DefaultRoute handler={CreateSearchPlayerPage}/>
             <Route path='create' handler={CreateSearchPlayerPage}/>

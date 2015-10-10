@@ -1,9 +1,9 @@
 {
   "name": "master-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Reinforcement learing and game tree search in Game 2048",
   "main": "./dist/init.js",
-  "author": "",
+  "author": "Pawel Wieladek",
   "license": "ISC",
   "devDependencies": {
     "babel": "^5.8.23",
@@ -32,23 +32,41 @@
     "bluebird": "^2.9.30",
     "bootstrap-sass": "^3.3.5",
     "bootstrap-sass-loader": "^1.0.9",
+    "bootswatch": "^3.3.5",
     "chance": "^0.7.5",
     "classnames": "^2.1.3",
     "express": "^4.13.3",
     "file-loader": "^0.8.4",
     "font-awesome": "^4.4.0",
     "immutable": "^3.7.4",
+    "jquery": "^2.1.4",
     "lodash": "^3.9.3",
     "moment": "^2.10.3",
     "mongodb": "^2.0.35",
     "mongoose": "^4.0.6",
     "numeral": "^1.5.3",
     "object-assign": "^3.0.0",
+    "octicons": "^3.1.0",
     "react": "^0.13.3",
     "react-bootstrap": "^0.25.2",
+    "react-highcharts": "^2.1.0",
     "react-router": "^0.13.3",
     "react-select": "^0.6.9",
     "react-slider": "^0.5.1",
     "reflux": "^0.2.12"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pawelwieladek/master-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pawelwieladek/master-project/issues"
+  },
+  "homepage": "https://github.com/pawelwieladek/master-project#readme"
 }

@@ -59,6 +59,17 @@ html, body {
   line-height: 37px;
 }
 
+.landing-icon {
+  font-size: 48px;
+}
+
+.bullet {
+  @extend .fa;
+  @extend .fa-fw;
+  @extend .fa-arrow-circle-right;
+  margin-right: 15px;
+}
+
 .grid {
   font-family: 'Oxygen', sans-serif;
   font-size: 0;

@@ -112,7 +112,7 @@ export default React.createClass({
                             <Col sm={6}>
                                 <div>
                                     <Well className="text-left">
-                                        <Button bsStyle="primary" onClick={this.playGame}><span className="fa fa-fw fa-rocket" /> Play</Button>
+                                        <Button bsStyle="primary" onClick={this.playGame} block><span className="fa fa-fw fa-rocket" /> Play</Button>
                                     </Well>
                                 </div>
                                 <div>

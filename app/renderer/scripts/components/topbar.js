@@ -18,6 +18,12 @@ let Topbar = React.createClass({
                     <Col md={6} className="logo text-center">
                         <span className="h4"><strong>2048</strong></span>
                     </Col>
+                    <Col md={3} className="text-right">
+                        <ButtonGroup>
+                            <Button onClick={() => this.transitionTo('/')}>Index</Button>
+                            <Button onClick={() => this.transitionTo('/samples')}>Samples</Button>
+                        </ButtonGroup>
+                    </Col>
                 </Row>
             </div>
         )

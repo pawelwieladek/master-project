@@ -9,7 +9,8 @@ let NumberInput = React.createClass({
         min: PropTypes.number,
         max: PropTypes.number,
         step: PropTypes.number,
-        defaultValue: PropTypes.number
+        defaultValue: PropTypes.number,
+        help: PropTypes.string
     },
     getDefaultProps() {
         return {
@@ -94,7 +95,7 @@ let NumberInput = React.createClass({
         let addonBefore = this.props.addonBefore ? (<div className="input-group-addon">{this.props.addonBefore}</div>) : null;
         return (
             <div className="number-input">
-                <Input bsStyle={style} hasFeedback>
+                <Input bsStyle={style} hasFeedback help={this.props.help}>
                     <label className="control-label">{label}</label>
                     <div className="input-group">
                         {addonBefore}

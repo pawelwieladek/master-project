@@ -22,15 +22,24 @@ export default React.createClass({
                     <Grid>
                         <Row>
                             <Col md={12}>
-                                <Input type='text' ref='iterations' label='Games to learn' defaultValue={10000} addonBefore={<span className="fa fa-fw fa-retweet" />} />
+                                <Input
+                                    type='text'
+                                    ref='iterations'
+                                    label='Games to learn'
+                                    defaultValue={10000}
+                                    addonBefore={<span className="fa fa-fw fa-retweet" />}
+                                    help='The more games algorithm will learn the better score it gets. Learning process can take a long while.'
+                                    />
                             </Col>
+                        </Row>
+                        <Row>
                             <Col md={12}>
                                 <ul className="list-inline">
                                     <li>
                                         <strong>Learning rate</strong>
                                     </li>
                                     <li>
-                                        <h4><Label bsStyle="primary">{learningRate}</Label></h4>
+                                        <span className="h4"><Label bsStyle="primary">{learningRate}</Label></span>
                                     </li>
                                 </ul>
                             </Col>
@@ -40,7 +49,7 @@ export default React.createClass({
                 <div className="footer">
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('learn-create')}><span className="fa fa-fw fa-chevron-left" /> Create new player</Button>
+                            <Button bsStyle="warning" onClick={() => this.transitionTo('learn-create')}><span className="fa fa-fw fa-chevron-left" /> Create new player</Button>
                         </Col>
                         <Col md={6} className="text-right">
                             <Button bsStyle="primary" onClick={this.learn}>Learn <span className="fa fa-fw fa-chevron-right" /></Button>

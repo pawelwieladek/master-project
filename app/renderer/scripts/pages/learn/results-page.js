@@ -98,10 +98,7 @@ let TableResults = React.createClass({
         return this.props.resultRecords.map((record, i) => (
             <tr key={`result-${i}`}>
                 <td>
-                    {record.start}
-                </td>
-                <td>
-                    {record.end}
+                    {`${record.start} - ${record.end}`}
                 </td>
                 <td>
                     {record.wins}
@@ -119,10 +116,7 @@ let TableResults = React.createClass({
                 <thead>
                 <tr>
                     <th>
-                        <strong>From</strong>
-                    </th>
-                    <th>
-                        <strong>To</strong>
+                        <strong>Games</strong>
                     </th>
                     <th>
                         <strong>Wins</strong>
