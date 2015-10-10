@@ -19,10 +19,10 @@ export default React.createClass({
                                     <div className="landing-icon">
                                         <span className="fa fa-fw fa-search" />
                                     </div>
-                                    <span className="h2">Search mode</span>
+                                    <h2>Search mode</h2>
+                                    <h4>Algorithm: Alpha-beta</h4>
                                 </div>
                                 <div style={{ marginTop: 20 }}>
-                                    <h4>Algorithm: Alpha-beta</h4>
                                     <ul className="list-unstyled" style={{ marginTop: 20 }}>
                                         <li>
                                             <span className="bullet" />
@@ -47,10 +47,10 @@ export default React.createClass({
                                     <div className="landing-icon">
                                         <span className="fa fa-fw fa-graduation-cap" />
                                     </div>
-                                    <span className="h2">Learn mode</span>
+                                    <h2>Learn mode</h2>
+                                    <h4>Algorithm: Reinforcement learning</h4>
                                 </div>
                                 <div style={{ marginTop: 20 }}>
-                                    <h4>Algorithm: Reinforcement learning</h4>
                                     <ul className="list-unstyled" style={{ marginTop: 20 }}>
                                         <li>
                                             <span className="bullet" />

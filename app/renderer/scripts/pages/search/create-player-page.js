@@ -46,7 +46,7 @@ export default React.createClass({
                                     label="Game tree depth"
                                     defaultValue={Config.Defaults.Search.Depth}
                                     addonBefore={<span className="fa fa-fw fa-sitemap"></span>}
-                                    help="Number of moves ahead the algorithm will estimate. The higher the longer it takes."
+                                    help="Number of moves ahead the algorithm will estimate. The higher depth, the longer it takes to calculate result."
                                     />
                             </Col>
                         </Row>
@@ -58,7 +58,7 @@ export default React.createClass({
                                     label="Monotonicity weight"
                                     defaultValue={Config.Defaults.Search.Monotonicity}
                                     addonBefore={<i className="fa fa-fw fa-sort-numeric-asc"></i>}
-                                    help="Higher tile values should be placed in the corners of game grid."
+                                    help="Algorithm's best practice: Higher tile values should be placed in the corners of game grid."
                                     />
                             </Col>
                             <Col sm={colSpan}>
@@ -67,8 +67,8 @@ export default React.createClass({
                                     ref="smoothness"
                                     label="Smoothness weight"
                                     defaultValue={Config.Defaults.Search.Smoothness}
-                                    addonBefore={<i className="fa fa-fw fa-star-half-o"></i>}
-                                    help="Neighbouring tiles should have the same value to be able to merge."
+                                    addonBefore={<i className="fa-fw octicon octicon-color-mode"></i>}
+                                    help="Algorithm's best practice: Neighbouring tiles should have the same value to be able to merge."
                                     />
                             </Col>
                             <Col sm={colSpan}>
@@ -77,8 +77,8 @@ export default React.createClass({
                                     ref="availability"
                                     label="Availability weight"
                                     defaultValue={Config.Defaults.Search.Availability}
-                                    addonBefore={<i className="fa fa-fw fa-th"></i>}
-                                    help="The more places on the grid are free the more moves are available for the player."
+                                    addonBefore={<i className="fa fa-fw fa-arrows"></i>}
+                                    help="Algorithm's best practice: The more places on the grid are free the more moves are available for the player."
                                     />
                             </Col>
                             <Col sm={colSpan}>
@@ -88,7 +88,7 @@ export default React.createClass({
                                     label="Maximization weight"
                                     defaultValue={Config.Defaults.Search.Maximization}
                                     addonBefore={<i className="fa fa-fw fa-trophy"></i>}
-                                    help="Finally, the higher value on the grid, the better. Value 2048 is the goal." />
+                                    help="Algorithm's best practice: Finally, the higher value on the grid, the better. Value 2048 is the goal." />
                             </Col>
                         </Row>
                     </Grid>

@@ -1,9 +1,13 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
+import { Repeat } from 'immutable';
 
 let GameGrid = React.createClass({
     propTypes: {
         disabled: PropTypes.bool
+    },
+    statics: {
+        empty: Repeat(0, 16).toArray()
     },
     render() {
         let tiles = this.props.tiles.map((value, index) => {

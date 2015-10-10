@@ -1,25 +1,24 @@
 import ipc from 'ipc';
 import React from 'react';
-import cx from 'classnames';
-import { Navigation } from 'react-router';
+import { Navigation, State } from 'react-router';
 import { ListenerMixin } from 'reflux';
-import { Grid, Row, Col, Button, Input, Alert, Well } from 'react-bootstrap';
-import { Repeat, List } from 'immutable';
-import ReactSlider from 'react-slider';
+import { Row, Col, Button } from 'react-bootstrap';
+import { List } from 'immutable';
 
 import GameGrid from '../../components/game-grid';
+import PlayControl from '../../components/play-control';
 import SearchIntents from '../../../../browser/intents/search-intents';
 import { killChildProcessIntent } from '../../../../browser/intents/common-intents.js';
 
 export default React.createClass({
-    mixins: [ ListenerMixin, Navigation ],
+    mixins: [ ListenerMixin, Navigation, State ],
     getInitialState() {
         return {
-            tiles: this.getEmptyTiles(),
-            moves: [],
-            isGameDone: false,
-            isInProgress: false,
-            isWin: false
+            currentState: GameGrid.empty,
+            states: [],
+            done: false,
+            ongoing: false,
+            win: false
         };
     },
     componentDidMount() {
@@ -30,100 +29,45 @@ export default React.createClass({
         ipc.send(killChildProcessIntent);
     },
     didPlayGame(game) {
-        let isWin = List(game.grid.tiles).max() === 11;
+        let win = List(game.grid.tiles).max() === 11;
         this.setState({
-            isGameDone: true,
-            isInProgress: false,
-            isWin: isWin,
-            tiles: game.grid.tiles
+            done: true,
+            ongoing: false,
+            win: win,
+            currentState: game.grid.tiles
         });
     },
     didNotifyProgress(tiles) {
         this.setState({
-            moves: this.state.moves.concat([tiles])
+            states: this.state.states.concat([tiles])
         });
     },
     playGame() {
         this.setState({
-            isGameDone: false,
-            isInProgress: true,
-            isWin: false,
-            moves: [],
-            tiles: this.getEmptyTiles()
+            done: false,
+            ongoing: true,
+            win: false,
+            states: [],
+            currentState: GameGrid.empty
         });
         ipc.send(SearchIntents.singleGame.playIntent);
     },
-    getEmptyTiles() {
-        return Repeat(0, 16).toArray();
-    },
-    sliderChanged(value) {
-        this.setState({
-            tiles: this.state.moves[value]
-        });
-    },
-    renderProgressMessage() {
-        return this.state.isInProgress ? (
-            <Alert bsStyle="info">Game in progress. Moves: {this.state.moves.length}</Alert>
-        ) : null;
-    },
-    renderResultMessage() {
-        if (this.state.isGameDone) {
-            let style = this.state.isWin ? "success" : "danger";
-            let icon = this.state.isWin ? "fa-trophy" : "fa-ban";
-            let label = this.state.isWin ? "Win" : "Failed";
-            return (
-                <Alert bsStyle={style} className="h4"><span className={cx('fa', 'fa-fw', icon)} /> {label}</Alert>
-            )
-        } else {
-            return null;
-        }
-    },
-    renderSlider() {
-        return this.state.isGameDone ? (
-            <Well>
-                <div style={{ marginBottom: 10 }}>
-                    <strong>Moves</strong>
-                </div>
-                <ReactSlider
-                    min={0}
-                    max={this.state.moves.length - 1}
-                    defaultValue={this.state.moves.length - 1}
-                    onChange={this.sliderChanged} />
-            </Well>
-        ) : null;
+    currentStateChanged(currentState) {
+        this.setState({ currentState });
     },
     render() {
-        let progressMessage = this.renderProgressMessage();
-        let resultMessage = this.renderResultMessage();
-        let slider = this.renderSlider();
         return (
             <div>
                 <div className="page-wrapper">
-                    <Grid>
-                        <Row style={{ marginBottom: 20 }}>
-                            <Col sm={6}>
-                                <div style={{ marginBottom: 20 }}>
-                                    <GameGrid tiles={this.state.tiles} />
-                                </div>
-                                <div>
-                                    {slider}
-                                </div>
-                            </Col>
-                            <Col sm={6}>
-                                <div>
-                                    <Well className="text-left">
-                                        <Button bsStyle="primary" onClick={this.playGame} block><span className="fa fa-fw fa-rocket" /> Play</Button>
-                                    </Well>
-                                </div>
-                                <div>
-                                    {progressMessage}
-                                </div>
-                                <div>
-                                    {resultMessage}
-                                </div>
-                            </Col>
-                        </Row>
-                    </Grid>
+                    <PlayControl
+                        onPlay={this.playGame}
+                        onCurrentStateChanged={this.currentStateChanged}
+                        states={this.state.states}
+                        currentState={this.state.currentState}
+                        done={this.state.done}
+                        ongoing={this.state.ongoing}
+                        win={this.state.win}
+                        />
                 </div>
                 <div className="footer">
                     <Row>
