@@ -1,0 +1,5 @@
+{
+  "name": "master-project",
+  "productName": "Master Project",
+  "main": "./init.js"
+}

@@ -69,7 +69,6 @@ export default class MainApp {
                 center: true
             });
             this.mainWindow.loadUrl('file://' + this.dirname +'/app/index.html');
-            this.mainWindow.openDevTools();
             this.mainWindow.on('closed', () => {
                 this.mainWindow = null;
             });

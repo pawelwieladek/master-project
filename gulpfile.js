@@ -7,6 +7,11 @@ var spawn = require('child_process').spawn;
 var stdio = require('stdio');
 var del = require('del');
 var assign = Object.assign || require('object-assign');
+var electronPackage = require('gulp-electron');
+var template = require('gulp-template');
+var rename = require("gulp-rename");
+
+var packageJson = require('./package.json');
 
 var options = stdio.getopt({
     'watch': { key: 'w', description: 'Watch changes', 'default': false }
@@ -24,7 +29,7 @@ var paths = {
 };
 
 gulp.task('clear', function (callback) {
-    del([paths.dest], callback);
+    del(['./dist', './release'], callback);
 });
 
 gulp.task('renderer:html', ['clear'], function () {
@@ -70,7 +75,7 @@ gulp.task('browser', ['browser:scripts', 'browser:init']);
 
 gulp.task('renderer', ['renderer:scripts', 'renderer:html']);
 
-gulp.task('build', ['renderer', 'browser']);
+gulp.task('build', ['renderer', 'browser', 'json']);
 
 gulp.task('run', ['build'], function() {
     spawn(electron, ['.'], { stdio: 'inherit' });
@@ -83,4 +88,34 @@ gulp.task('test', function () {
             reporter: 'dot',
             require: 'test/setup.js'
         }));
+});
+
+gulp.task('json', ['clear'], function() {
+    return gulp.src('./app/package.json.template')
+        .pipe(rename('package.json'))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('electron', ['build'], function() {
+
+    gulp.src("")
+        .pipe(electronPackage({
+            src: './dist',
+            packageJson: packageJson,
+            release: './release',
+            cache: './cache',
+            version: 'v0.30.4',
+            packaging: true,
+            platforms: ['darwin-x64'],
+            platformResources: {
+                darwin: {
+                    CFBundleDisplayName: packageJson.name,
+                    CFBundleIdentifier: packageJson.name,
+                    CFBundleName: packageJson.name,
+                    CFBundleVersion: packageJson.version,
+                    icon: './app/renderer/icons/logo.icns'
+                }
+            }
+        }))
+        .pipe(gulp.dest(""));
 });
