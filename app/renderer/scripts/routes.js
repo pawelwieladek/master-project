@@ -6,6 +6,7 @@ import AppPage from './pages/app-page';
 import SearchIndexPage from './pages/search/index-page.js';
 import CreateSearchPlayerPage from './pages/search/create-player-page.js';
 import PlaySearchGamePage from './pages/search/play-game-page.js';
+import SearchWinningRatePage from './pages/search/winning-rate-page.js';
 
 import LearnIndexPage from './pages/learn/index-page.js';
 import CreateLearnPlayer from './pages/learn/create-player-page.js';
@@ -22,6 +23,7 @@ let routes = (
             <DefaultRoute handler={CreateSearchPlayerPage}/>
             <Route path='create' handler={CreateSearchPlayerPage}/>
             <Route path='play' handler={PlaySearchGamePage}/>
+            <Route name='search-winning-rate' path='winning-rate' handler={SearchWinningRatePage}/>
         </Route>
         <Route path='learn' handler={LearnIndexPage}>
             <DefaultRoute handler={CreateLearnPlayer}/>

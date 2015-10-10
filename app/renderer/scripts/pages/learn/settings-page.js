@@ -22,7 +22,7 @@ export default React.createClass({
                     <Grid>
                         <Row>
                             <Col md={12}>
-                                <Input type='text' ref='iterations' label='Games to learn' defaultValue={100} addonBefore={<span className="fa fa-fw fa-retweet" />} />
+                                <Input type='text' ref='iterations' label='Games to learn' defaultValue={10000} addonBefore={<span className="fa fa-fw fa-retweet" />} />
                             </Col>
                             <Col md={12}>
                                 <ul className="list-inline">

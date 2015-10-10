@@ -64,11 +64,15 @@ let ChartResults = React.createClass({
                 }
             },
             xAxis: {
-                title: 'Games played',
+                title: {
+                    text: 'Games learned'
+                },
                 categories: []
             },
             yAxis: {
-                title: 'Winning rate',
+                title: {
+                    text: 'Winning rate'
+                },
                 min: 0.0,
                 max: 1.0
             },
@@ -146,7 +150,7 @@ let ResultTabs = React.createClass({
         return nextProps.granularity !== this.props.granularity || nextProps.results.length % this.props.granularity === 0
     },
     getResultRecords() {
-        let limit = Math.ceil(this.props.results.length / this.props.granularity);
+        let limit = Math.floor(this.props.results.length / this.props.granularity);
         let results = this.props.results.slice(0, this.props.granularity * limit);
         return Range(0, limit).map(i => {
             let wins = List(results).slice(i * this.props.granularity, (i + 1) * this.props.granularity).reduce((reduction, value) => value ? reduction + 1 : reduction, 0);
@@ -159,10 +163,10 @@ let ResultTabs = React.createClass({
     render() {
         let resultRecords = this.getResultRecords();
         let noData = (<div className="text-center">
-            <h4><i className="fa fa-fw fa-flask" /> Gathering first results...</h4>
+            <h4><i className="fa fa-fw fa-flask" /> Not enough results to show</h4>
         </div>);
-        let table = this.props.results.length > 0 ? <TableResults resultRecords={resultRecords} /> : noData;
-        let chart = this.props.results.length > 0 ? <ChartResults resultRecords={resultRecords} /> : noData;
+        let table = resultRecords.length > 0 ? <TableResults resultRecords={resultRecords} /> : noData;
+        let chart = resultRecords.length > 0 ? <ChartResults resultRecords={resultRecords} /> : noData;
         return (
             <div>
                 <Tabs defaultActiveKey={1} animation={false}>
@@ -268,7 +272,7 @@ export default React.createClass({
                 <div className="footer">
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('learn-settings', this.getParams())}><span className="fa fa-fw fa-chevron-left"></span> Learn more games</Button>
+                            <Button onClick={() => this.transitionTo('learn-settings', this.getParams())}><span className="fa fa-fw fa-chevron-left"></span>Learn more games</Button>
                         </Col>
                         <Col md={6} className="text-right">
                             <Button bsStyle="primary" onClick={() => this.transitionTo('learn-play', this.getParams())}>Play <span className="fa fa-fw fa-chevron-right"></span></Button>

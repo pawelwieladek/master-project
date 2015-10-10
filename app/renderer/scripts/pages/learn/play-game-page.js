@@ -90,7 +90,7 @@ export default React.createClass({
                             </Col>
                             <Col sm={6}>
                                 <div>
-                                    <Well className="text-right">
+                                    <Well className="text-left">
                                         <Button bsStyle="primary" onClick={this.playGame}><span className="fa fa-fw fa-rocket" /> Play</Button>
                                     </Well>
                                 </div>

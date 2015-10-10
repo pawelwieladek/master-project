@@ -16,6 +16,16 @@ let handlers = registry => {
         });
         send(SearchIntents.singleGame.playIntent, game);
     });
+
+    registry.register(SearchIntents.multipleGames.playIntent, (send, context) => {
+        let player = new SearchPlayer(context.state.player);
+        let gamesNumber = context.args[0];
+        for (let i = 0; i < gamesNumber; i++) {
+            let game = player.play();
+            send(SearchIntents.multipleGames.notifyIntent, game);
+        }
+        send(SearchIntents.multipleGames.playIntent);
+    });
 };
 
 export default handlers;

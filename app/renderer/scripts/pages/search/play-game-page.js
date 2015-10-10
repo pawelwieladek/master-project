@@ -1,5 +1,6 @@
 import ipc from 'ipc';
 import React from 'react';
+import cx from 'classnames';
 import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
 import { Grid, Row, Col, Button, Input, Alert, Well } from 'react-bootstrap';
@@ -60,49 +61,65 @@ export default React.createClass({
             tiles: this.state.moves[value]
         });
     },
-    render() {
-        let alert = null;
-        let slider = null;
-        if (this.state.isInProgress) {
-            alert = <Alert bsStyle="info">Game in progress. Moves: {this.state.moves.length}</Alert>;
-        } else if (this.state.isGameDone) {
-            if (this.state.isWin) {
-                alert = <Alert bsStyle="success"><span className="fa fa-fw fa-trophy" /> Win</Alert>;
-            } else {
-                alert = <Alert bsStyle="danger"><span className="fa fa-fw fa-ban" /> Failed</Alert>;
-            }
-            slider = (
-                <Well>
-                    <div style={{ marginBottom: 10 }}>
-                        <strong>Moves</strong>
-                    </div>
-                    <ReactSlider
-                        min={0}
-                        max={this.state.moves.length - 1}
-                        defaultValue={this.state.moves.length - 1}
-                        onChange={this.sliderChanged} />
-                </Well>
-            );
+    renderProgressMessage() {
+        return this.state.isInProgress ? (
+            <Alert bsStyle="info">Game in progress. Moves: {this.state.moves.length}</Alert>
+        ) : null;
+    },
+    renderResultMessage() {
+        if (this.state.isGameDone) {
+            let style = this.state.isWin ? "success" : "danger";
+            let icon = this.state.isWin ? "fa-trophy" : "fa-ban";
+            let label = this.state.isWin ? "Win" : "Failed";
+            return (
+                <Alert bsStyle={style} className="h4"><span className={cx('fa', 'fa-fw', icon)} /> {label}</Alert>
+            )
+        } else {
+            return null;
         }
+    },
+    renderSlider() {
+        return this.state.isGameDone ? (
+            <Well>
+                <div style={{ marginBottom: 10 }}>
+                    <strong>Moves</strong>
+                </div>
+                <ReactSlider
+                    min={0}
+                    max={this.state.moves.length - 1}
+                    defaultValue={this.state.moves.length - 1}
+                    onChange={this.sliderChanged} />
+            </Well>
+        ) : null;
+    },
+    render() {
+        let progressMessage = this.renderProgressMessage();
+        let resultMessage = this.renderResultMessage();
+        let slider = this.renderSlider();
         return (
             <div>
                 <div className="page-wrapper">
                     <Grid>
                         <Row style={{ marginBottom: 20 }}>
                             <Col sm={6}>
-                                <GameGrid tiles={this.state.tiles} />
+                                <div style={{ marginBottom: 20 }}>
+                                    <GameGrid tiles={this.state.tiles} />
+                                </div>
+                                <div>
+                                    {slider}
+                                </div>
                             </Col>
                             <Col sm={6}>
                                 <div>
-                                    <Well className="text-right">
+                                    <Well className="text-left">
                                         <Button bsStyle="primary" onClick={this.playGame}><span className="fa fa-fw fa-rocket" /> Play</Button>
                                     </Well>
                                 </div>
                                 <div>
-                                    {alert}
+                                    {progressMessage}
                                 </div>
                                 <div>
-                                    {slider}
+                                    {resultMessage}
                                 </div>
                             </Col>
                         </Row>
@@ -111,10 +128,10 @@ export default React.createClass({
                 <div className="footer">
                     <Row>
                         <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/search/create')}><span className="fa fa-fw fa-chevron-left" /> Create player</Button>
+                            <Button onClick={() => this.transitionTo('/search/create')}><span className="fa fa-fw fa-chevron-left" />Back to Create player</Button>
                         </Col>
                         <Col md={6} className="text-right">
-                            <Button onClick={() => this.transitionTo('/search/rate')}>Winning rate <span className="fa fa-fw fa-chevron-right" /></Button>
+                            <Button onClick={() => this.transitionTo('search-winning-rate')}>Winning rate <span className="fa fa-fw fa-chevron-right" /></Button>
                         </Col>
                     </Row>
                 </div>

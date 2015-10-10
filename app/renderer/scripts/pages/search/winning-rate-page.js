@@ -2,10 +2,11 @@ import ipc from 'ipc';
 import React from 'react';
 import { Navigation } from 'react-router';
 import { ListenerMixin } from 'reflux';
-import { Row, Col, Button, Input, Alert, Glyphicon, Well } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Input, Alert, Well, ProgressBar } from 'react-bootstrap';
 import { Repeat, List } from 'immutable';
 import ReactSlider from 'react-slider';
 
+import { killChildProcessIntent } from '../../../../browser/intents/common-intents.js';
 import GameGrid from '../../components/game-grid';
 import SearchIntents from '../../../../browser/intents/search-intents';
 
@@ -15,94 +16,139 @@ export default React.createClass({
     getInitialState() {
         return {
             tiles: this.getEmptyTiles(),
-            games: [],
+            results: [],
+            gamesNumber: null,
             isDone: false,
             isInProgress: false
         };
     },
     componentDidMount() {
-        ipc.on(SearchIntents.multipleGames.playIntent, this.didPlayGames);
+        ipc.on(SearchIntents.multipleGames.playIntent, this.didPlayAllGames);
         ipc.on(SearchIntents.multipleGames.notifyIntent, this.didNotifyProgress);
     },
-    didPlayGames() {
-
+    componentWillUnmount() {
+        ipc.send(killChildProcessIntent);
     },
     didNotifyProgress(tiles) {
         this.setState({
-            games: this.state.games.concat([tiles])
+            results: this.state.results.concat([tiles])
         });
     },
-    playGame() {
+    didPlayAllGames() {
         this.setState({
-            isGameDone: false,
-            isInProgress: true,
-            isWin: false,
-            moves: [],
-            tiles: this.getEmptyTiles()
+            isDone: true,
+            isInProgress: false
         });
-        ipc.send(SearchIntents.playSingleGameIntent);
+    },
+    calculateWinningRate() {
+        let gamesNumber = this.refs['gamesNumber'].getValue();
+        this.setState({
+            isDone: false,
+            isInProgress: true,
+            results: [],
+            tiles: this.getEmptyTiles(),
+            gamesNumber
+        });
+        ipc.send(SearchIntents.multipleGames.playIntent, gamesNumber);
     },
     getEmptyTiles() {
         return Repeat(0, 16).toArray();
     },
     sliderChanged(value) {
         this.setState({
-            tiles: this.state.moves[value]
+            tiles: this.state.results[value]
         });
     },
-    render() {
-        let alert = null;
-        let slider = null;
+    renderSlider() {
+        return this.state.isDone ? (
+            <Well>
+                <div style={{ marginBottom: 10 }}>
+                    <strong>Games</strong>
+                </div>
+                <ReactSlider
+                    min={0}
+                    max={this.state.results.length - 1}
+                    defaultValue={this.state.results.length - 1}
+                    onChange={this.sliderChanged} />
+            </Well>
+        ) : null;
+    },
+    renderProgressBar() {
         if (this.state.isInProgress) {
-            alert = <Alert bsStyle="info">Game in progress. Moves: {this.state.moves.length}</Alert>;
-        } else if (this.state.isGameDone) {
-            if (this.state.isWin) {
-                alert = <Alert bsStyle="success">Win</Alert>;
-            } else {
-                alert = <Alert bsStyle="danger">Failed</Alert>;
-            }
-            slider = (
-                <Well>
-                    <ReactSlider
-                        min={0}
-                        max={this.state.moves.length - 1}
-                        defaultValue={this.state.moves.length - 1}
-                        onChange={this.sliderChanged} />
-                </Well>
-            );
+            let progressValue = Math.round((100 * this.state.results.length) / this.state.gamesNumber);
+            return (
+                <ProgressBar bsStyle="default" now={progressValue} />
+            )
+        } else {
+            return null;
         }
+    },
+    renderWinningRate() {
+        if (this.state.isDone) {
+            let winningRate = Math.round((100 * this.state.results.filter(tiles => Math.max(...tiles) === 11).length) / this.state.results.length);
+            return (
+                <Alert bsStyle="info" className="h4">Winning rate: {`${winningRate}%`}</Alert>
+            )
+        } else {
+            return null;
+        }
+    },
+    renderCalculateButton() {
+        let isDisabled = this.state.isInProgress;
+        let label = !this.state.isInProgress ? 'Calculate winning rate' : 'Calculating winning rate...';
+        return (
+            <Button
+                bsStyle="primary"
+                onClick={this.calculateWinningRate}
+                disabled={isDisabled}>
+                <span className="fa fa-fw fa-rocket" /> {label}
+            </Button>
+        );
+    },
+    render() {
+        let slider = this.renderSlider();
+        let progressBar = this.renderProgressBar();
+        let winningRate = this.renderWinningRate();
+        let calculateButton = this.renderCalculateButton();
         return (
             <div>
-                <Row style={{ marginBottom: 20 }}>
-                    <Col sm={6}>
-                        <GameGrid tiles={this.state.tiles} />
-                    </Col>
-                    <Col sm={6}>
-                        <div>
-                            {alert}
-                        </div>
-                        <div>
-                            {slider}
-                        </div>
-                    </Col>
-                </Row>
-                <Well>
+                <div className="page-wrapper">
+                    <Grid>
+                        <Row>
+                            <Col sm={6}>
+                                <div style={{ marginBottom: 20 }}>
+                                    <GameGrid tiles={this.state.tiles} />
+                                </div>
+                                <div>
+                                    {slider}
+                                </div>
+                            </Col>
+                            <Col sm={6}>
+                                <div>
+                                    <Input type='text' ref='gamesNumber' label='Games number' defaultValue={10} addonBefore={<span className="fa fa-fw fa-retweet" />} />
+                                </div>
+                                <div>
+                                    <Well className="text-left">
+                                        {calculateButton}
+                                    </Well>
+                                </div>
+                                <div>
+                                    {progressBar}
+                                </div>
+                                <div>
+                                    {winningRate}
+                                </div>
+                            </Col>
+                        </Row>
+                    </Grid>
+                </div>
+                <div className="footer">
                     <Row>
-                        <Col md={12} className="text-right">
-                            <Button bsStyle="primary" onClick={this.playGame}>Play</Button>
+                        <Col md={12}>
+                            <Button onClick={() => this.transitionTo('/search/play')}><span className="fa fa-fw fa-chevron-left" />Back to Play</Button>
                         </Col>
                     </Row>
-                </Well>
-                <Well>
-                    <Row>
-                        <Col md={6}>
-                            <Button onClick={() => this.transitionTo('/search/create')}><Glyphicon glyph="chevron-left" /> Create player</Button>
-                        </Col>
-                        <Col md={6} className="text-right">
-                            <Button onClick={() => this.transitionTo('/search/rate')}>Winning rate <Glyphicon glyph="chevron-right" /></Button>
-                        </Col>
-                    </Row>
-                </Well>
+                </div>
             </div>
         );
     }
