@@ -1,3 +1,4 @@
+var Direction = require("./direction");
 var Grid = require("./grid");
 var Rules = require("./rules");
 

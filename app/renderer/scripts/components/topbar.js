@@ -10,18 +10,17 @@ let Topbar = React.createClass({
             <div className="topbar">
                 <Row>
                     <Col md={3}>
-                        <ButtonGroup>
-                            <Button onClick={() => this.transitionTo('/search')}>Search</Button>
-                            <Button onClick={() => this.transitionTo('/learn')}>Learn</Button>
-                        </ButtonGroup>
+                        <ul className="list-inline">
+                            <li><Button onClick={() => this.transitionTo('/search')}><span className="fa fa-fw fa-search" /> Search</Button></li>
+                            <li><Button onClick={() => this.transitionTo('/learn')}><span className="fa fa-fw fa-graduation-cap" /> Learn</Button></li>
+                        </ul>
                     </Col>
-                    <Col md={6} className="logo text-center">
-                        <span className="h4"><strong>2048</strong></span>
+                    <Col md={6} className="text-center">
+                        <div className="logo">2048</div>
                     </Col>
                     <Col md={3} className="text-right">
                         <ButtonGroup>
-                            <Button onClick={() => this.transitionTo('/')}>Index</Button>
-                            <Button onClick={() => this.transitionTo('/samples')}>Samples</Button>
+                            <Button onClick={() => this.transitionTo('/')}><span className="fa fa-fw fa-home"></span></Button>
                         </ButtonGroup>
                     </Col>
                 </Row>

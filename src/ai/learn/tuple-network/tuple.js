@@ -1,10 +1,16 @@
+var maxPossibleValue = 15;
+
 function Tuple(locations, lookupTable) {
     this.locations = locations;
     this.lookupTable = lookupTable || {};
 }
 
 Tuple.prototype.buildKey = function(values) {
-    return values.join(':');
+    var sum = 0;
+    for (var i = 0; i < values.length; i++) {
+        sum += values[i] * Math.pow(maxPossibleValue, i);
+    }
+    return sum;
 };
 
 Tuple.prototype.getWeight = function(values) {

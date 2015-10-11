@@ -8,7 +8,6 @@ var stdio = require('stdio');
 var del = require('del');
 var assign = Object.assign || require('object-assign');
 var electron = require('gulp-electron');
-var template = require('gulp-template');
 var rename = require('gulp-rename');
 
 var packageJson = require('./package.json');
@@ -97,7 +96,7 @@ gulp.task('electron', ['build'], function() {
             cache: './cache',
             version: 'v0.30.4',
             packaging: true,
-            platforms: ['darwin-x64'],
+            platforms: ['darwin-x64', 'win32-ia32'],
             platformResources: {
                 darwin: {
                     CFBundleDisplayName: packageJson.name,
@@ -105,6 +104,11 @@ gulp.task('electron', ['build'], function() {
                     CFBundleName: packageJson.name,
                     CFBundleVersion: packageJson.version,
                     icon: './app/renderer/icons/logo.icns'
+                },
+                win: {
+                    "version-string": packageJson.version,
+                    "file-version": packageJson.version,
+                    "product-version": packageJson.version
                 }
             }
         }))

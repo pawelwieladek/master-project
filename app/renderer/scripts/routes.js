@@ -16,12 +16,9 @@ import LearnSettingsPage from './pages/learn/settings-page.js';
 import LearnResultsPage from './pages/learn/results-page.js';
 import PlayLearnGamePage from './pages/learn/play-game-page.js';
 
-import SamplesPage from './pages/samples-page.js';
-
 let routes = (
     <Route handler={AppPage}>
         <DefaultRoute handler={IndexPage}/>
-        <Route path='samples' handler={SamplesPage} />
         <Route path='search' handler={SearchIndexPage}>
             <DefaultRoute handler={CreateSearchPlayerPage}/>
             <Route path='create' handler={CreateSearchPlayerPage}/>
