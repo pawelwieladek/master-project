@@ -28,6 +28,7 @@
     "sass-loader": "^1.0.3",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
+    "stats-lite": "^2.0.0",
     "stdio": "^0.2.7",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",

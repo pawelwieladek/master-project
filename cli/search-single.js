@@ -8,7 +8,7 @@ import Const from '../../config/const.js';
 
 let logger = new (winston.Logger)({
     transports: [
-        new (winston.transports.File)({ filename: path.join(__dirname, `../../results/search-single.txt`) })
+        new (winston.transports.File)({ filename: path.join(__dirname, `../results/search.txt`) })
     ]
 });
 
