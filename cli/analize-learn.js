@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import fs from 'fs'
 import path from 'path'
 import stdio from 'stdio'
@@ -16,21 +17,23 @@ let options = stdio.getopt({
     }
 });
 
-let id = parseInt(options.id);
 
-fs.readFile(path.resolve(path.join(__dirname, '../../results/', `learn-results-${id}.txt`)), 'utf8', (err, data) => {
+fs.readFile(path.resolve(path.join(__dirname, '../results/', `learn.txt`)), 'utf8', (err, data) => {
     if (err) {
         console.error(err);
         return;
     }
+    let id = parseInt(options.id);
     let granularity = parseInt(options.granularity);
-    let games = data.split(':');
-    console.log(games.length);
+    data = data.split('\n');
+    if (data[data.length - 1] === '') delete data[data.length - 1];
+    data = data.map(datum => JSON.parse(datum));
+    let games = _.findWhere(data, { id }).results;
     let resultsNumber = Math.ceil(games.length / granularity);
     for (let i = 0; i < resultsNumber; i++) {
         let start = i * granularity;
         let end = start + granularity;
-        let winsCount = games.splice(start, granularity).filter(game => parseInt(game) === 1).length;
+        let winsCount = games.slice(start, end).filter(game => parseInt(game) === 1).length;
         let winningRate = 100 * winsCount / granularity;
         console.log(`${start} - ${end}`, winsCount, `${winningRate}%`);
     }

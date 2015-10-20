@@ -1,9 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
+import winston from 'winston';
 import ProgressBar from 'progress';
 
-import LearnPlayer from '../../src/ai/learn/learn-player'
+import LearnPlayer from '../src/ai/learn/learn-player'
+
+let logger = new (winston.Logger)({
+    transports: [
+        new (winston.transports.File)({ filename: path.join(__dirname, `../results/learn.txt`) })
+    ]
+});
 
 let questions = [
     {
@@ -14,40 +21,31 @@ let questions = [
     },
     {
         type: 'input',
-        name: 'games',
+        name: 'gamesNumber',
         message: 'Number of games',
         'default': 50000
     }
 ];
 
-let timestamp = (new Date()).getTime();
+let id = (new Date()).getTime();
 
 inquirer.prompt(questions, response => {
-    let games = parseInt(response.games);
+    let gamesNumber = parseInt(response.gamesNumber);
     let learningRate = parseFloat(response.learningRate);
     let player = new LearnPlayer({ learningRate });
     let progressBar = new ProgressBar(':elapseds [:bar] :current/:total :percent :etas', {
         complete: '=',
         incomplete: ' ',
         width: 50,
-        total: games
+        total: gamesNumber
     });
-    let wins = [];
-    for (let i = 0; i < games; i++) {
+    let results = [];
+    for (let i = 0; i < gamesNumber; i++) {
         let game = player.play();
         let win = game.grid.max() === 11;
-        wins.push(win ? '1' : '0');
+        results.push(win ? '1' : '0');
         progressBar.tick();
     }
-    let fileContent = [];
-    fileContent.push(`timestamp:${timestamp}:learningRate:${learningRate}`);
-    fileContent.push(wins.join(':'));
-    fileContent = fileContent.join('\n');
-    fs.writeFile(path.resolve(path.join(__dirname, '../results/', `learn-results-${timestamp}.txt`)), fileContent, 'utf8', err => {
-        if (err) console.error(err);
-    });
-    let network = JSON.stringify(player.tupleNetwork);
-    fs.writeFile(path.resolve(path.join(__dirname, '../results/', `learn-network-${timestamp}.txt`)), network, 'utf8', err => {
-        if (err) console.error(err);
-    });
+    let network = player.tupleNetwork;
+    logger.info('result', { id, learningRate, results, network });
 });

@@ -67,7 +67,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "./node_modules/.bin/babel-node"
   },
   "repository": {
     "type": "git",
