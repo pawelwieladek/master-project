@@ -1,4 +1,5 @@
 import ProgressBar from 'progress';
+import Table from 'cli-table';
 
 import db from './dbs/search';
 import Form from '../common/form';
@@ -35,7 +36,25 @@ export default class SearchAnalyzeScript extends Form {
               .sort((a, b) => b.winningRate - a.winningRate)
               .slice(0, limit);
 
-            console.log(results);
+            let columns = ['depth', 'monotonicity', 'smoothness', 'availability', 'maximization', 'iterations', 'winningRate'];
+            var table = new Table({
+                head: columns,
+                colWidths: columns.map(c => 15)
+            });
+
+            results.forEach(result => {
+                table.push([
+                    result.depth,
+                    result.monotonicity,
+                    result.smoothness,
+                    result.availability,
+                    result.maximization,
+                    result.iterations,
+                    result.winningRate
+                ]);
+            });
+
+            console.log(table.toString());
         };
 
         super(questions, answersHandler);

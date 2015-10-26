@@ -1,10 +1,10 @@
 import ProgressBar from 'progress';
 import moment from 'moment';
+import Table from 'cli-table';
 
 import idsDb from './dbs/ids';
 import gamesDb from './dbs/games';
 import Form from '../common/form';
-import LearnPlayer from '../../src/ai/learn/learn-player';
 
 export default class LearnAnalysisForm extends Form {
     constructor() {
@@ -27,7 +27,7 @@ export default class LearnAnalysisForm extends Form {
                 type: 'input',
                 name: 'granularity',
                 message: 'Granularity',
-                'default': 1000
+                'default': 10000
             }
         ];
 
@@ -37,13 +37,18 @@ export default class LearnAnalysisForm extends Form {
 
             let games = gamesDb('results').find({ id }).games.map(x => parseInt(x));
             let resultsNumber = Math.ceil(games.length / granularity);
+            var table = new Table({
+                head: ['Games', 'Winning rate'],
+                colWidths: [20, 20]
+            });
             for (let i = 0; i < resultsNumber; i++) {
                 let start = i * granularity;
                 let end = start + granularity;
                 let winsCount = games.slice(start, end).filter(game => parseInt(game) === 1).length;
                 let winningRate = 100 * winsCount / granularity;
-                console.log(`${start} - ${end}`, winsCount, `${winningRate}%`);
+                table.push([`${start} - ${end}`, `${winningRate}%`]);
             }
+            console.log(table.toString());
         };
 
         super(questions, answersHandler);

@@ -28,6 +28,7 @@ export default class LearnRunForm extends Form {
             let gamesNumber = parseInt(answers.gamesNumber);
             let learningRate = parseFloat(answers.learningRate);
             let player = new LearnPlayer({ learningRate: learningRate });
+            console.log('player.learningRate', player.learningRate);
             let progressBar = new ProgressBar(':elapseds [:bar] :current/:total :percent :etas', {
                 complete: '=',
                 incomplete: ' ',

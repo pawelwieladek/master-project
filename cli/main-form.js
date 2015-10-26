@@ -1,6 +1,7 @@
 import Form from './common/form';
 import LearnRunForm from './learn/run';
 import LearnAnalysisForm from './learn/analysis';
+import LearnComparisonForm from './learn/comparison';
 import SearchRunForm from './search/run';
 import SearchAnalysisForm from './search/analysis';
 import SearchComparisonForm from './search/comparison';
@@ -33,6 +34,8 @@ export default class MainForm extends Form {
                 return new LearnRunForm();
             } else if (algorithm === 'learn' && command === 'analysis') {
                 return new LearnAnalysisForm();
+            } else if (algorithm === 'learn' && command === 'comparison') {
+                return new LearnComparisonForm();
             } else {
                 throw new Error('Not implemented');
             }
