@@ -26,6 +26,7 @@
     "inquirer": "^0.10.1",
     "lowdb": "^0.10.2",
     "mocha": "^2.2.4",
+    "moment": "^2.10.6",
     "node-sass": "^3.3.2",
     "numeral": "^1.5.3",
     "sass-loader": "^1.0.3",

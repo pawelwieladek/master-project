@@ -1,15 +1,17 @@
 import ProgressBar from 'progress';
+import moment from 'moment';
 
 import idsDb from './dbs/ids';
 import gamesDb from './dbs/games';
-import RunScript from '../run';
+import Form from '../common/form';
 import LearnPlayer from '../../src/ai/learn/learn-player';
 
-export default class LearnRunScript extends RunScript {
+export default class LearnAnalysisForm extends Form {
     constructor() {
         let options = idsDb('results').map(result => {
             return {
                 id: result.id,
+                date: moment(result.id).format('YYYY-MM-DD HH:mm'),
                 learningRate: result.learningRate
             };
         }).map(option => JSON.stringify(option));

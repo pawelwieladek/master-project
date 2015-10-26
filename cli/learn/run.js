@@ -2,11 +2,11 @@ import ProgressBar from 'progress';
 
 import idsDb from './dbs/ids';
 import gamesDb from './dbs/games';
-import netowrkDb from './dbs/networks';
-import RunScript from '../run';
+import networkDb from './dbs/networks';
+import Form from '../common/form';
 import LearnPlayer from '../../src/ai/learn/learn-player';
 
-export default class LearnRunScript extends RunScript {
+export default class LearnRunForm extends Form {
     constructor() {
         let questions = [
             {
@@ -24,9 +24,10 @@ export default class LearnRunScript extends RunScript {
         ];
 
         let answersHandler = answers => {
+            let id = (new Date()).getTime();
             let gamesNumber = parseInt(answers.gamesNumber);
             let learningRate = parseFloat(answers.learningRate);
-            let player = new LearnPlayer({ learningRate: this.learningRate });
+            let player = new LearnPlayer({ learningRate: learningRate });
             let progressBar = new ProgressBar(':elapseds [:bar] :current/:total :percent :etas', {
                 complete: '=',
                 incomplete: ' ',
@@ -44,7 +45,7 @@ export default class LearnRunScript extends RunScript {
 
             idsDb('results').push({ id, learningRate });
             gamesDb('results').push({ id, games });
-            netowrkDb('results').push({ id, network });
+            networkDb('results').push({ id, network });
         };
 
         super(questions, answersHandler);
