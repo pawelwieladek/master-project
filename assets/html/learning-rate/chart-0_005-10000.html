@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Results</title>
+</head>
+<body>
+<div class="container"></div>
+<script type="text/javascript" src="../../../node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../../../node_modules/highcharts-release/highcharts.js"></script>
+<script type="text/javascript" src="../../../node_modules/highcharts-release/modules/exporting.js"></script>
+<script type="text/javascript" src="../../js/createChart.js"></script>
+<script type="text/javascript">
+var learningRate = 0.005;
+var granularity = 10000;
+var showPoints = true;
+var data = [ [ 10000, 11.71 ],
+  [ 20000, 38.35 ],
+  [ 30000, 46.3 ],
+  [ 40000, 47.6 ],
+  [ 50000, 48.57 ],
+  [ 60000, 48.95 ],
+  [ 70000, 49.79 ],
+  [ 80000, 49.66 ],
+  [ 90000, 49.15 ],
+  [ 100000, 48.81 ],
+  [ 110000, 49.31 ],
+  [ 120000, 47.85 ],
+  [ 130000, 47.28 ],
+  [ 140000, 47.18 ],
+  [ 150000, 46.34 ],
+  [ 160000, 46.13 ],
+  [ 170000, 45.11 ],
+  [ 180000, 44.68 ],
+  [ 190000, 43.62 ],
+  [ 200000, 44.35 ] ];
+
+createChart(learningRate, granularity, data, showPoints);
+</script>
+</body>
+</html>

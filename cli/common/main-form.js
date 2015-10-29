@@ -1,10 +1,10 @@
-import Form from './common/form';
-import LearnRunForm from './learn/run';
-import LearnAnalysisForm from './learn/analysis';
-import LearnComparisonForm from './learn/comparison';
-import SearchRunForm from './search/run';
-import SearchAnalysisForm from './search/analysis';
-import SearchComparisonForm from './search/comparison';
+import Form from './form';
+import LearnRunForm from '../learn/run';
+import LearnAnalysisForm from '../learn/analysis';
+import LearnComparisonForm from '../learn/comparison';
+import SearchRunForm from '../search/run';
+import SearchAnalysisForm from '../search/analysis';
+import SearchComparisonForm from '../search/comparison';
 
 export default class MainForm extends Form {
     constructor() {

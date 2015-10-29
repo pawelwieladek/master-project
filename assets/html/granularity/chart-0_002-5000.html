@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Results</title>
+</head>
+<body>
+<div class="container"></div>
+<script type="text/javascript" src="../../../node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../../../node_modules/highcharts-release/highcharts.js"></script>
+<script type="text/javascript" src="../../../node_modules/highcharts-release/modules/exporting.js"></script>
+<script type="text/javascript" src="../../js/createChart.js"></script>
+<script type="text/javascript">
+var learningRate = 0.002;
+var granularity = 5000;
+var showPoints = false;
+var data = [ [ 5000, 0.79 ],
+  [ 10000, 4.3 ],
+  [ 15000, 11.01 ],
+  [ 20000, 20.87 ],
+  [ 25000, 28.55 ],
+  [ 30000, 34.58 ],
+  [ 35000, 38.73 ],
+  [ 40000, 41.55 ],
+  [ 45000, 45.76 ],
+  [ 50000, 49.15 ],
+  [ 55000, 49.45 ],
+  [ 60000, 52.09 ],
+  [ 65000, 53.1 ],
+  [ 70000, 53.67 ],
+  [ 75000, 55.03 ],
+  [ 80000, 55.56 ],
+  [ 85000, 55.34 ],
+  [ 90000, 56.38 ],
+  [ 95000, 56.84 ],
+  [ 100000, 57.02 ],
+  [ 105000, 57.07 ],
+  [ 110000, 57.57 ],
+  [ 115000, 57.53 ],
+  [ 120000, 57.8 ],
+  [ 125000, 58.15 ],
+  [ 130000, 57.7 ],
+  [ 135000, 58.15 ],
+  [ 140000, 58.61 ],
+  [ 145000, 58.71 ],
+  [ 150000, 59.16 ],
+  [ 155000, 59.58 ],
+  [ 160000, 59.34 ],
+  [ 165000, 59.29 ],
+  [ 170000, 59.89 ],
+  [ 175000, 60.4 ],
+  [ 180000, 60.59 ],
+  [ 185000, 60.87 ],
+  [ 190000, 60.85 ],
+  [ 195000, 60.97 ],
+  [ 200000, 60.14 ] ];
+
+createChart(learningRate, granularity, data, showPoints);
+</script>
+</body>
+</html>

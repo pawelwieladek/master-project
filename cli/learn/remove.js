@@ -4,7 +4,7 @@ import ids from './dbs/ids'
 import games from './dbs/games'
 import networks from './dbs/networks'
 
-let options= stdio.getopt({
+let options = stdio.getopt({
   id: {
     key: 'i',
     description: 'Id',

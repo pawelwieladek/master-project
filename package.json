@@ -23,6 +23,7 @@
     "gulp-spawn-mocha": "^2.0.1",
     "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.6",
+    "highcharts-release": "^4.1.9",
     "immutable": "^3.7.5",
     "inquirer": "^0.10.1",
     "lowdb": "^0.10.2",
@@ -73,7 +74,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "./node_modules/.bin/babel-node"
+    "start": "./node_modules/.bin/babel-node ./cli/cli.js"
   },
   "repository": {
     "type": "git",

@@ -31,6 +31,12 @@ export default class LearnComparisonForm extends Form {
                 name: 'granularity',
                 message: 'Granularity',
                 'default': 10000
+            },
+            {
+                type: 'confirm',
+                name: 'print',
+                message: 'Print for export?',
+                'default': false
             }
         ];
 
@@ -51,18 +57,28 @@ export default class LearnComparisonForm extends Form {
                 .object()
                 .value();
             let resultsNumber = Math.ceil(games[ids[0]].length / granularity);
-            var table = new Table({
+            let table = new Table({
                 head: ['Games', 'Mean', 'Stdev'],
                 colWidths: [20, 20, 20]
             });
+            let chartResults = [];
+            let tableResults = [];
             for (let i = 0; i < resultsNumber; i++) {
                 let start = i * granularity;
                 let end = start + granularity;
                 let winsCounts = ids.map(id => games[id].slice(start, end).filter(game => parseInt(game) === 1).length);
                 let winningRates = winsCounts.map(winsCount => 100 * winsCount / granularity);
                 table.push([`${start} - ${end}`, numeral(stats.mean(winningRates)).format('0.00'), numeral(stats.stdev(winningRates)).format('0.00')]);
+                chartResults.push([end, parseFloat(numeral(stats.mean(winningRates)).format('0.00'))]);
+                tableResults.push([end, parseFloat(numeral(stats.mean(winningRates)).format('0.00')), parseFloat(numeral(stats.stdev(winningRates)).format('0.00'))]);
             }
             console.log(table.toString());
+            if (answers.print) {
+              console.log('Print for export');
+              console.log('--------------');
+              console.log('Chart results:', chartResults);
+              console.log('Table results:', tableResults);
+            }
         };
 
         super(questions, answersHandler);

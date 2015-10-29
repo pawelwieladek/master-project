@@ -28,6 +28,12 @@ export default class LearnComparisonScript extends Form {
                 name: 'limit',
                 message: 'Limit',
                 'default': 10
+            },
+            {
+                type: 'confirm',
+                name: 'print',
+                message: 'Print for export?',
+                'default': false
             }
         ];
 
@@ -50,11 +56,12 @@ export default class LearnComparisonScript extends Form {
                 }).sort((a, b) => b.mean - a.mean).slice(0, limit);
 
                 let columns = ['depth', 'monotonicity', 'smoothness', 'availability', 'maximization', 'mean', 'stdev'];
-                var table = new Table({
+                let table = new Table({
                     head: columns,
                     colWidths: columns.map(c => 15)
                 });
 
+                let tableResults = [];
                 results.forEach(result => {
                     table.push([
                         result.depth,
@@ -65,9 +72,23 @@ export default class LearnComparisonScript extends Form {
                         numeral(result.mean).format('0.00'),
                         numeral(result.stdev).format('0.00')
                     ]);
+                    tableResults.push([
+                        result.depth,
+                        result.monotonicity,
+                        result.smoothness,
+                        result.availability,
+                        result.maximization,
+                        parseFloat(numeral(result.mean).format('0.00')),
+                        parseFloat(numeral(result.stdev).format('0.00'))
+                    ]);
                 });
 
                 console.log(table.toString());
+                if (answers.print) {
+                  console.log('Print for export');
+                  console.log('--------------');
+                  console.log('Table results:', tableResults);
+                }
             } catch (e) {
                 console.error('This data sets cannot be compared');
             }
