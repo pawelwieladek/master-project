@@ -1,20 +1,23 @@
-import low from 'lowdb'
-import stdio from 'stdio'
-import ids from './dbs/ids'
-import games from './dbs/games'
-import networks from './dbs/networks'
+import ids from './dbs/ids';
+import games from './dbs/games';
+import networks from './dbs/networks';
 
-let options = stdio.getopt({
-  id: {
-    key: 'i',
-    description: 'Id',
-    args: 1,
-    mandatory: true
-  }
-});
+import formBuilder from '../common/form-builder';
 
-let id = parseInt(options.id);
+export default formBuilder()
+    .withQuestions([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Id'
+        }
+    ])
+    .withAnswersHandler(answers => {
+        let id = parseInt(answers.id);
+        ids('results').remove({ id });
+        games('results').remove({ id });
+        networks('results').remove({ id });
+    })
+    .build();
 
-ids('results').remove({ id });
-games('results').remove({ id });
-networks('results').remove({ id });
+

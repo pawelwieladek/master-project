@@ -1,3 +1,2 @@
-import MainForm from './common/main-form';
-let mainForm = new MainForm();
-mainForm.submit();
+import algorithmsForm from './algorithms';
+algorithmsForm.submit();
