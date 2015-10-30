@@ -1,19 +1,22 @@
 import _ from 'lodash';
 
 import formBuilder from '../common/form-builder';
-import runForm from './run';
+import runWeightsForm from './run-weights';
+import runDepthsForm from './run-depths';
 import analyzeForm from './analyze';
 import compareForm from './compare';
 
 const Commands = {
-    Run: 'Run',
+    RunWeights: 'Run with weights range',
+    RunDepths: 'Run with depths range',
     Analyze: 'Analyze',
     Compare: 'Compare'
 };
 
 function createForm(command) {
     switch (command) {
-        case Commands.Run: return runForm;
+        case Commands.RunWeights: return runWeightsForm;
+        case Commands.RunDepths: return runDepthsForm;
         case Commands.Analyze: return analyzeForm;
         case Commands.Compare: return compareForm;
         default: throw new Error('Not implemented');
