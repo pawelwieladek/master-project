@@ -40,7 +40,7 @@ export default React.createClass({
                                     ref='learningRate'
                                     label='Learning rate'
                                     placeholder='Learning rate'
-                                    defaultValue={0.01}
+                                    defaultValue={0.002}
                                     addonBefore={<span className="fa fa-graduation-cap" />}
                                     help="Learning rate determine how fast the algorithm learns. If it's to low the algorithm can never reach its maximum. Otherwise if it's too high algorithm can omit some important knowledge that has to be gained." />
                             </Col>

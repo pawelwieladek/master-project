@@ -184,7 +184,7 @@ export default React.createClass({
             isLearning: !_.isUndefined(this.props.query.iterations),
             results: LearnPlayerStore.results,
             iterations: LearnPlayerStore.results.length + parseInt(this.props.query.iterations),
-            granularity: 100
+            granularity: 2000
         };
     },
     componentDidMount() {
@@ -213,7 +213,8 @@ export default React.createClass({
                     { value: 100, label: "100" },
                     { value: 500, label: "500" },
                     { value: 1000, label: "1000" },
-                    { value: 2000, label: "2000" }
+                    { value: 2000, label: "2000" },
+                    { value: 10000, label: "10000" }
                 ]}
                 clearable={false}
                 onChange={this.granularityChanged} />

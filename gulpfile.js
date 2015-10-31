@@ -96,7 +96,11 @@ gulp.task('electron', ['build'], function() {
             cache: './cache',
             version: 'v0.30.4',
             packaging: true,
-            platforms: ['darwin-x64', 'win32-ia32'],
+            platforms: [
+                'darwin-x64',
+                'win32-ia32',
+                'linux-ia32'
+            ],
             platformResources: {
                 darwin: {
                     CFBundleDisplayName: packageJson.name,
@@ -108,7 +112,8 @@ gulp.task('electron', ['build'], function() {
                 win: {
                     "version-string": packageJson.version,
                     "file-version": packageJson.version,
-                    "product-version": packageJson.version
+                    "product-version": packageJson.version,
+                    "icon": './app/renderer/icons/logo.ico'
                 }
             }
         }))
