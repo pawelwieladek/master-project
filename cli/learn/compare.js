@@ -27,7 +27,7 @@ export default formBuilder()
             type: 'input',
             name: 'granularity',
             message: 'Granularity',
-            'default': 10000
+            'default': 20000
         },
         {
             type: 'confirm',
@@ -54,7 +54,7 @@ export default formBuilder()
             .value();
         let resultsNumber = Math.ceil(games[ids[0]].length / granularity);
         let table = new Table({
-            head: ['Games', 'Mean', 'Stdev'],
+            head: ['Games', 'Avg winning rate', 'Standard deviation'],
             colWidths: [20, 20, 20]
         });
         let chartResults = [];
@@ -63,10 +63,10 @@ export default formBuilder()
             let start = i * granularity;
             let end = start + granularity;
             let winsCounts = ids.map(id => games[id].slice(start, end).filter(game => parseInt(game) === 1).length);
-            let winningRates = winsCounts.map(winsCount => 100 * winsCount / granularity);
-            table.push([`${start} - ${end}`, numeral(stats.mean(winningRates)).format('0.00'), numeral(stats.stdev(winningRates)).format('0.00')]);
-            chartResults.push([end, parseFloat(numeral(stats.mean(winningRates)).format('0.00'))]);
-            tableResults.push([end, parseFloat(numeral(stats.mean(winningRates)).format('0.00')), parseFloat(numeral(stats.stdev(winningRates)).format('0.00'))]);
+            let winningRates = winsCounts.map(winsCount => winsCount / granularity);
+            table.push([`${start + 1} - ${end}`, numeral(stats.mean(winningRates)).format('0.0000'), numeral(stats.stdev(winningRates)).format('0.0000')]);
+            chartResults.push([end, parseFloat(numeral(stats.mean(winningRates)).format('0.0000'))]);
+            tableResults.push([end, parseFloat(numeral(stats.mean(winningRates)).format('0.0000')), parseFloat(numeral(stats.stdev(winningRates)).format('0.0000'))]);
         }
         console.log(table.toString());
         if (answers.print) {
