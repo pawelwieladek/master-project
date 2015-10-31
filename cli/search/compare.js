@@ -74,8 +74,8 @@ export default formBuilder()
                     result.smoothness,
                     result.availability,
                     result.maximization,
-                    parseFloat(numeral(result.mean).format('0.00')),
-                    parseFloat(numeral(result.stdev).format('0.00'))
+                    numeral(result.mean).format('0.00'),
+                    numeral(result.stdev).format('0.00')
                 ]);
             });
 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Results</title>
+</head>
+<body>
+<div class="container"></div>
+<script type="text/javascript" src="../../../node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../../../node_modules/highcharts-release/highcharts.js"></script>
+<script type="text/javascript" src="../../../node_modules/highcharts-release/modules/exporting.js"></script>
+<script type="text/javascript" src="../../js/createChart.js"></script>
+<script type="text/javascript">
+
+$(function () {
+  $('.container').highcharts({
+    title: {
+      text: 'Learning rates'
+    },
+    subtitle: {
+      text: 'Granularity: 10000'
+    },
+    chart: {
+      width: 1000,
+      height: 400
+    },
+    plotOptions: {
+      line: {
+        marker: {
+          enabled: true,
+          symbol: 'circle',
+          radius: 3
+        }
+      }
+    },
+    credits: {
+      enabled: false
+    },
+    exporting: {
+      enabled: true,
+      filename: 'chart-all-10000'
+    },
+    tooltip: {
+      valueSuffix: '%'
+    },
+    yAxis: {
+      title: {
+        text: 'Winning rate',
+        style: {
+          fontSize: '14px'
+        }
+      },
+      labels: {
+        format: "{value}%",
+        style: {
+          fontSize: '13px'
+        }
+      },
+      tickInterval: 10
+    },
+    xAxis: {
+      labels: {
+        style: {
+          fontSize: '13px'
+        }
+      }
+    },
+    legend: {
+      enabled: true
+    },
+    series: [
+      {
+        name: '0.001',
+        data: [ [ 10000, 1.09 ],
+          [ 20000, 4.69 ],
+          [ 30000, 10.83 ],
+          [ 40000, 22.06 ],
+          [ 50000, 30.62 ],
+          [ 60000, 36.46 ],
+          [ 70000, 41.3 ],
+          [ 80000, 45.97 ],
+          [ 90000, 48.27 ],
+          [ 100000, 50.69 ],
+          [ 110000, 52.11 ],
+          [ 120000, 52.98 ],
+          [ 130000, 53.31 ],
+          [ 140000, 53.52 ],
+          [ 150000, 54.33 ],
+          [ 160000, 54.86 ],
+          [ 170000, 54.86 ],
+          [ 180000, 55.64 ],
+          [ 190000, 56.65 ],
+          [ 200000, 55.86 ] ]
+      },
+      {
+        name: '0.002',
+        data: [ [ 10000, 2.55 ],
+          [ 20000, 15.94 ],
+          [ 30000, 31.56 ],
+          [ 40000, 40.14 ],
+          [ 50000, 47.46 ],
+          [ 60000, 50.77 ],
+          [ 70000, 53.38 ],
+          [ 80000, 55.3 ],
+          [ 90000, 55.86 ],
+          [ 100000, 56.93 ],
+          [ 110000, 57.32 ],
+          [ 120000, 57.66 ],
+          [ 130000, 57.92 ],
+          [ 140000, 58.38 ],
+          [ 150000, 58.94 ],
+          [ 160000, 59.46 ],
+          [ 170000, 59.59 ],
+          [ 180000, 60.49 ],
+          [ 190000, 60.86 ],
+          [ 200000, 60.55 ] ]
+      },
+      {
+        name: '0.005',
+        data: [ [ 10000, 11.71 ],
+          [ 20000, 38.35 ],
+          [ 30000, 46.3 ],
+          [ 40000, 47.6 ],
+          [ 50000, 48.57 ],
+          [ 60000, 48.95 ],
+          [ 70000, 49.79 ],
+          [ 80000, 49.66 ],
+          [ 90000, 49.15 ],
+          [ 100000, 48.81 ],
+          [ 110000, 49.31 ],
+          [ 120000, 47.85 ],
+          [ 130000, 47.28 ],
+          [ 140000, 47.18 ],
+          [ 150000, 46.34 ],
+          [ 160000, 46.13 ],
+          [ 170000, 45.11 ],
+          [ 180000, 44.68 ],
+          [ 190000, 43.62 ],
+          [ 200000, 44.35 ] ]
+      },
+      {
+        name: '0.01',
+        data: [ [ 10000, 17.82 ],
+          [ 20000, 38.19 ],
+          [ 30000, 40.68 ],
+          [ 40000, 41.26 ],
+          [ 50000, 39.12 ],
+          [ 60000, 38.73 ],
+          [ 70000, 37.28 ],
+          [ 80000, 37.22 ],
+          [ 90000, 36.78 ],
+          [ 100000, 35.34 ],
+          [ 110000, 34.16 ],
+          [ 120000, 33.87 ],
+          [ 130000, 32.2 ],
+          [ 140000, 32.16 ],
+          [ 150000, 31.04 ],
+          [ 160000, 31.65 ],
+          [ 170000, 29.85 ],
+          [ 180000, 29.63 ],
+          [ 190000, 29.54 ],
+          [ 200000, 29.01 ] ]
+      }
+    ]
+  });
+});
+</script>
+</body>
+</html>
