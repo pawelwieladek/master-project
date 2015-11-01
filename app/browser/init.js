@@ -3,7 +3,7 @@ var handlers = require("./main").handlers;
 
 var main = new App({
     dirname: __dirname,
-    width: 1000,
+    width: 1024,
     height: 640
 });
 
