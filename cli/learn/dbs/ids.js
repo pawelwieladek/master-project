@@ -1,7 +1,4 @@
 import path from 'path';
-import low from 'lowdb';
+import createDb from '../../common/create-db';
 
-export default low(path.join(__dirname, `../../../results/learn/ids.json`), {
-    autosave: true,
-    async: false
-});
+export default createDb(path.join(__dirname, `../../../results/learn/ids.json`));
